@@ -24,7 +24,7 @@
 
   
 
-  <title>Hello World | Hexo</title>
+  <title>Hexo</title>
 
   
 
@@ -97,12 +97,17 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">Hello World</h1>
+          <h1 class="title-wrap"></h1>
           <h2 class="title-sub-wrap">
             <strong>John Doe</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2023-05-21T03:39:59.168Z" itemprop="datePublished">2023-05-21</time>
+            <time  class="article-date" datetime="2023-06-19T10:37:23.057Z" itemprop="datePublished">2023-06-19</time>
           </h2>
+          
+            <h2 class="title-sub-wrap new-date">
+              <span>最后更新于</span>
+              <time  class="article-updated" datetime="2023-06-18T12:41:24.293Z" itemprop="dateUpdated">2023-06-18</time>
+            </h2>
           
           
           <ul class="wrap-list dark">
@@ -132,20 +137,136 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+        <h1 id="跨站脚本攻击（XSS）攻击"><a href="#跨站脚本攻击（XSS）攻击" class="headerlink" title="跨站脚本攻击（XSS）攻击"></a>跨站脚本攻击（XSS）攻击</h1><p>跨站脚本攻击（Cross-site scripting，简称 XSS）是一种常见的网络攻击方式，攻击者利用网站存在漏洞，将恶意代码注入到网页中，使得用户在访问受攻击的页面时，浏览器会执行这些恶意代码，从而导致信息泄漏或者账号被盗用等危险后果。</p>
+<ul>
+<li>产生层面：通常在前端界面，JavaScript代码可以实现的地方</li>
+</ul>
+<p>攻击分类：</p>
+<ul>
+<li>来自内部的攻击：是在Web应用程序内部产生的，攻击者在Web应用程序的输入验证过程中注入恶意代码，并且没有被充分地过滤或者删除，从而让恶意代码被传递到用户的浏览器执行。攻击者可以通过和正常用户一样、合法地提交表单、留言等途径实现注入攻击。</li>
+<li>来自外部的攻击：指攻击者通过Web应用程序暴露在互联网上的接口，向Web应用程序注入恶意代码，以使恶意代码能够在用户端运行。如：发送有恶意代码的电子邮件或链接来诱骗客户登录；或在有上传点的地方上传恶意文件，在用户下载时执行。</li>
+</ul>
+<p>xss主要分三类：反射型xss、存储型xss、DOM型xss。</p>
+<p>常见的XSS攻击用的代码：</p>
+<ul>
+<li><pre><code class="html">&lt;script&gt;alert(document.cookie)&lt;/script&gt;  //弹出当前页面cookie值
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+&lt;script&gt;alert(&#39;hello，gaga!&#39;);&lt;/script&gt; //经典语句，哈哈！
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+&gt;&quot;&#39;&gt;&lt;img src=&quot;javascript.:alert(&#39;XSS&#39;)&quot;&gt;
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+&gt;&quot;&#39;&gt;&lt;script&gt;alert(&#39;XSS&#39;)&lt;/script&gt;
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+&lt;table background=&#39;javascript.:alert(([code])&#39;&gt;&lt;/table&gt;
 
+&lt;object type=text/html data=&#39;javascript.:alert(([code]);&#39;&gt;&lt;/object&gt;
+
+&quot;+alert(&#39;XSS&#39;)+&quot;
+
+&#39;&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;
+
+=&#39;&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;
+<pre class="line-numbers language-none"><code class="language-none">
+
+
+## XSS的分类
+###  1.反射型XSS
+
+攻击者在诱骗用户点击包含恶意代码的链接时，通过Web应用程序反射（Reflect）这些恶意代码，并将其发送给成功发起请求的用户，再由用户的浏览器解析执行，造成危害。
+
+1. 出现场景：
+
+   通常不会出现在服务端，会出现在网页搜索页面，需要构造植入的web界面。
+
+2. 攻击方式：
+
+   - 欺骗用户点击恶意链接。如我们构造一个网址&#96;http:&#x2F;&#x2F;example.com&#x2F;video?id&#x3D;&lt;script&gt;alert(‘You are hacked’)&lt;&#x2F;script&gt;&#96;，并欺骗用户为视频网址，待用户点击之后便会被攻击。
+   
+   - 在注入漏洞的表单处提交恶意代码。如攻击者在用户登录、搜索、评论等地方写入此段代码&#96;search&#x3D;&lt;script&gt;alert(“You are hacked”)&lt;&#x2F;script&gt;&#96;,提交之后便会被攻击
+   
+3. 判断是否存在反射型xss漏洞并利用
+
+   查看url是否有用get传参传入值，并显示，若有，便可尝试构造代码进行攻击。
+
+###  2.存储型XSS
+
+存储型XSS（也叫持久性XSS）攻击是一种更危险的XSS攻击方式，攻击者将恶意脚本注入到Web应用程序的数据库中，当用户访问受到攻击的页面时，恶意脚本会从数据库中恢复并执行，从而实现恶意操作。存储型XSS攻击通常会导致用户信息被窃取、会话劫持甚至网站被完全控制的风险。
+
+1. 出现场景：
+
+   通常出现在博客评论，用户评论，留言板，聊天室，HTML 电子邮件，wikis等有储存功能的界面当中。当过滤不严格时，攻击者可以构造代码使用户在访问页面时，丢失自己的隐私信息。
+
+2. 攻击方式：
+
+   向数据库传入恶意代码，使用户在每次访问界面时，丢失自己的隐私信息。
+
+3. 判断是否存在存储型XSS漏洞：
+
+   在评论界面随意插入一段恶意代码&#96;&lt;img src&#x3D;&quot;1&quot; onerror&#x3D;&quot;alert(&#x2F;xss&#x2F;)&quot;&#x2F;&gt;&#96;，如果注入后重新刷新发现直接回显注入的东西，说明是存储型xss。
+
+###  3.DOM型XSS
+
+通过修改页面的DOM节点形成的XSS，称之为DOM Based XSS。
+
+DOM:
+
+简单来说DOM文档就是一份XML文档，当有了DOM标准之后，DOM便将前端html代码化为一个树状结构，方便程序和脚本能够轻松的动态访问和更新这个树状结构的内容、结构以及样式，且不需要经过服务端，所以DOM型xss在js前端自己就可以完成数据的输入输出，不与服务器产生交互。
+
+![](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;9bb1631414374b5bad883e949c8259ad.png?x-oss-process&#x3D;image)
+
+所以说DOM型xss可以在前端通过js渲染来完成数据的交互，达到插入数据造成xss脚本攻击，且不经过服务器，所以即使抓包无无法抓取到这里的流量，而反射性与存储型xss需要与服务器交互，这便是三者的区别。
+
+1. 利用原理：
+
+   客户端JavaScript可以访问浏览器的DOM文本对象模型是利用的前提，当确认客户端代码中有DOM型XSS漏洞时，并且能诱使(钓鱼)一名用户访问自己构造的URL，就说明可以在受害者的客户端注入恶意脚本。
+
+2. 攻击方式：
+
+   与反射型类似。
+
+3. 判断是否有DOM型XSS漏洞：
+
+   与上边两种判断方式大致相似。
+
+   详情见：[快速入门xss 判断网站是否存在xss漏洞-腾讯云开发者社区-腾讯云 (tencent.com)](https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1352463)
+
+##  做题记录
+
+###  xss-laba的level3：
+
+在此关当中，我们输入的&#96;&lt;&gt;&#96;、&#96;&#x2F;&#96;被转义为其他符号了，导致我们无法执行JavaScript代码：
+
+![](F:\网络安全\图片资料\xss-labs level3.png)故我们需要找其他执行JavaScript代码的方式，除了用&lt;script&gt;&lt;&#x2F;script&gt;标签之外，我们还可以用超链接的型式，形式为   &#96;某某参数&#x3D;&quot;javascript:所要执行得代码语句&quot;，&#96;,通过这种形式，在此处，我们尝试构造两种特殊事件，才能执行Javascript代码
+
+1. **onmouseout事件**：指鼠标移出某个指点的HTML标签后，会出现什么效果。
+2. **onclick事件**：鼠标点击事件
+
+主要事件表：
+
+ ![](F:\网络安全\图片资料\xss-主要事件.webp)
+
+构造处此语句：&#96;&#39; onclick&#x3D;Javascript:alert(&#39;1&#39;)  &#x2F;&#x2F;&#96;,接入输入框中，在点击上传之后，再点击输入框即可完成攻击。
+
+**原理**：
+
+在查看源码之后，我们发现他用了&#96;.htmlspecialchars&#96;函数，如下图所示：
+
+&#96;&#96;&#96;php+HTML
+&lt;h1 align&#x3D;center&gt;欢迎来到level3&lt;&#x2F;h1&gt;
+&lt;?php 
+ini_set(&quot;display_errors&quot;, 0);
+$str &#x3D; $_GET[&quot;keyword&quot;];
+echo &quot;&lt;h2 align&#x3D;center&gt;没有找到和&quot;.htmlspecialchars($str).&quot;相关的结果.&lt;&#x2F;h2&gt;&quot;.&quot;&lt;center&gt;
+&lt;form action&#x3D;level3.php method&#x3D;GET&gt;
+&lt;input name&#x3D;keyword  value&#x3D;&#39;&quot;.htmlspecialchars($str).&quot;&#39;&gt;	
+&lt;input type&#x3D;submit name&#x3D;submit value&#x3D;搜索 &#x2F;&gt;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
+</li>
+</ul>
+<p>将我们输入值中的特殊符号进行转义，导致其不具有原本的含义，在此时常用的标签代码构造便无法使用，于是我们要尝试其他方法构造代码，将JavaScript代码嵌入到HTML标记中的事件处理程序属性中，常见事件如上表所示；我们选择鼠标单击事件，便于控制。</p>
+<p>当我们在输入框中输入：<code>&#39; onclick=Javascript:alert(&#39;1&#39;)  //</code>代码时，在此段代码后边的东西会被注释，在我们点击输入框时就会实现攻击。</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
       </section>
 
       
@@ -157,7 +278,7 @@
     
     <div class="card-text">
       
-        <a href="/2023/05/21/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+        <a href="/2023/06/19/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
           <h2 class="card-text--title text-ellipsis">(no title)</h2>
         </a>
       
@@ -166,6 +287,20 @@
   </article>
 </div>
           
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2023/06/19/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">(no title)</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
           
         </nav>
       
@@ -201,7 +336,7 @@
         <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
 </svg>
-        <span>2</span>
+        <span>4</span>
       </div>
       <div class="count-box--item">
         <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">

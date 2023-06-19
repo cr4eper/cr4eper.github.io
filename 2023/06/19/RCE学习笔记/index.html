@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+
+
+  <meta name="generator" content="Hexo 6.3.0">
+
+  
+
+  
+
+  
+    <meta name="author" content="John Doe">
+  
+
+  
+
+  
+
+  <title>Hexo</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          Hexo
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">友链</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap"></h1>
+          <h2 class="title-sub-wrap">
+            <strong>John Doe</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2023-06-19T10:36:57.719Z" itemprop="datePublished">2023-06-19</time>
+          </h2>
+          
+            <h2 class="title-sub-wrap new-date">
+              <span>最后更新于</span>
+              <time  class="article-updated" datetime="2023-06-04T11:31:51.649Z" itemprop="dateUpdated">2023-06-04</time>
+            </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <h1 id="RCE学习笔记"><a href="#RCE学习笔记" class="headerlink" title="RCE学习笔记"></a>RCE学习笔记</h1><ul>
+<li>rce漏洞：远程命令&#x2F;代码执行漏洞，简称RCE漏洞，可以让攻击者直接向后台服务器远程注入操作系统命令或者代码，从而控制后台系统。RCE分为远程命令执行ping和远程代码执行evel。</li>
+<li>产生原因：服务器没有针对执行函数做过滤，导致在没有指定绝对路径的情况下就执行命令。</li>
+</ul>
+<p>此处就需要我们了解一个命令，ping命令，此命令用于测试本机与网络上的另一主机是否可以联通，如果ping不通，则表示无法链接。</p>
+<h2 id="Linux常见的命令："><a href="#Linux常见的命令：" class="headerlink" title="Linux常见的命令："></a>Linux常见的命令：</h2><ol>
+<li>文件管理：<ul>
+<li>ls命令：它的作用是列出当前工作目录中的文件和目录。后面可以接其他字母来增加其查询限制：（-a 显示所有文件及目录，-m 以逗号为间隔，水平显示文件信息， -l 显示文件详细属性信息）</li>
+<li>find命令：它的作用是查找匹配给定条件的文件和目录。用法为：find &#x2F;文件路径 -name “文件名” （或find &#x2F; 文件路径 -name “*.扩展名”,<code>find -type f -print</code>:输出当前文件夹中所有文件）</li>
+<li>dir命令：命令可以列出当前目录下的文件和子目录，与 <code>ls</code> 命令的默认行为相同。但是，与 <code>ls</code> 命令不同的是，<code>dir</code> 命令默认不显示隐藏文件。（</li>
+<li>vdir命令：列出当前目录下的文件和子目录。与 <code>ls</code> 命令的 <code>-l</code> 参数相同，<code>vdir</code> 命令会显示文件和目录的详细信息，包括文件名、大小、权限等。（</li>
+<li>echo * 命令：可以列出当前目录下的所有文件和子目录的文件名，与 <code>ls</code> 命令的默认行为相同。（</li>
+</ul>
+</li>
+<li>文件查看：<ul>
+<li>cat：将某文件的内容全部输出到屏幕上。（当以特殊符号为文件名时，如“-”，“\“，等，需要用&#x2F;显示其路径：<code>./-</code>，或用双引号括起来：<code>&quot;-&quot;</code>)</li>
+<li>tail：用于显示文件尾部内容，默认显示后十行（tail -n &lt;行数&gt; filename  显示文件尾部的n行内容；<strong>tail -c &lt;字节数&gt;  filename</strong>   显示文件尾部的n个字节内容；）</li>
+<li>more：该指令会一页一页的显示读取的文件内容，按空格键会向下翻页，按d键会向上翻页（more file1：查看文件1的内容；more -num file2：察看文件2的内容，一次显示num行；more +num file3：显示file3的内容从第num行开始显示）。</li>
+<li>less：可以向后或者向前查看文本（less file1：查看file1文件内容，less -m file1：查看file1文件，并在底部显示百分比）</li>
+<li>head：显示文件开头的内容，默认显示头十行内容（head -n &lt;行数&gt;  filename   显示文件内容的前n行；head  -c &lt;字节&gt;  filename   显示文件内容的前n个字节）</li>
+</ul>
+</li>
+<li>其他：<ul>
+<li>ifconfig ： 查看自身IP。</li>
+<li>uname： 显示部分重要信息，如内核名称、主机名、内核版本号、处理器类型之类的信息 。（uname -a：显示所有关键信息。）</li>
+</ul>
+</li>
+</ol>
+<p>命令拼接符：</p>
+<pre class="line-numbers language-none"><code class="language-none">command1 ; command2 : 先执行command1后执行comnand2
+command1 &amp; command2 : 先执行comnand2后执行command1
+command1 &amp;&amp; command2 : 先执行command1后执行comnand2
+command1 | command2 : 只执行command2
+command1 || command2 : command1执行失败， 再执行command2(若command1执行成功，就不再执行command2)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>常见的linux测试命令<br> ls 列出目录<br> ls &#x2F; 列出根目录<br> cat 文件名 显示文件内容<br> cat &#x2F;etc&#x2F;passwd 显示用户信息文件</p>
+<p>关于其他特殊符号的详细用法见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45970619/article/details/106975847"> Linux特殊符号使用及含义_”Blue”的博客-CSDN博客</a></p>
+<h2 id="1-php外部命令执行"><a href="#1-php外部命令执行" class="headerlink" title="1.php外部命令执行"></a>1.php外部命令执行</h2><p>php外部命令执行主要通过三个函数system，exec，passthru这三个函数。</p>
+<ol>
+<li><p>system函数：用于执行外部程序，用法通常为system(‘所需执行的命令’)，该函数输出并返回最后一行shell结果。（shell：Shell是一个命令行解释器，可以让我们用命令来控制计算机操作系统。它将我们输入的命令翻译成计算机能够理解的指令，并将结果返回给我们，简单说就是命令执行结果。），常见用法如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">system (string $command [, int &amp;$return_var ]): string|false
+其中，参数 $command 表示要执行的系统命令，参数 $return_var 是一个引用参数，用于返回命令的返回值。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+</li>
+<li><p>exec函数：此函数用于执行一个外部程序，其用法大致与system相同，不过其不会输出执行结果，若要使其输出结果，则需在php命令中加上echo。常见用法如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">exec (string $command [, array &amp;$output [, int &amp;$return_var ]]): string|false
+其中，参数 $command 表示要执行的系统命令，参数 $output 是一个引用参数，用于返回命令的输出结果，参数 $return_var 是一个引用参数，用于返回命令的返回值。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+</li>
+<li><p>passthru函数：<code>passthru()</code> 函数是 PHP 中的一个系统函数，它用于执行外部命令并直接输出结果，类似于在终端中输入命令并输出结果。常见格式如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">passthru (string $command [, int &amp;$return_var ]): void
+其中，参数 $command 表示要执行的系统命令，参数 $return_var 是一个引用参数，用于返回命令的返回值。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+</li>
+<li><p>eval()函数： <code>eval()</code> 函数是 PHP 中非常危险的函数，它可以执行字符串形式的 PHP 代码。由于 <code>eval()</code> 函数的存在，攻击者可以通过注入可执行代码的方式来控制应用程序。</p>
+<pre class="line-numbers language-none"><code class="language-none">eval (string $code_str): mixed
+其中，$code_str 参数是一个包含可执行代码的字符串。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+</li>
+<li><p>file_get_contents()函数：<code>file_get_contents()</code> 函数用于读取文件的内容，如果使用 <code>file_get_contents()</code> 函数读取了用户输入数据，那么攻击者可以在文件中注入代码并通过应用程序执行。常见使用方法如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">file_get_contents(string $filename [, bool $use_include_path &#x3D; FALSE [, resource $context [, int $offset &#x3D; 0 [, int $maxlen &#x3D; NULL ]]]]): string
+
+其中，$filename 是要读取的文件名或 URL，也可以是为协议。如果 $use_include_path 参数为 true，则还可从 PHP include_path 中搜索文件。 $context 参数是一个可选的资源句柄，用于在读取文件时指定上下文信息。 $offset 参数指定从文件的开始位置的字节数开始读取，而 $maxlen 参数限制要读取的最大字节数。如果省略 $maxlen 参数，则将读取整个文件。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+</li>
+<li><p>assert函数：assert ( mixed $assertion [, Throwable $exception ] ) : boolassert() 会检查指定的 assertion 并在结果为 FALSE 时采取适当的行动。判断一个表达式是否成立。返回true or false。如果 assertion 是字符串，它将会被 assert() 当做 PHP 代码来执行。</p>
+<p>assert与eval的区别：assert是直接将字符串当代码执行；eval是把合法的php代码进行执行</p>
+</li>
+<li><p>echo函数：<code>echo ls | sh</code> 通过这样的句子可以执行函数，还可以执行被base64编码，hex编码之后的命令。</p>
+</li>
+<li><p>include函数：</p>
+</li>
+<li><p>其他：</p>
+<ul>
+<li>&#96;&#96;反引号：在php代码当中，反引号跟eval作用大致相同，都可以执行函数，同样也需要echo才能将结果输出。</li>
+<li><code>&#123;&#125;</code>花括号：{command,<code>所要执行的命令</code>}，通过这个方法，我们同样可以执行命令。</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-无过滤"><a href="#2-无过滤" class="headerlink" title="2.无过滤"></a>2.无过滤</h2><p>此类型的命令执行漏洞，并没有过滤，直接按其所显示的php代码进行操作便可。</p>
+<h2 id="3-eval执行"><a href="#3-eval执行" class="headerlink" title="3.eval执行"></a>3.eval执行</h2><p>此类题型中php程序通过eval函数来执行某语句，通常为传递的参数，故我们只需利用上述三个命令执行函数来直接执行命令即可。</p>
+<h2 id="4-文件包含"><a href="#4-文件包含" class="headerlink" title="4.文件包含"></a>4.文件包含</h2><p>文件包含：是指编译器进行预处理时复制指定的文件内容代替源文件中预处理命令的过程，一个源文件可以将另一个源文件的全部内容包含进来。初衷是为了减少程序代码的冗余。文件包含漏洞原理<br>可以试想一下，开发人员如果每一个代码文件中都要使用到同一段代码，非常繁琐，所以通常会将用到的代码转换成一个文件，让每一个用到它的代码都包含在里面，而无需再次编写。这种调用文件的过程一般被称为包含文件。但由于这种灵活性，从而导致客户端可以调用任意恶意文件，从而造成文件包含漏洞。文件 PHP 中的文件包含分为本地包含和远程包含(allow_url_include &#x3D; on)</p>
+<ol>
+<li>远程文件包含是一种常见的Web应用程序漏洞，发生在包含文件时。它指的是攻击者利用Web应用程序中的代码缺陷，将恶意脚本文件从远程服务器加载到受影响的Web页面中。攻击者通过修改包含文件的URL参数来实现这种攻击。当应用程序执行包含操作时，由于未对输入进行充分验证或过滤，因此可能导致恶意脚本被加载并执行，从而允许攻击者进行各种恶意活动，如窃取用户数据、破坏网站等。</li>
+</ol>
+<p>通常在文件包含中的常用函数有以下四种：</p>
+<ul>
+<li>require():找不到被包含的文件会产生致命错误，并停止脚本运行</li>
+<li>include():找不到被包含的文件只会产生警告，脚本继续执行</li>
+<li>require_once()与require()类似:唯一的区别是如果该文件的代码已经被包含，则不会再次包含</li>
+<li>include_once()与include()类似:唯一的区别是如果该文件的代码已经被包含，则不会再次包含</li>
+</ul>
+<p>在源代码中有这几个函数时，我们便可通过php:&#x2F;&#x2F;input伪协议，再用post传参传入<?php phpinfo(); ?>这段带码，来看其是否可用，对于PHP伪协议在下面有详细的介绍。</p>
+<p>在某些特殊情况时，他存在上述的几个函数，但却无法使用伪协议，在这时我们要判断他是被过滤还是其他情况，如果是被过滤。根据情况绕过即可，但如果不是被过滤，却依旧无法使用，那我们就需要尝试其他方法，接下来将介绍部分方法（补充中）：</p>
+<ol>
+<li><p>利用日志传入木马法：当我们输入默认日志地址之后，若他显示出日志文件时，则表示这种方法可以使用，以下是一些常见的日志文件的默认地址：</p>
+<ul>
+<li>apache+Linux日志默认路径：&#x2F;etc&#x2F;httpd&#x2F;logs&#x2F;access_log；或&#x2F;var&#x2F;log&#x2F;httpd&#x2F;access_log</li>
+<li>nginx 日志文件：&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</li>
+</ul>
+<p>再利用bp抓包在User-Agent中传入一句话木马，再通过蚁剑进行连接具体操作如下图：</p>
+<p>![](F:\网络安全\图片资料\屏幕截图 2023-06-04 193006.png)</p>
+<p>便可以连接。</p>
+</li>
+</ol>
+<h2 id="5-命令行过滤"><a href="#5-命令行过滤" class="headerlink" title="5.命令行过滤"></a>5.命令行过滤</h2><ol>
+<li><p>关键字过滤：如ls，cat等关键字被过滤，导致我们无法执行命令。</p>
+<p>解决方法：</p>
+<ul>
+<li>代替法：用其他意义相同的命令来代替此命令；如<code>cat</code>{查看命令}可以用:<code>less</code>{逐页查看}、<code>head</code>{查看文件开头几行}、<code>grep</code>{从文件中查找到某个关键字，并将该行显示出来}。具体使用方法见：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145366493">Linux常用文件查看命令 - 知乎 (zhihu.com)</a></li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>拼接法：将命令的字母拆分开，然后将其赋给几个变量，最后在拼接起来；如cat可写为：a&#x3D;c；b&#x3D;at；$a$b flag。这样就构造好了命令执行语句。<ul>
+<li>使用空变量$*和$@，$x,${x}绕过：在命令语句中间加入这些空变量，如：ca$*t flag;这样便可构造好语句。</li>
+</ul>
+</li>
+<li>编码绕过：将被过滤的关键字进行base64，URL编码，hex编码，在填入命令语句当中，便也可执行；如：cat的base64编码为Y2F0，Y2F0 falg也是一个命令语句。例如：<code>cat flag</code>的base64编码时<code>Y2F0IGZsYWc=</code>，我们便可以构造这样的命令执行式：<code>echo &quot;Y2F0IGZsYWc=&quot; | base64 -d | sh</code> 来执行flag文件查询命令。hex编码可以利用Linux的xxd命令解码。<ul>
+<li>Oct编码绕过：</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p>空格过滤：在命令构造当中不能产生空格。</p>
+<p>解决方法：</p>
+<ul>
+<li>代替法：<code>&lt; </code>、<code>&lt;&gt;</code>、<code>%09</code>(tab键)、<code>%20</code>、<code>$IFS$9</code>、<code>$IFS$1</code>、<code>$&#123;IFS&#125;</code>、<code>$IFS</code>等；上述符号都与空格含有相同，可用其将空格替换。 </li>
+<li>花括号法：<code>&#123;cat,flag&#125;</code>像这构造样执行命令我们便不需要使用空格。</li>
+</ul>
+</li>
+<li><p>过滤目录分割符<code>/</code>，导致我们无法访问目标文件。</p>
+<p>解决方法：</p>
+<ul>
+<li>cd命令：利用cd命令进入目标文件所在文件夹，在用cat进行访问。如：ping：127.0.0.1；cd 目标文件夹；cat 目标文件。这样，便可绕过过滤。</li>
+</ul>
+</li>
+<li><p>过滤<code>;</code>号，导致无法执行命令。</p>
+<p>解决方法：</p>
+<ul>
+<li>替换法： <code>|</code>  &#x2F;&#x2F;只执行后面那条命令、 <code> ||</code>  &#x2F;&#x2F;只执行前面那条命令、 <code> &amp;</code>  &#x2F;&#x2F;两条命令都会执行、<code>  &amp;&amp;</code>  &#x2F;&#x2F;两条命令都会执行、<code> %0a</code>      &#x2F;&#x2F;换行符、<code> %0d </code>   &#x2F;&#x2F;回车符号，通过与其能达到相同作用的符号进行连接，然后便可执行，同样的，如果是其他符号被过滤，同样可以使用此类方法。</li>
+</ul>
+</li>
+<li><p>输入长度限制：当我们输入命令很长，单输入长度收到限制，导致无法完整输入命令。</p>
+<p>解决方法：</p>
+<ul>
+<li>换行符：在Linux中<code>\</code>表示换行。</li>
+</ul>
+</li>
+</ol>
+<p>总之，过滤时不会只过滤一种，会多种符号一起过滤，我们需要找其中未被过滤的，并结合绕过方法，来进行绕过。</p>
+<h2 id="6-php伪协议"><a href="#6-php伪协议" class="headerlink" title="6.php伪协议"></a>6.php伪协议</h2><p>PHP 伪协议是一种特殊的 URI 方案，用于让 PHP 解释器通过 URL 参数来执行代码，从而简化编程过程和提高效率。 PHP 伪协议的基本格式是：</p>
+<pre class="line-numbers language-none"><code class="language-none">protocol:expression<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>其中，<code>protocol</code> 是伪协议名称，<code>expression</code> 是需要执行的 PHP 代码或表达式。</p>
+<ul>
+<li><p>PHP 伪协议支持多种操作，包括：</p>
+<ol>
+<li><p><code>php://stdin</code>、<code>php://stderr</code>、<code>php://stdout</code>：这些伪协议可以让 PHP 解释器从标准输入、标准错误或标准输出读取或写入数据。</p>
+</li>
+<li><p><code>php://filter</code>：该伪协议提供了一种过滤数据流的机制，可以通过管道方式将指定的处理器函数应用于数据流中的数据，这里的这个数据流可以是任何可读取或可写入的流对象，包括文件、套接字连接、cURL 返回的资源等等</p>
+<p>详细用法：</p>
+<pre class="line-numbers language-none"><code class="language-none">基本语法：php:&#x2F;&#x2F;filter&#x2F;filtername&#x2F;resource&#x3D;urlencoded_data
+其中，filtername 代表过滤器的名称，在该伪协议中，可以使用的过滤器名称包括：
+
+1.convert.base64-encode：将数据进行 base64 编码；
+2.convert.base64-decode：将 base64 编码的数据进行解码；
+3.convert.quoted-printable-encode：将数据进行 Quoted-Printable 编码；
+4.convert.quoted-printable-decode：将 Quoted-Printable 编码的数据进行解码；
+5.string.rot13：将数据进行 ROT13 加密；
+6.string.toupper：将数据中的字母转换为大写字母；
+7.string.tolower：将数据中的字母转换为小写字母；
+8.zlib.deflate：将数据压缩为 zlib 格式；
+9.zlib.inflate：将压缩过的数据进行解压缩。
+
+resource 参数代表要进行过滤的资源，可以是文件名、网络连接或字符串等数据源。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><code>php://output</code>：这个伪协议会将输出流缓存到内存中，直到脚本执行完成才输出结果。</p>
+</li>
+<li><p><code>php://input</code>： 是 PHP 中的一种输入流，用于从 HTTP 请求中读取原始的 POST 数据。当使用 POST 方法提交表单数据时，PHP 默认将 POST 数据存储在 <code>php://input</code> 输入流中，可以通过该输入流读取和处理 POST 数据。在某些函数的帮助之下我们可以将输入的php代码执行，达到远程命令执行。（<strong>存疑：为什么必须使用其协议进行读取，都是通过函数来执行，为什么不能直接读取post数据流中的数据进行执行，不是也能达到同样的效果吗</strong>）</p>
+<p>常见可帮助执行的函数：eval() 函数、assert() 函数</p>
+</li>
+</ol>
+</li>
+<li><p>使用条件：不需要开启allow_url_fopen，仅php:&#x2F;&#x2F;input、 php:&#x2F;&#x2F;stdin、 php:&#x2F;&#x2F;memory 和 php:&#x2F;&#x2F;temp 需要开启allow_url_include。其余的双off也可使用</p>
+</li>
+</ul>
+<p>除了上述伪协议之外，PHP 还支持其他一些伪协议，包括：</p>
+<ul>
+<li><p><code>data://</code>：</p>
+<ol>
+<li><p>作用：数据流封装器，以传递相应格式的数据。可以让用户来控制输入流，当它与包含函数结合时，用户输入的data:&#x2F;&#x2F;流会被当作php文件执行。</p>
+<p>扩展：包含函数是一种特殊的函数，用于将外部文件或数据包含到当前 PHP 脚本中，以便在脚本中使用它们，PHP 中常用的几个包含函数有：<code>include()</code>、<code>require()</code>、<code>include_once()</code> 和 <code>require_once()</code>。它们的作用类似，主要区别在于错误处理机制、文件是否能重复包含等方面。</p>
+</li>
+<li><p>用法：如下</p>
+<pre class="line-numbers language-none"><code class="language-none">语法格式：
+data:[mediatype][;base64],data
+其中，mediatype 指定了数据的 MIME 类型，可以是 text&#x2F;plain、application&#x2F;octet-stream 等任意 MIME 类型。如果不指定该参数，数据默认为 text&#x2F;plain 类型。
+
+如果要对数据进行 Base64 编码，则需要在 mediatype 后添加 ;base64 参数，以表示数据需要进行 Base64 编码。如果数据不需要进行 Base64 编码，则不需要添加该参数。
+
+data 参数指定了要进行处理的数据内容，可以是文本、二进制数据等任何类型的数据。当数据为文本类型时，需要使用 URL 编码对其进行编码。
+如：
+1、data:&#x2F;&#x2F;text&#x2F;plain,
+http:&#x2F;&#x2F;127.0.0.1&#x2F;include.php?file&#x3D;data:&#x2F;&#x2F;text&#x2F;plain,&lt;?php%20phpinfo();?&gt;
+ 
+2、data:&#x2F;&#x2F;text&#x2F;plain;base64,a   “将a数据进行编码”
+http:&#x2F;&#x2F;127.0.0.1&#x2F;include.php?file&#x3D;data:&#x2F;&#x2F;text&#x2F;plain;base64,PD9waHAgcGhwaW5mbygpOz8%2b
+&lt;?php
+&#x2F;&#x2F; 打印 &quot;I love PHP&quot;
+echo  file_get_contents ( &#39;data:&#x2F;&#x2F;text&#x2F;plain;base64,SSBsb3ZlIFBIUAo&#x3D;&#39; );
+?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过这样，我们可以在上传时混入php命令，再在php命令中加入命令执行函数，我们就可以达到远程命令执行的目的。</p>
+</li>
+<li><p>使用条件：llow_url_fopen <code>[on/off]</code>，allow_url_include  <code>[on/off]</code>。双off也可以使用</p>
+</li>
+</ol>
+</li>
+<li><p><code>glob://</code>：</p>
+<ol>
+<li><p>作用：是 PHP 中的一种伪协议，用于搜索符合指定模式的文件路径。它可以与其它协议嵌套使用，以获取特定目录下的符合指定模式的所有文件。</p>
+</li>
+<li><p>用法：具体使用方法如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">glob:&#x2F;&#x2F;[directory_path&#x2F;[file_pattern]]
+其中，directory_path 可选，表示需要搜索的目录路径，默认为当前脚本执行的目录。file_pattern 必选，表示要搜索的文件模式，可以是通配符 *、?、[] 等。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>扩展：通配符是一种用于表示文件名、路径、字符串等模糊匹配的符号，包括星号（<code>*</code>）和问号（<code>?</code>）。星号（<code>*</code>）表示匹配任意个字符（包括零个字符），问号（<code>?</code>）表示匹配单个字符</p>
+</li>
+</ol>
+</li>
+<li><p>zip:&#x2F;&#x2F;, bzip2:&#x2F;&#x2F;, zlib:&#x2F;&#x2F;协议：</p>
+<ol>
+<li>作用：此三类均属于压缩流，可以访问压缩文件当中的子文件，并且无需指定文件后缀。但需注意，无需指定文件后缀并不代表任何后缀的压缩文件都可用zip:&#x2F;&#x2F;伪协议访问，访问压缩文件需要使用对应的压缩格式和相关的协议。如对于使用 Gzip（<code>.gz</code>）压缩的文件，应该使用 <code>compress.zlib://</code> 协议来进行访问，对于使用 Bzip2（<code>.bz2</code>）压缩的文件，则应该使用 <code>compress.bzip2://</code> 协议访问。</li>
+<li>使用方法：[伪协议]+[压缩文件在系统中路径] <code>#</code> [目标文件在压缩文件当中的路径]。此处需特别注意，压缩文件路径于目标文件路径需以<code>#</code>隔开。</li>
+<li>使用条件：allow_url_fopen <code>[on/off]</code>，allow_url_include  <code>[on/off]</code>。双off也可以使用</li>
+</ol>
+</li>
+<li><p><code>file:// </code>伪协议：</p>
+<ol>
+<li>作用：用于访问本地文件系统，这个本地指的是运行 PHP 代码的服务器所在机器的文件系统。也就是说，使用 <code>file://</code> 伪协议可以访问服务器上的任意本地文件，包括硬盘、文件夹、甚至虚拟文件系统，例如 <code>/proc</code> 和 <code>/sys</code> 等目录。我们可以通过此伪协议来直接访问服务器上的文件。</li>
+<li>用法：file:&#x2F;&#x2F;+[文件的绝对路径和文件名];</li>
+<li>使用条件：allow_url_fopen <code>[on/off]</code>，allow_url_include  <code>[on/off]</code>。双off也可以使用。</li>
+</ol>
+</li>
+</ul>
+<h2 id="7-常见过大量滤绕过方法（未学，之后补）"><a href="#7-常见过大量滤绕过方法（未学，之后补）" class="headerlink" title="7.常见过大量滤绕过方法（未学，之后补）"></a>7.常见过大量滤绕过方法（未学，之后补）</h2><p>当我们输入的数据收到大量过滤时，如nssctf上的ez_rce题目中，题目php源码如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">&lt;?php
+## 放弃把，小伙子，你真的不会RCE,何必在此纠结呢？？？？？？？？？？？？
+if(isset($_GET[&#39;code&#39;]))&#123;
+    $code&#x3D;$_GET[&#39;code&#39;];
+    if (!preg_match(&#39;&#x2F;sys|pas|read|file|ls|cat|tac|head|tail|more|less|php|base|echo|cp|\$|\*|\+|\^|scan|\.|local|current|chr|crypt|show_source|high|readgzfile|dirname|time|next|all|hex2bin|im|shell&#x2F;i&#39;,$code))&#123;
+        echo &#39;看看你输入的参数！！！不叫样子！！&#39;;echo &#39;&lt;br&gt;&#39;;
+        eval($code);
+    &#125;
+    else&#123;
+        die(&quot;你想干什么？？？？？？？？？&quot;);
+    &#125;
+&#125;
+else&#123;
+    echo &quot;居然都不输入参数，可恶!!!!!!!!!&quot;;
+    show_source(__FILE__);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以发现：<br><code>/sys|pas|read|file|ls|cat|tac|head|tail|more|less|php|base|echo|cp|\$|\*|\+|\^|scan|\.|local|current|chr|crypt|show_source|high|readgzfile|dirname|time|next|all|hex2bin|im|shell/i&#39;</code>，这些数据都被过滤了，现在介绍一种关于这种情况的绕过方式。</p>
+<p>闭合标签反引号执行：对这些过滤的数据检查，发现<code>&lt;&gt;</code>和<code>&#39;&#39;</code>为被过滤，故可使用此类方法。</p>
+<p><em><strong>(无参数rce，之后再补)。</strong></em></p>
+<h2 id="8-常见过滤绕过技巧"><a href="#8-常见过滤绕过技巧" class="headerlink" title="8.常见过滤绕过技巧"></a>8.常见过滤绕过技巧</h2><ol>
+<li><p>thinkphp框架漏洞利用：</p>
+<p>详情见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/yangbz123/article/details/115329314"> ThinkPHP漏洞总结（利用）_thinkphp漏洞利用_bye_X的博客-CSDN博客</a></p>
+</li>
+</ol>
+<p>​     </p>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2023/06/19/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%88XSS%EF%BC%89%E6%94%BB%E5%87%BB/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">(no title)</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2023/05/21/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">(no title)</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://s.gravatar.com/avatar/2d6b803eea37de0257620d5fabee7e64?s=200&amp;r=g&amp;d=retro" class="soft-size--round soft-style--box" alt="Creeper">
+    
+    
+      <h2>Creeper</h2>
+    
+    
+      <p>贵在坚持</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>4</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>flex-block主题部分重构，详情查看https://github.com/miiiku/flex-block</p>
+  </div>
+</section>
+
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/621779/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+          <a href="https://twitter.com/guanquanhong" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-twitter" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M962.285714 233.142857q-38.285714 56-92.571429 95.428571 0.571429 8 0.571429 24 0 74.285714-21.714286 148.285714t-66 142-105.428571 120.285714-147.428571 83.428571-184.571429 31.142857q-154.857143 0-283.428571-82.857143 20 2.285714 44.571429 2.285714 128.571429 0 229.142857-78.857143-60-1.142857-107.428571-36.857143t-65.142857-91.142857q18.857143 2.857143 34.857143 2.857143 24.571429 0 48.571429-6.285714-64-13.142857-106-63.714286t-42-117.428571l0-2.285714q38.857143 21.714286 83.428571 23.428571-37.714286-25.142857-60-65.714286t-22.285714-88q0-50.285714 25.142857-93.142857 69.142857 85.142857 168.285714 136.285714t212.285714 56.857143q-4.571429-21.714286-4.571429-42.285714 0-76.571429 54-130.571429t130.571429-54q80 0 134.857143 58.285714 62.285714-12 117.142857-44.571429-21.142857 65.714286-81.142857 101.714286 53.142857-5.714286 106.285714-28.571429z"></path>
+</svg>
+          </a>
+        
+      
+    </div>
+     
+    <p>&copy; 2023 <a href="/" target="_blank">John Doe</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+</body>
+</html>
