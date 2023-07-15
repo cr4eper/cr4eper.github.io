@@ -1,1166 +1,322 @@
-
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>Hexo</title>
-        <meta name="author" content="John Doe" />
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <link rel="icon" href="/images/favicon.png" />
-        <script src="https://cdn.staticfile.org/vue/3.2.47/vue.global.prod.min.js"></script>
-<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.3.0/css/all.min.css" />
-<link rel="stylesheet" href="/css/fonts.min.css" />
-<script> const mixins = {}; </script>
-
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
 
 
+  <meta name="generator" content="Hexo 6.3.0">
 
+  
 
-<script src="/js/lib/preview.js"></script>
+  
 
+  
+    <meta name="author" content="John Doe">
+  
 
+  
 
+  
 
+  <title>Hexo</title>
 
-<script src="/js/lib/home.js"></script>
+  
 
-<link rel="stylesheet" href="/css/main.css" />
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
 
-    <meta name="generator" content="Hexo 6.3.0"></head>
-    <body>
-        <div id="layout">
-            <transition name="fade">
-                <div id="loading" v-show="loading">
-                    <div id="loading-circle">
-                        <h2>LOADING</h2>
-                        <p>加载过慢请开启缓存 浏览器默认开启</p>
-                        <img src="/images/loading.gif" />
-                    </div>
-                </div>
-            </transition>
-            <nav id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
-    <div id="desktop-menu">
-        <a class="title" href="/">
-            <span>HEXO</span>
-        </a>
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container">
+  
+    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
         
-        <a href="/">
-            <i class="fa-solid fa-house fa-fw"></i>
-            <span>&ensp;Home</span>
-        </a>
+          Hexo
         
-        <a href="/about">
-            <i class="fa-solid fa-id-card fa-fw"></i>
-            <span>&ensp;About</span>
-        </a>
-        
-        <a href="/archives">
-            <i class="fa-solid fa-box-archive fa-fw"></i>
-            <span>&ensp;Archives</span>
-        </a>
-        
-        <a href="/categories">
-            <i class="fa-solid fa-bookmark fa-fw"></i>
-            <span>&ensp;Categories</span>
-        </a>
-        
-        <a href="/tags">
-            <i class="fa-solid fa-tags fa-fw"></i>
-            <span>&ensp;Tags</span>
-        </a>
-        
+      </a>
     </div>
-    <div id="mobile-menu">
-        <div class="title" @click="showMenuItems = !showMenuItems">
-            <i class="fa-solid fa-bars fa-fw"></i>
-            <span>&emsp;HEXO</span>
-        </div>
-        <transition name="slide">
-            <div class="items" v-show="showMenuItems">
-                
-                <a href="/">
-                    <div class="item">
-                        <div style="min-width: 20px; max-width: 50px; width: 10%">
-                            <i class="fa-solid fa-house fa-fw"></i>
-                        </div>
-                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
-                    </div>
-                </a>
-                
-                <a href="/about">
-                    <div class="item">
-                        <div style="min-width: 20px; max-width: 50px; width: 10%">
-                            <i class="fa-solid fa-id-card fa-fw"></i>
-                        </div>
-                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
-                    </div>
-                </a>
-                
-                <a href="/archives">
-                    <div class="item">
-                        <div style="min-width: 20px; max-width: 50px; width: 10%">
-                            <i class="fa-solid fa-box-archive fa-fw"></i>
-                        </div>
-                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
-                    </div>
-                </a>
-                
-                <a href="/categories">
-                    <div class="item">
-                        <div style="min-width: 20px; max-width: 50px; width: 10%">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </div>
-                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
-                    </div>
-                </a>
-                
-                <a href="/tags">
-                    <div class="item">
-                        <div style="min-width: 20px; max-width: 50px; width: 10%">
-                            <i class="fa-solid fa-tags fa-fw"></i>
-                        </div>
-                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
-                    </div>
-                </a>
-                
-            </div>
-        </transition>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">友链</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+      </ul>
     </div>
+  </div>
 </nav>
-<transition name="fade">
-    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
-</transition>
 
-            <transition name="into">
-                <div id="main" v-show="!loading">
-                    <div id="home-head">
-    <div id="home-background" ref="homeBackground" data-images="/images/background.jpg"></div>
-    <div id="home-info" @click="homeClick">
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="info">
-            <div class="wrap">
-                <h1>Hexo</h1>
-                <h3></h3>
-                <h5></h5>
-            </div>
-        </span>
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block layout-padding">
+        <h1 class="title-wrap">Hexo</h1>
+        
+      </div>
     </div>
-</div>
-<div id="home-posts-wrap" true ref="homePostsWrap">
-    <div id="home-posts">
-        
+  
 
-<div class="post">
-    <a href="/2023/06/19/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title"></h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/6/19
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="文件上传笔记"><a href="#文件上传笔记" class="headerlink" title="文件上传笔记"></a>文件上传笔记</h1><p>文件上传漏洞常触发点：相册、头像上传、视频、照片分享、附件上传（论坛发帖、邮箱）、文件管理器等。</p>
-<p>漏洞形成条件：</p>
-<ul>
-<li>文件能够通过前端和后端过滤和文件处理</li>
-<li>文件内容不会改变，能够被正确存储</li>
-<li>存储位置在Web容器控制范围内</li>
-<li>攻击者有权限访问存储目录并有权执行文件</li>
-<li>只要破坏了其中的任一条件即可防止文件上传漏洞。</li>
-</ul>
-<p>一句话木马：<?php @eval($_POST['attack']);?></p>
-<h2 id="1-前端验证"><a href="#1-前端验证" class="headerlink" title="1.前端验证"></a>1.前端验证</h2><p>应用程序是通过前端js代码进行验证，而不再后端程序进行验证，所以我们可以通过burpsuite抓包进行前端验证修改，步骤如下：</p>
-<p><img src="F:\网络安全\图片资料\前端js饶过.png"></p>
-<p>然后通过剑蚁程序进行文件操作便可成功获得数据。</p>
-<h2 id="2-文件名滤过绕过"><a href="#2-文件名滤过绕过" class="headerlink" title="2.文件名滤过绕过"></a>2.文件名滤过绕过</h2><p>原理：js代码通过黑名单的形式判断文件上传类型，并没有完整的过滤功能，攻击者通过上传黑名单以外的文件类型而进行文件验证。</p>
-<p>此种过滤方式通常较为单一，将文件后缀改为PHP，php2，phP等便可以成功绕过。具体如下图：</p>
-<p><img src="F:\网络安全\图片资料\文件名绕过.png"></p>
-<h2 id="3-Content—Type过滤绕过"><a href="#3-Content—Type过滤绕过" class="headerlink" title="3.Content—Type过滤绕过"></a>3.Content—Type过滤绕过</h2><p>不同文件都会有不同的Content—Type，例如JPG文件的Content—Type是image&#x2F;jpeg，PHP文件文件的Content—Type为application&#x2F;xhtml+xml，以下是一些常见文件的Content—Type：</p>
-<ul>
-<li>文本文件 (.txt)：text&#x2F;plain</li>
-<li>HTML 文件 (.html)：text&#x2F;html</li>
-<li>CSS 文件 (.css)：text&#x2F;css</li>
-<li>JavaScript 文件 (.js)：application&#x2F;javascript</li>
-<li>JSON 文件 (.json)：application&#x2F;json</li>
-<li>图片文件 (.jpg, .png, .gif)：image&#x2F;jpeg, image&#x2F;png, image&#x2F;gif</li>
-<li>PDF 文件 (.pdf)：application&#x2F;pdf</li>
-<li>Word 文件 (.docx)：application&#x2F;vnd.openxmlformats-officedocument.wordprocessingml.document</li>
-<li>Excel 文件 (.xlsx)：application&#x2F;vnd.openxmlformats-officedocument.spreadsheetml.sheet</li>
-<li>PowerPoint 文件 (.pptx)：application&#x2F;vnd.openxmlformats-officedocument.presentationml.presentation</li>
-</ul>
-<p>此种过滤用的就是判断上传的文件是否为符合要求的文件，若不符合，他就不会上传到服务器，这个时候我们便可以利用bp抓包来修改上传文件的Content—Type，使其变为符合要求的请求头，达到绕过的目的。</p>
-<h2 id="4-文件头绕过"><a href="#4-文件头绕过" class="headerlink" title="4.文件头绕过"></a>4.文件头绕过</h2><p>与上一种过滤相同，不同的文件有不同的文件头，防护者通过对上传文件的文件头进行检测，若不是符合要求的文件头，则文件不会被上传，以下是部分常用文件的文件头：</p>
-<ul>
-<li>JPEG 图像文件 (.jpg, .jpeg): FF D8 FF</li>
-<li>PNG 图像文件 (.png): 89 50 4E 47 0D 0A 1A 0A</li>
-<li>GIF 图像文件 (.gif): 47 49 46 38 37 61 或 47 49 46 38 39 61</li>
-<li>BMP 图像文件 (.bmp): 42 4D</li>
-<li>PDF 文件 (.pdf): 25 50 44 46 2D 或 25 50 44 46 2D 31 2E</li>
-<li>Word 文件 (.doc, .docx): D0 CF 11 E0 A1 B1 1A E1 或 50 4B 03 04 14 00 06 00</li>
-<li>Excel 文件 (.xls, .xlsx): D0 CF 11 E0 A1 B1 1A E1 或 50 4B 03 04 14 00 06 00</li>
-<li>PowerPoint 文件 (.ppt, .pptx): D0 CF 11 E0 A1 B1 1A E1 或 50 4B 03 04 14 00 06 00</li>
-<li>MP3 音频文件 (.mp3): FF FB 或 FF F3 或 49 44 33</li>
-<li>MP4 视频文件 (.mp4): 00 00 00 18 或 00 00 00 20</li>
-<li>ZIP 压缩文件 (.zip): 50 4B 03 04</li>
-</ul>
-<p><strong>注意:上述文件头为十六进制，在写入木马文件时需要将其转化为ascii码。</strong></p>
-<p>这种时候，我们如果想要绕过，只需要修改文件的文件头即可完成绕过，修改文件头有以下几种方法：</p>
-<ol>
-<li><p>直接在木马文件中添加文件头：顾名思义，就是直接在写的木马文件的最前边加上符合要求的文件的文件头，如：GIF文件的文件头GIF89a，故我们只需在代码文件中写入如下内容即可：</p>
-<p><code>GIF89a&lt;?php eval($_POST[&#39;shell&#39;]); ?&gt;</code></p>
-<p>这段内容即可完成绕过；</p>
-</li>
-<li><p>文件结合法：除添加文件头之外，还有一种比较常用的方法，不需要记文件头。我们可以直接将木马文件复制到一个文本文件中生成一个新的木马文件，具体操作如下：假设111.jpg是一个文本文件，222.txt是一个木马文件，里边内容为一句话木马；通过copy命令将两个文件结合到333.php文件中，具体代码如下：</p>
-<p><code>copy 111.jpg/b + 222.txt/a 333.php</code></p>
-<p>上面的<code>/b</code>表示该文件为一个二进制文件，<code>/a</code>表示一个ASCII的文本文件。</p>
-</li>
-</ol>
-<p>在完成木马制作之后，直接上传成功后，用剑蚁连接即可。</p>
-<h2 id="5-htaccess文件上传"><a href="#5-htaccess文件上传" class="headerlink" title="5.  .htaccess文件上传"></a>5.  .htaccess文件上传</h2><h3 id="htaccess基础"><a href="#htaccess基础" class="headerlink" title="htaccess基础"></a>htaccess基础</h3><p>htaccess是一种用于 Apache Web 服务器的特殊配置文件。是纯文本文件，主要作用有URL重写、自定义错误页面、MIME类型配置以及访问权限控制等。主要体现在伪静态的应用、图片防盗链、自定义404错误页面、阻止&#x2F;允许特定IP&#x2F;IP段、目录浏览与主页、禁止访问指定文件类型、文件密码保护等。简单来说，就是我们可以通过这个文件将上传的png、jpg等文件以php代码的方式来运行。</p>
-<ol>
-<li><p>命令使用条件：</p>
-<ul>
-<li><p>需开启配置文件httpd.conf：  </p>
-<p> <code>Options FollowSymLinks AllowOverride None</code></p>
-<p>中将None改为All。</p>
-</li>
-<li><p>去掉Mod_rewrite.so 的注释，开启rewrite模块</p>
-<p><code>LoadModule rewrite_module modules/mod_rewrite.so</code></p>
-</li>
-</ul>
-</li>
-<li><p>htaccess文件上传配置</p>
-<ul>
-<li><p>命令构建方法：</p>
-<p><code>FilesMatch</code>指令：</p>
-<pre class="line-numbers language-htaccess" data-language="htaccess"><code class="language-htaccess">&lt;FilesMatch &quot;\.上传的问价的类型&quot;&gt;  
-   SetHandler application&#x2F;x-httpd-php
-&lt;&#x2F;FilesMatch&gt;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p><code>AddType</code>指令：</p>
-<pre class="line-numbers language-htaccess" data-language="htaccess"><code class="language-htaccess">AddType application&#x2F;x-httpd-php .文件扩展名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+  
+  
 
-<p>相比FilesMatch指令来说的话，AddType更加便利，他可以添加多种文件，无需指定文件名。</p>
-</li>
-</ul>
-</li>
-</ol>
-<p>注意：有的时候他会对你上传的图片进行文件头检查，注意多种组合结合使用。</p>
-<p>在上传之后直接用剑蚁进行问价查询，或者远程命令执行即可。</p>
-<h2 id="6-文件截断上传"><a href="#6-文件截断上传" class="headerlink" title="6.文件截断上传"></a>6.文件截断上传</h2><ol>
-<li><p>原理：</p>
-<p>操作系统通常由c语言或汇编语言写成，在这两种语言当中，<code>\0</code>通常用作字符串结尾，故我们在上传文件时，可以修改上传的数据包，在文件名中插入<code>\0</code>,使在操作系统中的文件为我们想要的文件文件类型。</p>
-</li>
-<li><p>使用前提：</p>
-<ul>
-<li>php版本小于5.3.29</li>
-<li>magic_quotes_gpc &#x3D; Off</li>
-</ul>
-</li>
-<li><p>具体方法：</p>
-<p>在上传文件之后，抓包，得到上传的文件的数据包：</p>
-<p><img src="F:\网络安全\图片资料\文件上传00截断截图1.png"></p>
-<p>然后在文件名处，和filename处进行00截断，注意，截断用的是<code>%00</code>，而非是<code>\0</code>。如下图所示：</p>
-<p><img src="F:\网络安全\图片资料\文件上传00截断截图2.png"></p>
-<p>在上传完图片之后便可以，用蚁剑进行连结。</p>
-<p>以上为get形式传参，若改为post传参，文件路径会在下边。会在Centent—Type的上下方，此时我们依旧需要截断，但无法使用%00，因为post传参不会解码，故我们需要先解码，再截断，或者在hex界面将文件路径的最后改为00即可。</p>
-</li>
-</ol>
-<h2 id="7-二次渲染文件上传"><a href="#7-二次渲染文件上传" class="headerlink" title="7.二次渲染文件上传"></a>7.二次渲染文件上传</h2><ol>
-<li><p>原理：在我们上传文件后，网站会对图片进行二次处理（格式、尺寸，保存，删除 要求等），服务器会把里面的内容进行替换更新，处理完成后，根据我们原有的图片生成一个新的图片（标准化）并放到网站对应的标签进行显示。</p>
-</li>
-<li><p>绕过方法：</p>
-<ul>
-<li>配合竞争条件文件上传：击者可以利用条件竞争漏洞在服务器上同时上传多个图片，并在处理第一个上传的图片时修改其属性，使其包含恶意代码。恶意代码将在进行二次渲染时被激活，从而导致系统的安全被破坏。</li>
-<li>配合文件包含漏洞：就是将木马插入图片当中，使其可以被执行。</li>
-</ul>
-</li>
-<li><p>如何判断图片是否被二次处理，处理之后有什么地方是相同的：</p>
-<p>在我们用copy命令制作好一个图片木马之后，上传到服务器之后会展示出来，我们便可以通过图片十六进制查看文件来对比有什么差别。如：</p>
-<p><img src="F:\网络安全\图片资料\二次渲染.png"></p>
-<p>再进行比较，便可以知道我们原本的muma.png文件在哪些地方变化了，哪些地方没有变化，在没有变化的地方将我们的木马复制过去，便可以保证在被二次渲染时不会被过滤，从而达到绕过的目的。</p>
-</li>
-</ol>
-<h2 id="8-竞争条件文件上传"><a href="#8-竞争条件文件上传" class="headerlink" title="8.竞争条件文件上传"></a>8.竞争条件文件上传</h2><p>该漏洞值多线程在没有进行锁操作的情况下或同步同时进行访问同一个共享代码、变量文件，运行的额结果以来不用线程访问数据的顺序。引用别人的列子：</p>
-<p><em>假设两个进程P1和P2共享了变量a。在某一执行时刻，P1更新a为1，在另一时刻，P2更新a为2。因此两个任务竞争地写变量a。在这个例子中，竞争的“失败者”(最后更新的进程）决定了变量a的最终值。多个进程并发访问和操作同一数据且执行结果与访问的特定顺序有关，称为竞争条件。</em></p>
-<ul>
-<li><p>成因：由于服务器端在处理不同用户的请求时是并发进行处理的，如果对这些并发操作处理不当的话会由于一些时序问题导致一些异常情况的发生；简单来说就是我们上传的代码时在上传之后再进行检测是否包含可疑代码，也就是说，我们的php代码被上传之后，后端会在短时件内把他删除，所以只要我们抢在其删除钱访问代码，便可以成功入侵。或者在其成功进入后端时使其在当前目录下生成一个木马文件也可行。</p>
-</li>
-<li><p>利用方法：在上传木马时，将木马文件写为:</p>
-<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
-	<span class="token variable">$file</span><span class="token operator">=</span><span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"muma.php"</span><span class="token punctuation">,</span><span class="token string double-quoted-string">"w"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token variable">$string</span><span class="token operator">=</span><span class="token string single-quoted-string">'&lt;?php @eval($_POST["test"]); ?>'</span><span class="token punctuation">;</span>
-	<span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token variable">$file</span><span class="token punctuation">,</span><span class="token variable">$string</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">fcolse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  
+  
 
-<p>将我们的木马文件写在当前文件路径当中的muma.php文件当中，然后我们直接访问muma.php文件即可。或者说我们利用bp当中的模块，进行多次数据发送，在发送的途中进行蚁剑连结，成功之后即可。</p>
-</li>
-</ul>
-<h2 id="9-双写后缀绕过"><a href="#9-双写后缀绕过" class="headerlink" title="9.双写后缀绕过"></a>9.双写后缀绕过</h2><p>在部分过滤当中，他会将我们上传文件名中不和法的扩展名替换为空格，通常为替换php，但是只会替换一次，在这种时候我们便可以通过此种方法来进行绕过。即将后缀写为<code>pphphp</code>，在将第一个php替换为空格时，第二个空格也会因此出现。便可以成功绕过。</p>
-<h2 id="10-做题疑点记录"><a href="#10-做题疑点记录" class="headerlink" title="10.做题疑点记录"></a>10.做题疑点记录</h2><ol>
-<li><p>23&#x2F;6&#x2F;13：在写nssctf中的Ez_upload题目时，遇到了没法解决的现象，在上传一个gif图片之后显示：</p>
-<p><img src="F:\网络安全\图片资料\做题疑点记录1.png"></p>
-<p>期初我以为是我上传的图片类型不合适，于是又尝试了其他两种图片类型，结果都是显示这个状态；于是我又以为文件上传的路径会在返回包里，我又拿bp抓包查看，但在抓包之后依旧未查看到文件路径：</p>
-<p><img src="F:\网络安全\图片资料\做题记录2.png"></p>
-<p>于是找了题解，题解解释说需将Centent—Cype改成image&#x2F;jpeg，并解释其必须按为此种类型图片才可上传，在尝试过后，果然可行，于是收集了如下常见图片类型的文件头：</p>
-<ul>
-<li>JPEG（jpg&#x2F;jpeg）：Content-Type 为 image&#x2F;jpeg。</li>
-<li>PNG（png）：Content-Type 为 image&#x2F;png。</li>
-<li>GIF（gif）：Content-Type 为 image&#x2F;gif。</li>
-<li>BMP（bmp）：Content-Type 为 image&#x2F;bmp 或者 image&#x2F;x-windows-bmp。</li>
-<li>TIFF（tif&#x2F;tiff）：Content-Type 为 image&#x2F;tiff 或者 image&#x2F;x-tiff。</li>
-<li>WebP（webp）：Content-Type 为 image&#x2F;webp。</li>
-</ul>
-<p>便于在之后的写题中测试。</p>
-</li>
-</ol>
+  
+  
 
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/06/19/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
+  
+  
 
-<div class="post">
-    <a href="/2023/06/19/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%88XSS%EF%BC%89%E6%94%BB%E5%87%BB/">
-        <h2 class="post-title"></h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/6/19
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="跨站脚本攻击（XSS）攻击"><a href="#跨站脚本攻击（XSS）攻击" class="headerlink" title="跨站脚本攻击（XSS）攻击"></a>跨站脚本攻击（XSS）攻击</h1><p>跨站脚本攻击（Cross-site scripting，简称 XSS）是一种常见的网络攻击方式，攻击者利用网站存在漏洞，将恶意代码注入到网页中，使得用户在访问受攻击的页面时，浏览器会执行这些恶意代码，从而导致信息泄漏或者账号被盗用等危险后果。</p>
-<ul>
-<li>产生层面：通常在前端界面，JavaScript代码可以实现的地方</li>
-</ul>
-<p>攻击分类：</p>
-<ul>
-<li>来自内部的攻击：是在Web应用程序内部产生的，攻击者在Web应用程序的输入验证过程中注入恶意代码，并且没有被充分地过滤或者删除，从而让恶意代码被传递到用户的浏览器执行。攻击者可以通过和正常用户一样、合法地提交表单、留言等途径实现注入攻击。</li>
-<li>来自外部的攻击：指攻击者通过Web应用程序暴露在互联网上的接口，向Web应用程序注入恶意代码，以使恶意代码能够在用户端运行。如：发送有恶意代码的电子邮件或链接来诱骗客户登录；或在有上传点的地方上传恶意文件，在用户下载时执行。</li>
-</ul>
-<p>xss主要分三类：反射型xss、存储型xss、DOM型xss。</p>
-<p>常见的XSS攻击用的代码：</p>
-<ul>
-<li><pre><code class="html">&lt;script&gt;alert(document.cookie)&lt;/script&gt;  //弹出当前页面cookie值
+  
+  
+  
+</header>
 
-&lt;script&gt;alert(&#39;hello，gaga!&#39;);&lt;/script&gt; //经典语句，哈哈！
+    <!-- 首页 -->
 
-&gt;&quot;&#39;&gt;&lt;img src=&quot;javascript.:alert(&#39;XSS&#39;)&quot;&gt;
-
-&gt;&quot;&#39;&gt;&lt;script&gt;alert(&#39;XSS&#39;)&lt;/script&gt;
-
-&lt;table background=&#39;javascript.:alert(([code])&#39;&gt;&lt;/table&gt;
-
-&lt;object type=text/html data=&#39;javascript.:alert(([code]);&#39;&gt;&lt;/object&gt;
-
-&quot;+alert(&#39;XSS&#39;)+&quot;
-
-&#39;&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;
-
-=&#39;&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;
-<pre class="line-numbers language-none"><code class="language-none">
-
-
-## XSS的分类
-###  1.反射型XSS
-
-攻击者在诱骗用户点击包含恶意代码的链接时，通过Web应用程序反射（Reflect）这些恶意代码，并将其发送给成功发起请求的用户，再由用户的浏览器解析执行，造成危害。
-
-1. 出现场景：
-
-   通常不会出现在服务端，会出现在网页搜索页面，需要构造植入的web界面。
-
-2. 攻击方式：
-
-   - 欺骗用户点击恶意链接。如我们构造一个网址&#96;http:&#x2F;&#x2F;example.com&#x2F;video?id&#x3D;&lt;script&gt;alert(‘You are hacked’)&lt;&#x2F;script&gt;&#96;，并欺骗用户为视频网址，待用户点击之后便会被攻击。
-   
-   - 在注入漏洞的表单处提交恶意代码。如攻击者在用户登录、搜索、评论等地方写入此段代码&#96;search&#x3D;&lt;script&gt;alert(“You are hacked”)&lt;&#x2F;script&gt;&#96;,提交之后便会被攻击
-   
-3. 判断是否存在反射型xss漏洞并利用
-
-   查看url是否有用get传参传入值，并显示，若有，便可尝试构造代码进行攻击。
-
-###  2.存储型XSS
-
-存储型XSS（也叫持久性XSS）攻击是一种更危险的XSS攻击方式，攻击者将恶意脚本注入到Web应用程序的数据库中，当用户访问受到攻击的页面时，恶意脚本会从数据库中恢复并执行，从而实现恶意操作。存储型XSS攻击通常会导致用户信息被窃取、会话劫持甚至网站被完全控制的风险。
-
-1. 出现场景：
-
-   通常出现在博客评论，用户评论，留言板，聊天室，HTML 电子邮件，wikis等有储存功能的界面当中。当过滤不严格时，攻击者可以构造代码使用户在访问页面时，丢失自己的隐私信息。
-
-2. 攻击方式：
-
-   向数据库传入恶意代码，使用户在每次访问界面时，丢失自己的隐私信息。
-
-3. 判断是否存在存储型XSS漏洞：
-
-   在评论界面随意插入一段恶意代码&#96;&lt;img src&#x3D;&quot;1&quot; onerror&#x3D;&quot;alert(&#x2F;xss&#x2F;)&quot;&#x2F;&gt;&#96;，如果注入后重新刷新发现直接回显注入的东西，说明是存储型xss。
-
-###  3.DOM型XSS
-
-通过修改页面的DOM节点形成的XSS，称之为DOM Based XSS。
-
-DOM:
-
-简单来说DOM文档就是一份XML文档，当有了DOM标准之后，DOM便将前端html代码化为一个树状结构，方便程序和脚本能够轻松的动态访问和更新这个树状结构的内容、结构以及样式，且不需要经过服务端，所以DOM型xss在js前端自己就可以完成数据的输入输出，不与服务器产生交互。
-
-![](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;9bb1631414374b5bad883e949c8259ad.png?x-oss-process&#x3D;image)
-
-所以说DOM型xss可以在前端通过js渲染来完成数据的交互，达到插入数据造成xss脚本攻击，且不经过服务器，所以即使抓包无无法抓取到这里的流量，而反射性与存储型xss需要与服务器交互，这便是三者的区别。
-
-1. 利用原理：
-
-   客户端JavaScript可以访问浏览器的DOM文本对象模型是利用的前提，当确认客户端代码中有DOM型XSS漏洞时，并且能诱使(钓鱼)一名用户访问自己构造的URL，就说明可以在受害者的客户端注入恶意脚本。
-
-2. 攻击方式：
-
-   与反射型类似。
-
-3. 判断是否有DOM型XSS漏洞：
-
-   与上边两种判断方式大致相似。
-
-   详情见：[快速入门xss 判断网站是否存在xss漏洞-腾讯云开发者社区-腾讯云 (tencent.com)](https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1352463)
-
-##  做题记录
-
-###  xss-laba的level3：
-
-在此关当中，我们输入的&#96;&lt;&gt;&#96;、&#96;&#x2F;&#96;被转义为其他符号了，导致我们无法执行JavaScript代码：
-
-![](F:\网络安全\图片资料\xss-labs level3.png)故我们需要找其他执行JavaScript代码的方式，除了用&lt;script&gt;&lt;&#x2F;script&gt;标签之外，我们还可以用超链接的型式，形式为   &#96;某某参数&#x3D;&quot;javascript:所要执行得代码语句&quot;，&#96;,通过这种形式，在此处，我们尝试构造两种特殊事件，才能执行Javascript代码
-
-1. **onmouseout事件**：指鼠标移出某个指点的HTML标签后，会出现什么效果。
-2. **onclick事件**：鼠标点击事件
-
-主要事件表：
-
- ![](F:\网络安全\图片资料\xss-主要事件.webp)
-
-构造处此语句：&#96;&#39; onclick&#x3D;Javascript:alert(&#39;1&#39;)  &#x2F;&#x2F;&#96;,接入输入框中，在点击上传之后，再点击输入框即可完成攻击。
-
-**原理**：
-
-在查看源码之后，我们发现他用了&#96;.htmlspecialchars&#96;函数，如下图所示：
-
-&#96;&#96;&#96;php+HTML
-&lt;h1 align&#x3D;center&gt;欢迎来到level3&lt;&#x2F;h1&gt;
-&lt;?php 
-ini_set(&quot;display_errors&quot;, 0);
-$str &#x3D; $_GET[&quot;keyword&quot;];
-echo &quot;&lt;h2 align&#x3D;center&gt;没有找到和&quot;.htmlspecialchars($str).&quot;相关的结果.&lt;&#x2F;h2&gt;&quot;.&quot;&lt;center&gt;
-&lt;form action&#x3D;level3.php method&#x3D;GET&gt;
-&lt;input name&#x3D;keyword  value&#x3D;&#39;&quot;.htmlspecialchars($str).&quot;&#39;&gt;	
-&lt;input type&#x3D;submit name&#x3D;submit value&#x3D;搜索 &#x2F;&gt;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</code></pre>
-</li>
-</ul>
-<p>将我们输入值中的特殊符号进行转义，导致其不具有原本的含义，在此时常用的标签代码构造便无法使用，于是我们要尝试其他方法构造代码，将JavaScript代码嵌入到HTML标记中的事件处理程序属性中，常见事件如上表所示；我们选择鼠标单击事件，便于控制。</p>
-<p>当我们在输入框中输入：<code>&#39; onclick=Javascript:alert(&#39;1&#39;)  //</code>代码时，在此段代码后边的东西会被注释，在我们点击输入框时就会实现攻击。</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/06/19/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%88XSS%EF%BC%89%E6%94%BB%E5%87%BB/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/06/19/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title"></h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/6/19
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="RCE学习笔记"><a href="#RCE学习笔记" class="headerlink" title="RCE学习笔记"></a>RCE学习笔记</h1><ul>
-<li>rce漏洞：远程命令&#x2F;代码执行漏洞，简称RCE漏洞，可以让攻击者直接向后台服务器远程注入操作系统命令或者代码，从而控制后台系统。RCE分为远程命令执行ping和远程代码执行evel。</li>
-<li>产生原因：服务器没有针对执行函数做过滤，导致在没有指定绝对路径的情况下就执行命令。</li>
-</ul>
-<p>此处就需要我们了解一个命令，ping命令，此命令用于测试本机与网络上的另一主机是否可以联通，如果ping不通，则表示无法链接。</p>
-<h2 id="Linux常见的命令："><a href="#Linux常见的命令：" class="headerlink" title="Linux常见的命令："></a>Linux常见的命令：</h2><ol>
-<li>文件管理：<ul>
-<li>ls命令：它的作用是列出当前工作目录中的文件和目录。后面可以接其他字母来增加其查询限制：（-a 显示所有文件及目录，-m 以逗号为间隔，水平显示文件信息， -l 显示文件详细属性信息）</li>
-<li>find命令：它的作用是查找匹配给定条件的文件和目录。用法为：find &#x2F;文件路径 -name “文件名” （或find &#x2F; 文件路径 -name “*.扩展名”,<code>find -type f -print</code>:输出当前文件夹中所有文件）</li>
-<li>dir命令：命令可以列出当前目录下的文件和子目录，与 <code>ls</code> 命令的默认行为相同。但是，与 <code>ls</code> 命令不同的是，<code>dir</code> 命令默认不显示隐藏文件。（</li>
-<li>vdir命令：列出当前目录下的文件和子目录。与 <code>ls</code> 命令的 <code>-l</code> 参数相同，<code>vdir</code> 命令会显示文件和目录的详细信息，包括文件名、大小、权限等。（</li>
-<li>echo * 命令：可以列出当前目录下的所有文件和子目录的文件名，与 <code>ls</code> 命令的默认行为相同。（</li>
-</ul>
-</li>
-<li>文件查看：<ul>
-<li>cat：将某文件的内容全部输出到屏幕上。（当以特殊符号为文件名时，如“-”，“\“，等，需要用&#x2F;显示其路径：<code>./-</code>，或用双引号括起来：<code>&quot;-&quot;</code>)</li>
-<li>tail：用于显示文件尾部内容，默认显示后十行（tail -n &lt;行数&gt; filename  显示文件尾部的n行内容；<strong>tail -c &lt;字节数&gt;  filename</strong>   显示文件尾部的n个字节内容；）</li>
-<li>more：该指令会一页一页的显示读取的文件内容，按空格键会向下翻页，按d键会向上翻页（more file1：查看文件1的内容；more -num file2：察看文件2的内容，一次显示num行；more +num file3：显示file3的内容从第num行开始显示）。</li>
-<li>less：可以向后或者向前查看文本（less file1：查看file1文件内容，less -m file1：查看file1文件，并在底部显示百分比）</li>
-<li>head：显示文件开头的内容，默认显示头十行内容（head -n &lt;行数&gt;  filename   显示文件内容的前n行；head  -c &lt;字节&gt;  filename   显示文件内容的前n个字节）</li>
-</ul>
-</li>
-<li>其他：<ul>
-<li>ifconfig ： 查看自身IP。</li>
-<li>uname： 显示部分重要信息，如内核名称、主机名、内核版本号、处理器类型之类的信息 。（uname -a：显示所有关键信息。）</li>
-</ul>
-</li>
-</ol>
-<p>命令拼接符：</p>
-<pre class="line-numbers language-none"><code class="language-none">command1 ; command2 : 先执行command1后执行comnand2
-command1 &amp; command2 : 先执行comnand2后执行command1
-command1 &amp;&amp; command2 : 先执行command1后执行comnand2
-command1 | command2 : 只执行command2
-command1 || command2 : command1执行失败， 再执行command2(若command1执行成功，就不再执行command2)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>常见的linux测试命令<br> ls 列出目录<br> ls &#x2F; 列出根目录<br> cat 文件名 显示文件内容<br> cat &#x2F;etc&#x2F;passwd 显示用户信息文件</p>
-<p>关于其他特殊符号的详细用法见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45970619/article/details/106975847"> Linux特殊符号使用及含义_”Blue”的博客-CSDN博客</a></p>
-<h2 id="1-php外部命令执行"><a href="#1-php外部命令执行" class="headerlink" title="1.php外部命令执行"></a>1.php外部命令执行</h2><p>php外部命令执行主要通过三个函数system，exec，passthru这三个函数。</p>
-<ol>
-<li><p>system函数：用于执行外部程序，用法通常为system(‘所需执行的命令’)，该函数输出并返回最后一行shell结果。（shell：Shell是一个命令行解释器，可以让我们用命令来控制计算机操作系统。它将我们输入的命令翻译成计算机能够理解的指令，并将结果返回给我们，简单说就是命令执行结果。），常见用法如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">system (string $command [, int &amp;$return_var ]): string|false
-其中，参数 $command 表示要执行的系统命令，参数 $return_var 是一个引用参数，用于返回命令的返回值。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-</li>
-<li><p>exec函数：此函数用于执行一个外部程序，其用法大致与system相同，不过其不会输出执行结果，若要使其输出结果，则需在php命令中加上echo。常见用法如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">exec (string $command [, array &amp;$output [, int &amp;$return_var ]]): string|false
-其中，参数 $command 表示要执行的系统命令，参数 $output 是一个引用参数，用于返回命令的输出结果，参数 $return_var 是一个引用参数，用于返回命令的返回值。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-</li>
-<li><p>passthru函数：<code>passthru()</code> 函数是 PHP 中的一个系统函数，它用于执行外部命令并直接输出结果，类似于在终端中输入命令并输出结果。常见格式如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">passthru (string $command [, int &amp;$return_var ]): void
-其中，参数 $command 表示要执行的系统命令，参数 $return_var 是一个引用参数，用于返回命令的返回值。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-</li>
-<li><p>eval()函数： <code>eval()</code> 函数是 PHP 中非常危险的函数，它可以执行字符串形式的 PHP 代码。由于 <code>eval()</code> 函数的存在，攻击者可以通过注入可执行代码的方式来控制应用程序。</p>
-<pre class="line-numbers language-none"><code class="language-none">eval (string $code_str): mixed
-其中，$code_str 参数是一个包含可执行代码的字符串。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-</li>
-<li><p>file_get_contents()函数：<code>file_get_contents()</code> 函数用于读取文件的内容，如果使用 <code>file_get_contents()</code> 函数读取了用户输入数据，那么攻击者可以在文件中注入代码并通过应用程序执行。常见使用方法如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">file_get_contents(string $filename [, bool $use_include_path &#x3D; FALSE [, resource $context [, int $offset &#x3D; 0 [, int $maxlen &#x3D; NULL ]]]]): string
-
-其中，$filename 是要读取的文件名或 URL，也可以是为协议。如果 $use_include_path 参数为 true，则还可从 PHP include_path 中搜索文件。 $context 参数是一个可选的资源句柄，用于在读取文件时指定上下文信息。 $offset 参数指定从文件的开始位置的字节数开始读取，而 $maxlen 参数限制要读取的最大字节数。如果省略 $maxlen 参数，则将读取整个文件。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-</li>
-<li><p>assert函数：assert ( mixed $assertion [, Throwable $exception ] ) : boolassert() 会检查指定的 assertion 并在结果为 FALSE 时采取适当的行动。判断一个表达式是否成立。返回true or false。如果 assertion 是字符串，它将会被 assert() 当做 PHP 代码来执行。</p>
-<p>assert与eval的区别：assert是直接将字符串当代码执行；eval是把合法的php代码进行执行</p>
-</li>
-<li><p>echo函数：<code>echo ls | sh</code> 通过这样的句子可以执行函数，还可以执行被base64编码，hex编码之后的命令。</p>
-</li>
-<li><p>include函数：</p>
-</li>
-<li><p>其他：</p>
-<ul>
-<li>&#96;&#96;反引号：在php代码当中，反引号跟eval作用大致相同，都可以执行函数，同样也需要echo才能将结果输出。</li>
-<li><code>&#123;&#125;</code>花括号：{command,<code>所要执行的命令</code>}，通过这个方法，我们同样可以执行命令。</li>
-</ul>
-</li>
-</ol>
-<h2 id="2-无过滤"><a href="#2-无过滤" class="headerlink" title="2.无过滤"></a>2.无过滤</h2><p>此类型的命令执行漏洞，并没有过滤，直接按其所显示的php代码进行操作便可。</p>
-<h2 id="3-eval执行"><a href="#3-eval执行" class="headerlink" title="3.eval执行"></a>3.eval执行</h2><p>此类题型中php程序通过eval函数来执行某语句，通常为传递的参数，故我们只需利用上述三个命令执行函数来直接执行命令即可。</p>
-<h2 id="4-文件包含"><a href="#4-文件包含" class="headerlink" title="4.文件包含"></a>4.文件包含</h2><p>文件包含：是指编译器进行预处理时复制指定的文件内容代替源文件中预处理命令的过程，一个源文件可以将另一个源文件的全部内容包含进来。初衷是为了减少程序代码的冗余。文件包含漏洞原理<br>可以试想一下，开发人员如果每一个代码文件中都要使用到同一段代码，非常繁琐，所以通常会将用到的代码转换成一个文件，让每一个用到它的代码都包含在里面，而无需再次编写。这种调用文件的过程一般被称为包含文件。但由于这种灵活性，从而导致客户端可以调用任意恶意文件，从而造成文件包含漏洞。文件 PHP 中的文件包含分为本地包含和远程包含(allow_url_include &#x3D; on)</p>
-<ol>
-<li>远程文件包含是一种常见的Web应用程序漏洞，发生在包含文件时。它指的是攻击者利用Web应用程序中的代码缺陷，将恶意脚本文件从远程服务器加载到受影响的Web页面中。攻击者通过修改包含文件的URL参数来实现这种攻击。当应用程序执行包含操作时，由于未对输入进行充分验证或过滤，因此可能导致恶意脚本被加载并执行，从而允许攻击者进行各种恶意活动，如窃取用户数据、破坏网站等。</li>
-</ol>
-<p>通常在文件包含中的常用函数有以下四种：</p>
-<ul>
-<li>require():找不到被包含的文件会产生致命错误，并停止脚本运行</li>
-<li>include():找不到被包含的文件只会产生警告，脚本继续执行</li>
-<li>require_once()与require()类似:唯一的区别是如果该文件的代码已经被包含，则不会再次包含</li>
-<li>include_once()与include()类似:唯一的区别是如果该文件的代码已经被包含，则不会再次包含</li>
-</ul>
-<p>在源代码中有这几个函数时，我们便可通过php:&#x2F;&#x2F;input伪协议，再用post传参传入<?php phpinfo(); ?>这段带码，来看其是否可用，对于PHP伪协议在下面有详细的介绍。</p>
-<p>在某些特殊情况时，他存在上述的几个函数，但却无法使用伪协议，在这时我们要判断他是被过滤还是其他情况，如果是被过滤。根据情况绕过即可，但如果不是被过滤，却依旧无法使用，那我们就需要尝试其他方法，接下来将介绍部分方法（补充中）：</p>
-<ol>
-<li><p>利用日志传入木马法：当我们输入默认日志地址之后，若他显示出日志文件时，则表示这种方法可以使用，以下是一些常见的日志文件的默认地址：</p>
-<ul>
-<li>apache+Linux日志默认路径：&#x2F;etc&#x2F;httpd&#x2F;logs&#x2F;access_log；或&#x2F;var&#x2F;log&#x2F;httpd&#x2F;access_log</li>
-<li>nginx 日志文件：&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</li>
-</ul>
-<p>再利用bp抓包在User-Agent中传入一句话木马，再通过蚁剑进行连接具体操作如下图：</p>
-<p>![](F:\网络安全\图片资料\屏幕截图 2023-06-04 193006.png)</p>
-<p>便可以连接。</p>
-</li>
-</ol>
-<h2 id="5-命令行过滤"><a href="#5-命令行过滤" class="headerlink" title="5.命令行过滤"></a>5.命令行过滤</h2><ol>
-<li><p>关键字过滤：如ls，cat等关键字被过滤，导致我们无法执行命令。</p>
-<p>解决方法：</p>
-<ul>
-<li>代替法：用其他意义相同的命令来代替此命令；如<code>cat</code>{查看命令}可以用:<code>less</code>{逐页查看}、<code>head</code>{查看文件开头几行}、<code>grep</code>{从文件中查找到某个关键字，并将该行显示出来}。具体使用方法见：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145366493">Linux常用文件查看命令 - 知乎 (zhihu.com)</a></li>
-</ul>
-</li>
-</ol>
-<ul>
-<li>拼接法：将命令的字母拆分开，然后将其赋给几个变量，最后在拼接起来；如cat可写为：a&#x3D;c；b&#x3D;at；$a$b flag。这样就构造好了命令执行语句。<ul>
-<li>使用空变量$*和$@，$x,${x}绕过：在命令语句中间加入这些空变量，如：ca$*t flag;这样便可构造好语句。</li>
-</ul>
-</li>
-<li>编码绕过：将被过滤的关键字进行base64，URL编码，hex编码，在填入命令语句当中，便也可执行；如：cat的base64编码为Y2F0，Y2F0 falg也是一个命令语句。例如：<code>cat flag</code>的base64编码时<code>Y2F0IGZsYWc=</code>，我们便可以构造这样的命令执行式：<code>echo &quot;Y2F0IGZsYWc=&quot; | base64 -d | sh</code> 来执行flag文件查询命令。hex编码可以利用Linux的xxd命令解码。<ul>
-<li>Oct编码绕过：</li>
-</ul>
-</li>
-</ul>
-<ol start="2">
-<li><p>空格过滤：在命令构造当中不能产生空格。</p>
-<p>解决方法：</p>
-<ul>
-<li>代替法：<code>&lt; </code>、<code>&lt;&gt;</code>、<code>%09</code>(tab键)、<code>%20</code>、<code>$IFS$9</code>、<code>$IFS$1</code>、<code>$&#123;IFS&#125;</code>、<code>$IFS</code>等；上述符号都与空格含有相同，可用其将空格替换。 </li>
-<li>花括号法：<code>&#123;cat,flag&#125;</code>像这构造样执行命令我们便不需要使用空格。</li>
-</ul>
-</li>
-<li><p>过滤目录分割符<code>/</code>，导致我们无法访问目标文件。</p>
-<p>解决方法：</p>
-<ul>
-<li>cd命令：利用cd命令进入目标文件所在文件夹，在用cat进行访问。如：ping：127.0.0.1；cd 目标文件夹；cat 目标文件。这样，便可绕过过滤。</li>
-</ul>
-</li>
-<li><p>过滤<code>;</code>号，导致无法执行命令。</p>
-<p>解决方法：</p>
-<ul>
-<li>替换法： <code>|</code>  &#x2F;&#x2F;只执行后面那条命令、 <code> ||</code>  &#x2F;&#x2F;只执行前面那条命令、 <code> &amp;</code>  &#x2F;&#x2F;两条命令都会执行、<code>  &amp;&amp;</code>  &#x2F;&#x2F;两条命令都会执行、<code> %0a</code>      &#x2F;&#x2F;换行符、<code> %0d </code>   &#x2F;&#x2F;回车符号，通过与其能达到相同作用的符号进行连接，然后便可执行，同样的，如果是其他符号被过滤，同样可以使用此类方法。</li>
-</ul>
-</li>
-<li><p>输入长度限制：当我们输入命令很长，单输入长度收到限制，导致无法完整输入命令。</p>
-<p>解决方法：</p>
-<ul>
-<li>换行符：在Linux中<code>\</code>表示换行。</li>
-</ul>
-</li>
-</ol>
-<p>总之，过滤时不会只过滤一种，会多种符号一起过滤，我们需要找其中未被过滤的，并结合绕过方法，来进行绕过。</p>
-<h2 id="6-php伪协议"><a href="#6-php伪协议" class="headerlink" title="6.php伪协议"></a>6.php伪协议</h2><p>PHP 伪协议是一种特殊的 URI 方案，用于让 PHP 解释器通过 URL 参数来执行代码，从而简化编程过程和提高效率。 PHP 伪协议的基本格式是：</p>
-<pre class="line-numbers language-none"><code class="language-none">protocol:expression<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>其中，<code>protocol</code> 是伪协议名称，<code>expression</code> 是需要执行的 PHP 代码或表达式。</p>
-<ul>
-<li><p>PHP 伪协议支持多种操作，包括：</p>
-<ol>
-<li><p><code>php://stdin</code>、<code>php://stderr</code>、<code>php://stdout</code>：这些伪协议可以让 PHP 解释器从标准输入、标准错误或标准输出读取或写入数据。</p>
-</li>
-<li><p><code>php://filter</code>：该伪协议提供了一种过滤数据流的机制，可以通过管道方式将指定的处理器函数应用于数据流中的数据，这里的这个数据流可以是任何可读取或可写入的流对象，包括文件、套接字连接、cURL 返回的资源等等</p>
-<p>详细用法：</p>
-<pre class="line-numbers language-none"><code class="language-none">基本语法：php:&#x2F;&#x2F;filter&#x2F;filtername&#x2F;resource&#x3D;urlencoded_data
-其中，filtername 代表过滤器的名称，在该伪协议中，可以使用的过滤器名称包括：
-
-1.convert.base64-encode：将数据进行 base64 编码；
-2.convert.base64-decode：将 base64 编码的数据进行解码；
-3.convert.quoted-printable-encode：将数据进行 Quoted-Printable 编码；
-4.convert.quoted-printable-decode：将 Quoted-Printable 编码的数据进行解码；
-5.string.rot13：将数据进行 ROT13 加密；
-6.string.toupper：将数据中的字母转换为大写字母；
-7.string.tolower：将数据中的字母转换为小写字母；
-8.zlib.deflate：将数据压缩为 zlib 格式；
-9.zlib.inflate：将压缩过的数据进行解压缩。
-
-resource 参数代表要进行过滤的资源，可以是文件名、网络连接或字符串等数据源。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p><code>php://output</code>：这个伪协议会将输出流缓存到内存中，直到脚本执行完成才输出结果。</p>
-</li>
-<li><p><code>php://input</code>： 是 PHP 中的一种输入流，用于从 HTTP 请求中读取原始的 POST 数据。当使用 POST 方法提交表单数据时，PHP 默认将 POST 数据存储在 <code>php://input</code> 输入流中，可以通过该输入流读取和处理 POST 数据。在某些函数的帮助之下我们可以将输入的php代码执行，达到远程命令执行。（<strong>存疑：为什么必须使用其协议进行读取，都是通过函数来执行，为什么不能直接读取post数据流中的数据进行执行，不是也能达到同样的效果吗</strong>）</p>
-<p>常见可帮助执行的函数：eval() 函数、assert() 函数</p>
-</li>
-</ol>
-</li>
-<li><p>使用条件：不需要开启allow_url_fopen，仅php:&#x2F;&#x2F;input、 php:&#x2F;&#x2F;stdin、 php:&#x2F;&#x2F;memory 和 php:&#x2F;&#x2F;temp 需要开启allow_url_include。其余的双off也可使用</p>
-</li>
-</ul>
-<p>除了上述伪协议之外，PHP 还支持其他一些伪协议，包括：</p>
-<ul>
-<li><p><code>data://</code>：</p>
-<ol>
-<li><p>作用：数据流封装器，以传递相应格式的数据。可以让用户来控制输入流，当它与包含函数结合时，用户输入的data:&#x2F;&#x2F;流会被当作php文件执行。</p>
-<p>扩展：包含函数是一种特殊的函数，用于将外部文件或数据包含到当前 PHP 脚本中，以便在脚本中使用它们，PHP 中常用的几个包含函数有：<code>include()</code>、<code>require()</code>、<code>include_once()</code> 和 <code>require_once()</code>。它们的作用类似，主要区别在于错误处理机制、文件是否能重复包含等方面。</p>
-</li>
-<li><p>用法：如下</p>
-<pre class="line-numbers language-none"><code class="language-none">语法格式：
-data:[mediatype][;base64],data
-其中，mediatype 指定了数据的 MIME 类型，可以是 text&#x2F;plain、application&#x2F;octet-stream 等任意 MIME 类型。如果不指定该参数，数据默认为 text&#x2F;plain 类型。
-
-如果要对数据进行 Base64 编码，则需要在 mediatype 后添加 ;base64 参数，以表示数据需要进行 Base64 编码。如果数据不需要进行 Base64 编码，则不需要添加该参数。
-
-data 参数指定了要进行处理的数据内容，可以是文本、二进制数据等任何类型的数据。当数据为文本类型时，需要使用 URL 编码对其进行编码。
-如：
-1、data:&#x2F;&#x2F;text&#x2F;plain,
-http:&#x2F;&#x2F;127.0.0.1&#x2F;include.php?file&#x3D;data:&#x2F;&#x2F;text&#x2F;plain,&lt;?php%20phpinfo();?&gt;
- 
-2、data:&#x2F;&#x2F;text&#x2F;plain;base64,a   “将a数据进行编码”
-http:&#x2F;&#x2F;127.0.0.1&#x2F;include.php?file&#x3D;data:&#x2F;&#x2F;text&#x2F;plain;base64,PD9waHAgcGhwaW5mbygpOz8%2b
-&lt;?php
-&#x2F;&#x2F; 打印 &quot;I love PHP&quot;
-echo  file_get_contents ( &#39;data:&#x2F;&#x2F;text&#x2F;plain;base64,SSBsb3ZlIFBIUAo&#x3D;&#39; );
-?&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>通过这样，我们可以在上传时混入php命令，再在php命令中加入命令执行函数，我们就可以达到远程命令执行的目的。</p>
-</li>
-<li><p>使用条件：llow_url_fopen <code>[on/off]</code>，allow_url_include  <code>[on/off]</code>。双off也可以使用</p>
-</li>
-</ol>
-</li>
-<li><p><code>glob://</code>：</p>
-<ol>
-<li><p>作用：是 PHP 中的一种伪协议，用于搜索符合指定模式的文件路径。它可以与其它协议嵌套使用，以获取特定目录下的符合指定模式的所有文件。</p>
-</li>
-<li><p>用法：具体使用方法如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">glob:&#x2F;&#x2F;[directory_path&#x2F;[file_pattern]]
-其中，directory_path 可选，表示需要搜索的目录路径，默认为当前脚本执行的目录。file_pattern 必选，表示要搜索的文件模式，可以是通配符 *、?、[] 等。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>扩展：通配符是一种用于表示文件名、路径、字符串等模糊匹配的符号，包括星号（<code>*</code>）和问号（<code>?</code>）。星号（<code>*</code>）表示匹配任意个字符（包括零个字符），问号（<code>?</code>）表示匹配单个字符</p>
-</li>
-</ol>
-</li>
-<li><p>zip:&#x2F;&#x2F;, bzip2:&#x2F;&#x2F;, zlib:&#x2F;&#x2F;协议：</p>
-<ol>
-<li>作用：此三类均属于压缩流，可以访问压缩文件当中的子文件，并且无需指定文件后缀。但需注意，无需指定文件后缀并不代表任何后缀的压缩文件都可用zip:&#x2F;&#x2F;伪协议访问，访问压缩文件需要使用对应的压缩格式和相关的协议。如对于使用 Gzip（<code>.gz</code>）压缩的文件，应该使用 <code>compress.zlib://</code> 协议来进行访问，对于使用 Bzip2（<code>.bz2</code>）压缩的文件，则应该使用 <code>compress.bzip2://</code> 协议访问。</li>
-<li>使用方法：[伪协议]+[压缩文件在系统中路径] <code>#</code> [目标文件在压缩文件当中的路径]。此处需特别注意，压缩文件路径于目标文件路径需以<code>#</code>隔开。</li>
-<li>使用条件：allow_url_fopen <code>[on/off]</code>，allow_url_include  <code>[on/off]</code>。双off也可以使用</li>
-</ol>
-</li>
-<li><p><code>file:// </code>伪协议：</p>
-<ol>
-<li>作用：用于访问本地文件系统，这个本地指的是运行 PHP 代码的服务器所在机器的文件系统。也就是说，使用 <code>file://</code> 伪协议可以访问服务器上的任意本地文件，包括硬盘、文件夹、甚至虚拟文件系统，例如 <code>/proc</code> 和 <code>/sys</code> 等目录。我们可以通过此伪协议来直接访问服务器上的文件。</li>
-<li>用法：file:&#x2F;&#x2F;+[文件的绝对路径和文件名];</li>
-<li>使用条件：allow_url_fopen <code>[on/off]</code>，allow_url_include  <code>[on/off]</code>。双off也可以使用。</li>
-</ol>
-</li>
-</ul>
-<h2 id="7-常见过大量滤绕过方法（未学，之后补）"><a href="#7-常见过大量滤绕过方法（未学，之后补）" class="headerlink" title="7.常见过大量滤绕过方法（未学，之后补）"></a>7.常见过大量滤绕过方法（未学，之后补）</h2><p>当我们输入的数据收到大量过滤时，如nssctf上的ez_rce题目中，题目php源码如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">&lt;?php
-## 放弃把，小伙子，你真的不会RCE,何必在此纠结呢？？？？？？？？？？？？
-if(isset($_GET[&#39;code&#39;]))&#123;
-    $code&#x3D;$_GET[&#39;code&#39;];
-    if (!preg_match(&#39;&#x2F;sys|pas|read|file|ls|cat|tac|head|tail|more|less|php|base|echo|cp|\$|\*|\+|\^|scan|\.|local|current|chr|crypt|show_source|high|readgzfile|dirname|time|next|all|hex2bin|im|shell&#x2F;i&#39;,$code))&#123;
-        echo &#39;看看你输入的参数！！！不叫样子！！&#39;;echo &#39;&lt;br&gt;&#39;;
-        eval($code);
-    &#125;
-    else&#123;
-        die(&quot;你想干什么？？？？？？？？？&quot;);
-    &#125;
-&#125;
-else&#123;
-    echo &quot;居然都不输入参数，可恶!!!!!!!!!&quot;;
-    show_source(__FILE__);
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>可以发现：<br><code>/sys|pas|read|file|ls|cat|tac|head|tail|more|less|php|base|echo|cp|\$|\*|\+|\^|scan|\.|local|current|chr|crypt|show_source|high|readgzfile|dirname|time|next|all|hex2bin|im|shell/i&#39;</code>，这些数据都被过滤了，现在介绍一种关于这种情况的绕过方式。</p>
-<p>闭合标签反引号执行：对这些过滤的数据检查，发现<code>&lt;&gt;</code>和<code>&#39;&#39;</code>为被过滤，故可使用此类方法。</p>
-<p><em><strong>(无参数rce，之后再补)。</strong></em></p>
-<h2 id="8-常见过滤绕过技巧"><a href="#8-常见过滤绕过技巧" class="headerlink" title="8.常见过滤绕过技巧"></a>8.常见过滤绕过技巧</h2><ol>
-<li><p>thinkphp框架漏洞利用：</p>
-<p>详情见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/yangbz123/article/details/115329314"> ThinkPHP漏洞总结（利用）_thinkphp漏洞利用_bye_X的博客-CSDN博客</a></p>
-</li>
-</ol>
-<p>​     </p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/06/19/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/05/21/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-        <h2 class="post-title"></h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/5/21
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <h1 id="sql注入学习笔记"><a href="#sql注入学习笔记" class="headerlink" title="sql注入学习笔记"></a>sql注入学习笔记</h1><h2 id="1-MySQL注入类型"><a href="#1-MySQL注入类型" class="headerlink" title="1.MySQL注入类型"></a>1.MySQL注入类型</h2><p>可以按照两个分类标准来进行分类，当然常见的就是按照注入方式的不同将其分类为：</p>
-<ol>
-<li><p>联合查询注入：可以明确判断回显位置的情况下使用</p>
-</li>
-<li><p>报错注入：无回显位置，可以有报错输出的情况可以使用</p>
-</li>
-<li><p>布尔盲注：关闭错误回显和数据回显，但是页面会根据我们的输入对错变化。可以使用。</p>
-</li>
-<li><p>时间盲注：无任何形式的回显，但是仅仅对睡眠函数有响应，可以使用时间盲注。</p>
-</li>
-<li><p>堆叠注入：堆叠注入在mysql上不常见，必须要用到mysqli_multi_query()或者PDO，可以用分号分割来执行多个语句，相当于可直连数据库。Mssql则较常见堆叠注入。</p>
-</li>
-</ol>
-<p>根据注入点分类：</p>
-<ol>
-<li>数字型注入</li>
-<li>字符型注入</li>
-<li>搜索型注入</li>
-</ol>
-<p>注意：在判断注入类型时，不要过快判断，首先判断注入点，字符型与整数型，需多次尝试闭合符号，再看其有无回显，无回显排除联合注入，然后看其会不会报错，不会报错排除报错注入，再看其是否会提示你错误（注意：提示错误分很多方式，有的是直接显示，有的是什么也不显示，需自己注意区分），不会排除布尔盲注，最后就只剩基于时间盲注，至于堆叠注入，后面再记录时会详细补充。</p>
-<h2 id="2-联合注入"><a href="#2-联合注入" class="headerlink" title="2.联合注入"></a>2.联合注入</h2><p>SQL注入的一库三表<br>information_schema</p>
-<pre><code>    元数据数据库 (数据库名, 表名, 字段名)
-
-    1.元数据
-
-    2.默认情况下,所有的用户都可以进行访问
-</code></pre>
-<p>结构</p>
-<p>@@datadir  返回数据库所在路径</p>
-<p>information_schema</p>
-<p>schemata<br>schema_name   库名<br>tables<br>table_name    表名<br>able_schema  表所属的库名<br>columns<br> column_name   字段名<br>  table_name       字段所属表名<br>  table_schema  字段所属表所属库的名字</p>
-<p>union联合查询注入注意事项<br>union内部的 select语句必须拥有相同数量的列。列也必须拥有相似的数据类型,结果会去掉重复的记录。当union之前的select语句结果集为空 时，查询结果将由union后的select语句控制。</p>
-<p>用法举例： select username,password from user where id&#x3D;1 union select 字段1，字段2 from 表名 联合查询的字段数需要和主查询一致</p>
-<p>MySQL函数利用<br>        1、常用函数<br>                user()</p>
-<pre><code>            database()当前所在数据库
-
-            version()版本号
-
-            session_user()用户名
-
-            basedir
-
-            datadir
-
-            version_compile_os
-
-    2、连接字符串函数
-            前提：
-
-                    concat(str1 ,str2)
-
-                    concat_ws(separator, str1,str2.....)
-
-                    group_concat(str1 ,str2......)
-</code></pre>
-<p>联合查询注入union<br>利用前提<br>                   页面上有显示位,用于显示我们想要的结果</p>
-<pre><code>               优点：方便、快捷、易于利用
-
-               缺点：需要显示位
-</code></pre>
-<p>联合注入的过程<br>1、判断注入点  {  注意：闭合符号有很多种，当尝试过一种不行时，应尝试其他符号，常见符号如下：’<code> </code>“<code> </code>无符号<code> </code>)<code> </code>‘)<code> </code>“)<code> </code>‘))<code> </code>  }</p>
-<p>2、判断是整型还是字符型</p>
-<p>3、判断查询列数</p>
-<p>4、判断显示位</p>
-<p>5、获取所有数据库名</p>
-<p>6、获取数据库所有表名</p>
-<p>7、获取字段名</p>
-<p>8、获取字段中的数量</p>
-<p>首先是判断其到底是哪一种类型的数据注入。</p>
-<ol>
-<li><p>判断其为字符型注入还是整数型输入时只需将参数与语句用引号括起来，或者拼接字符（通过and拼接两个字符可以判断）；如果报错，则表示为整数型注入，不报错，则表示为字符型注入。</p>
-</li>
-<li><p>运用order by 查询其数据库中表的数量，其使用方法为：</p>
-<pre><code>        <pre class="line-numbers language-中文" data-language="中文"><code class="language-中文">以下是一些常用的sqlmap代码及其含义：
-
-1. 基本参数
-
-- -u，指定要测试的URL地址。
-- --level，指定注入测试的难度，取值范围为1~5，数字越大难度越高。
-- --dbms，指定目标所使用的数据库类型，支持多种数据库类型，例如MySQL、MSSQL、Oracle等。
-- --dbs，列出目标所使用的所有数据库的名称。
-- --tables，列出目标数据库中所有表的名称。
- --columns，列出目标数据库中所有列的名称。
- -p，指定要测试的参数名。
-
-1. 注入方法
-
-- --technique，指定使用的注入技术，包括UNION、Error-based、Blind等。
-- --skip-waf，跳过Web应用程序防火墙（WAF）的检测，尝试进行注入攻击。
- --tamper，指定使用的字符转换技术，旨在绕过WAF和其他防御机制，例如进行URL编码、十六进制编码等。
-
-1. 攻击选项
-
-- --dump，导出整个数据库或数据表中的数据。
-- --dump-all，导出所有数据库、数据表中的数据。
- --dump-format，指定导出数据的格式，包括HTML、CSV、XML、SQL等。
-- --os-shell，尝试在目标服务器上打开一个交互式操作系统Shell。
-
-1. 其他选项
-
-- --batch，自动处理所有提示信息，不需要交互。
-- -v，输出详细的注入信息和调试信息。
-- --users，列出目标数据库中所有用户的信息。
-- --passwords，列出目标数据库用户的密码信息。
-
-需要注意的是，使用sqlmap进行注入攻击时需要严格遵守法律规定，得到合法的授权，避免非法使用。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-        sqlmap详细操作见：https://zhuanlan.zhihu.com/p/397917097的知乎文章。
-</code></pre>
-</li>
-</ol>
-<h2 id="2-报错注入"><a href="#2-报错注入" class="headerlink" title="2.报错注入"></a>2.报错注入</h2><p>报错注入种类：</p>
-<p><strong>1.BigInt数据类型溢出</strong></p>
-<p><strong>2.函数参数格式错误</strong></p>
-<p><strong>3.主键冲突（重复）</strong></p>
-<p>利用报错函数，使其回显；</p>
-<p>其余基本与联合注入相同，当显示信息不完全时，可以用mid函数，mid（字符串，开始字段，结束字段）此函数来截取回显，使其逐步显现出来。或者用limit（回显个数，回显行数）来进行限制回显数量。</p>
-<p>数据类型溢出报错：</p>
-<p>函数参数格式报错函数：</p>
-<p>updatexml(xml_doument,XPath_string,new_value)<br>第一个参数：XML_document是String格式，为XML文档对象的名称，文中为Doc<br>第二个参数：XPath_string (Xpath格式的字符串) ，如果不了解Xpath语法，可以在网上查找教程。<br>第三个参数：new_value，String格式，替换查找到的符合条件的数据</p>
-<p>举个列子：?id&#x3D;1’ updatexml(1,concat(select database()),0)–+<code> </code>这就是报错查询当前所在数据库的语句。</p>
-<p>此函数的回显点在第二位，</p>
-<p>extractvalue（变量，变量）</p>
-<p>此函数的回显位在第二位，</p>
-<p><strong>主键复冲</strong>：</p>
-<p>使用函数：floor() + rand() + group() + count()；</p>
-<p>函数解释：floor() 函数的作用就是返回小于等于括号内该值的最大整数，也就是取整。</p>
-<p>​                     rand()是一个随机函数，通过一个固定的随机数的种子0之后，产生大于等于0小于1的伪随机序列。</p>
-<p>​                   group()返回匹配指定条件的行数。<code>COUNT()</code>即为一种简单的聚合函数，可以配合<code>GROUP BY</code>实现分组并聚合数据。</p>
-<p>​                    group by分组函数，按by后面的条件进行分组。</p>
-<p>​                     </p>
-<h2 id="3-布尔盲注"><a href="#3-布尔盲注" class="headerlink" title="3.布尔盲注"></a>3.布尔盲注</h2><p>布尔盲注使用函数（括号中为其参数类型）：</p>
-<p>ascii（单个字符）：将查询到的结果转变的ascii码。</p>
-<p>length（字符串）：返回字符串长度。</p>
-<p>left(字符串，长度)：从左向右截取固定长度的字符串。</p>
-<p>substr()&#x2F;substring() 函数 ， 返回从pos位置开始到length长度的子字符串。参数，<code>str</code>，<code>pos</code>，<code>length</code>；</p>
-<p><code>str</code>：字符串</p>
-<p><code>pos</code>：开始位置</p>
-<p><code>length</code>： 截取长度。</p>
-<p>if(expr1,expr2,expr3) 判断语句 如果第⼀个语句正确就执⾏第⼆个语句如果错误执⾏第三个语句</p>
-<p>substr() ⽤来截取字符串</p>
-<p>基于时间的布尔盲注：</p>
-<p>由于此类盲注不会返回任何值，我们需利用sleep（）函数让语句停留n秒，从而通过布尔逻辑判断其是否为所求值</p>
-<h2 id="4-堆叠注入"><a href="#4-堆叠注入" class="headerlink" title="4.堆叠注入"></a>4.堆叠注入</h2><ul>
-<li><strong>定义</strong>：堆叠注入，从名词的含义就可以看到应该是一堆 sql 语句(多条)一起执行。而在真实的运用中也是这样的, 我们知道在 mysql 中, 主要是命令行中, 每一条语句结尾加; 表示语句结束。这样我们就想到了是不是可以多句一起使用。</li>
-<li><strong>注入原理</strong>： 在SQL中，分号（;）是用来表示一条sql语句的结束。与 union select 的区别是在堆叠注入后边可以接入任何语句。</li>
-<li><strong>缺陷</strong>：在某些情况的影响下无法使用。</li>
-</ul>
-<p>产生原因如下图：</p>
-<p><img src="F:\网络安全\图片资料\堆叠注入.png"></p>
-<p>判断方法，在id&#x3D;1之后加一个分号，如过报错或无法运行，则表示无法进行堆叠注入，如果正常运行，则表示可以进行堆叠注入。</p>
-<p>该方法优势：该方法相较于联合查询语句，它可以将数据库中的数据进行修改，而联合查询只能执行查询语句。</p>
-<h2 id="5-二次注入"><a href="#5-二次注入" class="headerlink" title="5.二次注入"></a>5.二次注入</h2><p>原理：</p>
-<p><img src="https://img-blog.csdnimg.cn/9dd485b00d2f4a7384ebc465b369d689.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSx5o6n55qE6I-c6bih546p5a62,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
-<p>简单点说就是第一次输入时进了过滤，第二次取出时未进行处理，直接进行第二此注入，就会产生漏洞。</p>
-<h2 id="6-过滤注入"><a href="#6-过滤注入" class="headerlink" title="6.过滤注入"></a>6.过滤注入</h2><ol>
-<li><p>过滤注释符号：即传入的注释符号被删除，即出现<code>--</code>或<code>#</code>号时，直接删除掉，解决过滤时，可以用括号<code>（’</code>符号进行注释,具体情况具体分析。</p>
-</li>
-<li><p>and、or过滤：一旦出现and、or就删除。解决方法：通过大小写变换，如‘anD’；或者通过逻辑符‘&amp;&amp;’等符号替换，如果符号被过滤，还可使用该符号的编码</p>
-</li>
-<li><p>空格过滤：可以用<code>+</code>、<code>/**/</code>等符号进行替换，具体情况具体分析。其他如下图：</p>
-<p><img src="F:\网络安全\图片资料\Screenshot_2023-05-07-12-53-46-802_tv.danmaku.bil.jpg"></p>
-<p>还可以使用报错注入，使其不出现空格。</p>
-</li>
-<li><p>逗号过滤：可以使用join语句，join语句：JOIN 子句用于把来自两个或多个表的行结合起来，基于这些表之间的共同字段。基本用法为union select * from ((select 1)A <strong>join</strong> (select 2)B <strong>join</strong> (select 3)C join (select 4)D);这种方法不需要使用过逗号。</p>
-</li>
-</ol>
-<h2 id="7-waf绕过"><a href="#7-waf绕过" class="headerlink" title="7.waf绕过"></a>7.waf绕过</h2><ol>
-<li><p>安全狗绕过：</p>
-<ul>
-<li><p>内联注释法：&#x2F;*!5位数字,但是不能大于版本号 关键字 *&#x2F; 5位数字中最好包含44。</p>
-</li>
-<li><p>内联反向思维绕过：&#x2F;<em>!5位数6位字符</em>&#x2F; 注释内容，5位数大于版本号，6位字符随便输，注释内容在外边。</p>
-</li>
-<li><p>url编码绕过：</p>
-<p>常见的url编码：</p>
-<p>‘&#x3D;%27;”&#x3D;%22;空格&#x3D;%20;回车&#x3D;%0d;换行&#x3D;%0a;NULL&#x3D;%00;水平制表&#x3D;%09;垂直制表&#x3D;%0b，更多编码查询:<a target="_blank" rel="noopener" href="http://yige.org/tags/ref_urlencode.php%E3%80%82">http://yige.org/tags/ref_urlencode.php。</a></p>
-<p>但是注意,以前可以利用常见的URL编码绕过,但是现在不行,需要使用一些奇怪的URL编码进行绕过;例:%!字母 ,然后用&#x2F;<em>URL编码</em>&#x2F;做，注释 如果一个URL编码不行,可以采用输入多个URL编码。</p>
-<p>基本格式：关键字&#x2F;<em>%!a</em>&#x2F;关键字</p>
-</li>
-<li><p>get传参绕过：基本格式：参数名&#x3D;&#x2F;<em>&amp;id&#x3D;1&amp;b&#x3D;</em>&#x2F;。</p>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="8-MySQL结构型注入"><a href="#8-MySQL结构型注入" class="headerlink" title="8.MySQL结构型注入"></a>8.MySQL结构型注入</h2><p>MYSQL结构型注入是一种利用MySQL数据库系统中的结构特征进行SQL注入攻击的技术。MySQL数据库系统采用了一种名为“信息模式（Information Schema）”的特殊数据库，它存储了有关数据库和表结构的元数据信息。攻击者可以利用这些元数据信息来推断数据库和表结构，并构造恶意的SQL查询语句，从而绕过应用程序的输入验证机制，直接操作或获取数据库中的敏感信息。</p>
-<h2 id="9-万能密码"><a href="#9-万能密码" class="headerlink" title="9.万能密码"></a>9.万能密码</h2><p>原理：</p>
-<p><img src="https://img-blog.csdnimg.cn/2020081511261330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2h4aHhoeGh4eA==,size_16,color_FFFFFF,t_70#pic_center"></p>
-<p>万能密码表：</p>
-<ul>
-<li>‘ or 1&#x3D;’1</li>
-<li>‘or’&#x3D;’or’</li>
-<li>admin</li>
-<li>admin’–</li>
-<li>admin’ or 4&#x3D;4–</li>
-<li>admin’ or ‘1’&#x3D;’1’–</li>
-<li>admin888</li>
-<li>“or “a”&#x3D;”a</li>
-<li>admin’ or 2&#x3D;2#</li>
-<li>a’ having 1&#x3D;1#</li>
-<li>a’ having 1&#x3D;1–</li>
-<li>admin’ or ‘2’&#x3D;’2</li>
-<li>‘)or(‘a’&#x3D;’a</li>
-<li>or 4&#x3D;4–</li>
-<li>c</li>
-<li>a’or’ 4&#x3D;4–</li>
-<li>“or 4&#x3D;4–</li>
-<li>‘or’a’&#x3D;’a</li>
-<li>“or”&#x3D;”a’&#x3D;’a</li>
-<li>‘or’’&#x3D;’</li>
-<li>‘or’&#x3D;’or’</li>
-<li>1 or ‘1’&#x3D;’1’&#x3D;1</li>
-<li>1 or ‘1’&#x3D;’1’ or 4&#x3D;4</li>
-<li>‘OR 4&#x3D;4%00</li>
-<li>“or 4&#x3D;4%00</li>
-<li>‘xor</li>
-<li>admin’ UNION Select 1,1,1 FROM admin Where ‘’&#x3D;’</li>
-<li>1</li>
-<li>-1%cf’ union select 1,1,1 as password,1,1,1 %23</li>
-<li>1</li>
-<li>17..admin’ or ‘a’&#x3D;’a 密码随便</li>
-<li>‘or’&#x3D;’or’</li>
-<li>‘or 4&#x3D;4&#x2F;*</li>
-<li>something</li>
-<li>‘ OR ‘1’&#x3D;’1</li>
-<li>1’or’1’&#x3D;’1</li>
-<li>admin’ OR 4&#x3D;4&#x2F;*</li>
-<li>1’or’1’&#x3D;’1</li>
-</ul>
-<p>详情见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/hxhxhxhxx/article/details/108020010">(16条消息) sql注入之万能密码总结_sql注入万能密码_無名之涟的博客-CSDN博客</a></p>
-<h2 id="10-宽字节注入"><a href="#10-宽字节注入" class="headerlink" title="10.宽字节注入"></a>10.宽字节注入</h2><p>成因：产生宽字节注入的原因涉及了编码转换的问题，当我们的mysql使用GBK编码后，同时两个字符的前一个字符ASCII码大于128时，会将两个字符认成一个汉字，那么大家像一个，如果存在过滤我们输入的函数（addslashes()、mysql_real_escape_string()、mysql_escape_string()、Magic_quotes_gpc）会将我们的输入进行转义。注入语句中的<code>&#39;</code>，<code>&quot;</code>，<code>\</code>，被反斜杠给实列化，失去其原有的作用，导致无法完成原有注入。</p>
-<p>解决方法：我们可以输入%df，它会与\构成一个中文的GBK编码，但数据库无法识别中文，便会忽略中文，继续向下执行，便可以成功注入。</p>
-<p>详列见：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7167647367246643208">深入浅出带你学习宽字节注入 - 掘金 (juejin.cn)</a></p>
-<h2 id="11-where后注入"><a href="#11-where后注入" class="headerlink" title="11.where后注入"></a>11.where后注入</h2><p>一种通过在where语句之后添加语句进行查询的注入方法。</p>
-<h2 id="12-update注入"><a href="#12-update注入" class="headerlink" title="12.update注入"></a>12.update注入</h2><p>首先，先了解update语句：UPDATE 语句用于更新表中已存在的记录。基本语法如下</p>
-<pre class="line-numbers language-none"><code class="language-none">UPDATE table_name
-SET column1 &#x3D; value1, column2 &#x3D; value2, ...
-WHERE condition;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li><strong>table_name</strong>：要修改的表名称。</li>
-<li>**column1, column2, …**：要修改的字段名称，可以为多个字段。</li>
-<li>**value1, value2, …**：要修改的值，可以为多个值。</li>
-<li><strong>condition</strong>：修改条件，用于指定哪些数据要修改。</li>
-</ul>
-<p>这种漏洞通常出现再用户信息修改界面，用户信息修改就是利用update语句来进行修改数据库中的数据。</p>
-<p>其余大致与其他注入与句相同。</p>
-<h2 id="13-insert注入"><a href="#13-insert注入" class="headerlink" title="13.insert注入"></a>13.insert注入</h2><p>首先，insert语句的作用：插入数据到表中，也可以在指定表指定位置差入数据。具体用法如下：</p>
-<p>插入数据： INSERT INTO Student VALUES (‘bob’, ‘15’, ‘99’)；</p>
-<p>指定列插入数据：INSERT INTO Student(name,age) VALUES (‘bob’, ‘15’)；</p>
-<p>注册页面如果有注入漏洞的话，一般是insert类型的，因为注册相当于往数据库的表中插入一行新数据信息。再联合其他注入方式便可以成功注入</p>
-<h2 id="14-order-by后注入"><a href="#14-order-by后注入" class="headerlink" title="14.order by后注入"></a>14.order by后注入</h2><p>与其他注入大致相同，不过注入点在order by语句的后面，不过在此之前我们需要学会判断其是否在order by后面，方法很简单，在参数后面加个asc（结果升序显示）、desc（结果降序显示）来观察其顺序是否改变就行了（此适应于显示了表的情况）。接下来我们判断order by后面接的参数有没有影响，尝试注入：<code>left(version()</code>,1)和<code>right(version(),1)</code>，发现结果没影响，说明后面参数随意，则此时我们可以进行注入。接下来我们可以通过构造报错语句，盲注语句和联合查询语句，便可以进行注入了。</p>
-<p>详情见：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4d7deb4d524a">SQL注入 order by后的注入(Less-46) - 简书 (jianshu.com)</a></p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/05/21/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="go-post">阅读全文</a>
-</div>
-
-
-        <div class="page-current">
-    <div class="prev">
-        
-    </div>
-    <div class="page-index">
-        
-        <span class="current">1</span>
-        
-    </div>
-    <div class="next">
-        
-    </div>
-</div>
-
-    </div>
+<!-- post list container -->
+<div class="body-container">
+  <div class="content-container layout-block article-list">
     
-    <div id="home-card">
-        <div id="card-style">
-    <div id="card-div">
-        <div class="avatar">
-            <img src="/images/avatar.jpg" alt="avatar" />
-        </div>
-        <div class="name">John Doe</div>
-        <div class="description">
-            <p>Normal <em>Italic</em> <strong>Strong</strong><br>…</p>
+      <div class="article-item layout-padding">
+        <article class="card-container article-card content-padding--large soft-size--large soft-style--box">
+          
 
-        </div>
-        
-        
-        <div class="friend-links">
+          <div class="card-text">
             
-            <div class="friend-link">
-                <a target="_blank" rel="noopener" href="https://github.com/621779">Argvchs</a>
+              <a href="/2023/06/19/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+                <h2 class="card-text--title">(no title)</h2>
+              </a>
+            
+            <div class="card-text--row">
+              <span>发布于</span>
+              <time  class="article-date" datetime="2023-06-19T10:38:06.345Z" itemprop="datePublished">2023-06-19</time>
             </div>
             
-        </div>
-        
-    </div>
-</div>
-
-    </div>
+              <div class="card-text--row new-date">
+                <span>更新于</span>
+                <time  class="article-updated" datetime="2023-06-13T12:57:38.580Z" itemprop="dateUpdated">2023-06-13</time>
+              </div>
+            
+            <ul class="wrap-list light">
+  
+</ul>
+            <ul class="wrap-list light">
+  
+</ul>
+          </div>
+        </article>
+      </div>
     
+      <div class="article-item layout-padding">
+        <article class="card-container article-card content-padding--large soft-size--large soft-style--box">
+          
+
+          <div class="card-text">
+            
+              <a href="/2023/06/19/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%88XSS%EF%BC%89%E6%94%BB%E5%87%BB/" itemprop="url">
+                <h2 class="card-text--title">(no title)</h2>
+              </a>
+            
+            <div class="card-text--row">
+              <span>发布于</span>
+              <time  class="article-date" datetime="2023-06-19T10:37:23.057Z" itemprop="datePublished">2023-06-19</time>
+            </div>
+            
+              <div class="card-text--row new-date">
+                <span>更新于</span>
+                <time  class="article-updated" datetime="2023-06-18T12:41:24.293Z" itemprop="dateUpdated">2023-06-18</time>
+              </div>
+            
+            <ul class="wrap-list light">
+  
+</ul>
+            <ul class="wrap-list light">
+  
+</ul>
+          </div>
+        </article>
+      </div>
+    
+      <div class="article-item layout-padding">
+        <article class="card-container article-card content-padding--large soft-size--large soft-style--box">
+          
+
+          <div class="card-text">
+            
+              <a href="/2023/06/19/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+                <h2 class="card-text--title">(no title)</h2>
+              </a>
+            
+            <div class="card-text--row">
+              <span>发布于</span>
+              <time  class="article-date" datetime="2023-06-19T10:36:57.719Z" itemprop="datePublished">2023-06-19</time>
+            </div>
+            
+              <div class="card-text--row new-date">
+                <span>更新于</span>
+                <time  class="article-updated" datetime="2023-06-04T11:31:51.649Z" itemprop="dateUpdated">2023-06-04</time>
+              </div>
+            
+            <ul class="wrap-list light">
+  
+</ul>
+            <ul class="wrap-list light">
+  
+</ul>
+          </div>
+        </article>
+      </div>
+    
+      <div class="article-item layout-padding">
+        <article class="card-container article-card content-padding--large soft-size--large soft-style--box">
+          
+
+          <div class="card-text">
+            
+              <a href="/2023/05/21/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+                <h2 class="card-text--title">(no title)</h2>
+              </a>
+            
+            <div class="card-text--row">
+              <span>发布于</span>
+              <time  class="article-date" datetime="2023-05-21T05:27:07.624Z" itemprop="datePublished">2023-05-21</time>
+            </div>
+            
+              <div class="card-text--row new-date">
+                <span>更新于</span>
+                <time  class="article-updated" datetime="2023-05-12T09:37:45.703Z" itemprop="dateUpdated">2023-05-12</time>
+              </div>
+            
+            <ul class="wrap-list light">
+  
+</ul>
+            <ul class="wrap-list light">
+  
+</ul>
+          </div>
+        </article>
+      </div>
+    
+  </div>
 </div>
 
-                    <footer id="footer">
-    <div id="footer-wrap">
-        <div>
-            &copy;
-            2022 - 2023 Hexo
-            <span id="footer-icon">
-                <i class="fa-solid fa-font-awesome fa-fw"></i>
-            </span>
-            &commat;John Doe
-        </div>
-        <div>
-            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
-            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
-        </div>
+<!-- page container -->
+
+
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
         
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/621779/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+          <a href="https://twitter.com/guanquanhong" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-twitter" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M962.285714 233.142857q-38.285714 56-92.571429 95.428571 0.571429 8 0.571429 24 0 74.285714-21.714286 148.285714t-66 142-105.428571 120.285714-147.428571 83.428571-184.571429 31.142857q-154.857143 0-283.428571-82.857143 20 2.285714 44.571429 2.285714 128.571429 0 229.142857-78.857143-60-1.142857-107.428571-36.857143t-65.142857-91.142857q18.857143 2.857143 34.857143 2.857143 24.571429 0 48.571429-6.285714-64-13.142857-106-63.714286t-42-117.428571l0-2.285714q38.857143 21.714286 83.428571 23.428571-37.714286-25.142857-60-65.714286t-22.285714-88q0-50.285714 25.142857-93.142857 69.142857 85.142857 168.285714 136.285714t212.285714 56.857143q-4.571429-21.714286-4.571429-42.285714 0-76.571429 54-130.571429t130.571429-54q80 0 134.857143 58.285714 62.285714-12 117.142857-44.571429-21.142857 65.714286-81.142857 101.714286 53.142857-5.714286 106.285714-28.571429z"></path>
+</svg>
+          </a>
+        
+      
     </div>
+     
+    <p>&copy; 2023 <a href="/" target="_blank">John Doe</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
 </footer>
+  </div>
 
-                </div>
-            </transition>
-            
-            <transition name="fade">
-                <div id="preview" ref="preview" v-show="previewShow">
-                    <img id="preview-content" ref="previewContent" />
-                </div>
-            </transition>
-            
-        </div>
-        <script src="/js/main.js"></script>
-        
-    </body>
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+</body>
 </html>
