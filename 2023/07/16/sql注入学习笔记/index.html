@@ -138,6 +138,7 @@
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
         <span id="more"></span>
 
+<p><img src="/images/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/html%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95.png"></p>
 <h1 id="sql注入学习笔记"><a href="#sql注入学习笔记" class="headerlink" title="sql注入学习笔记"></a>sql注入学习笔记</h1><h2 id="1-MySQL注入类型"><a href="#1-MySQL注入类型" class="headerlink" title="1.MySQL注入类型"></a>1.MySQL注入类型</h2><p>可以按照两个分类标准来进行分类，当然常见的就是按照注入方式的不同将其分类为：</p>
 <ol>
 <li><p>联合查询注入：可以明确判断回显位置的情况下使用</p>
@@ -286,7 +287,7 @@
 <li><strong>缺陷</strong>：在某些情况的影响下无法使用。</li>
 </ul>
 <p>产生原因如下图：</p>
-<p><img src="F:\网络安全\图片资料\堆叠注入.png"></p>
+<p><img src="/images%5C%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5.png"></p>
 <p>判断方法，在id&#x3D;1之后加一个分号，如过报错或无法运行，则表示无法进行堆叠注入，如果正常运行，则表示可以进行堆叠注入。</p>
 <p>该方法优势：该方法相较于联合查询语句，它可以将数据库中的数据进行修改，而联合查询只能执行查询语句。</p>
 <h2 id="5-二次注入"><a href="#5-二次注入" class="headerlink" title="5.二次注入"></a>5.二次注入</h2><p>原理：</p>
@@ -298,7 +299,7 @@
 <li><p>and、or过滤：一旦出现and、or就删除。解决方法：通过大小写变换，如‘anD’；或者通过逻辑符‘&amp;&amp;’等符号替换，如果符号被过滤，还可使用该符号的编码</p>
 </li>
 <li><p>空格过滤：可以用<code>+</code>、<code>/**/</code>等符号进行替换，具体情况具体分析。其他如下图：</p>
-<p><img src="F:\网络安全\图片资料\Screenshot_2023-05-07-12-53-46-802_tv.danmaku.bil.jpg"></p>
+<p><img src="/images%5CScreenshot_2023-05-07-12-53-46-802_tv.danmaku.bil.jpg"></p>
 <p>还可以使用报错注入，使其不出现空格。</p>
 </li>
 <li><p>逗号过滤：可以使用join语句，join语句：JOIN 子句用于把来自两个或多个表的行结合起来，基于这些表之间的共同字段。基本用法为union select * from ((select 1)A <strong>join</strong> (select 2)B <strong>join</strong> (select 3)C join (select 4)D);这种方法不需要使用过逗号。</p>
@@ -402,8 +403,8 @@ WHERE condition;<span aria-hidden="true" class="line-numbers-rows"><span></span>
     
     <div class="card-text">
       
-        <a href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">文件上传笔记</h2>
+        <a href="/2023/07/16/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">RCE学习笔记</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -417,8 +418,8 @@ WHERE condition;<span aria-hidden="true" class="line-numbers-rows"><span></span>
     
     <div class="card-text">
       
-        <a href="/2023/07/16/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%88XSS%EF%BC%89%E6%94%BB%E5%87%BB/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">跨站脚本攻击（XSS）攻击</h2>
+        <a href="/2023/07/16/hello/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">hello</h2>
         </a>
       
       <div class="card-text--row">Older</div>
