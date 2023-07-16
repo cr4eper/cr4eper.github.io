@@ -13,18 +13,20 @@
   <meta name="generator" content="Hexo 6.3.0">
 
   
-
-  
-
-  
-    <meta name="author" content="John Doe">
+    <meta name="description" content="仰天大笑出门去，我辈岂是蓬蒿人">
   
 
   
 
   
+    <meta name="author" content="阿巴">
+  
 
-  <title>Hexo</title>
+  
+
+  
+
+  <title>跨站脚本攻击（XSS）攻击 | 阿巴</title>
 
   
 
@@ -56,7 +58,7 @@
     <div class="navbar-logo">
       <a href="/">
         
-          Hexo
+          阿巴
         
       </a>
     </div>
@@ -97,23 +99,20 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap"></h1>
+          <h1 class="title-wrap">跨站脚本攻击（XSS）攻击</h1>
           <h2 class="title-sub-wrap">
-            <strong>John Doe</strong>
+            <strong>阿巴</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2023-06-19T10:37:23.057Z" itemprop="datePublished">2023-06-19</time>
+            <time  class="article-date" datetime="2023-07-16T06:35:17.000Z" itemprop="datePublished">2023-07-16</time>
           </h2>
-          
-            <h2 class="title-sub-wrap new-date">
-              <span>最后更新于</span>
-              <time  class="article-updated" datetime="2023-06-18T12:41:24.293Z" itemprop="dateUpdated">2023-06-18</time>
-            </h2>
           
           
           <ul class="wrap-list dark">
   
 </ul>
           <ul class="wrap-list dark">
+  
+    <li><a href="/tags/web%E5%AE%89%E5%85%A8/">🏷️ web安全</a></li>
   
 </ul>
         </div>
@@ -137,7 +136,9 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1 id="跨站脚本攻击（XSS）攻击"><a href="#跨站脚本攻击（XSS）攻击" class="headerlink" title="跨站脚本攻击（XSS）攻击"></a>跨站脚本攻击（XSS）攻击</h1><p>跨站脚本攻击（Cross-site scripting，简称 XSS）是一种常见的网络攻击方式，攻击者利用网站存在漏洞，将恶意代码注入到网页中，使得用户在访问受攻击的页面时，浏览器会执行这些恶意代码，从而导致信息泄漏或者账号被盗用等危险后果。</p>
+        <span id="more"></span>
+
+<h1 id="跨站脚本攻击（XSS）攻击"><a href="#跨站脚本攻击（XSS）攻击" class="headerlink" title="跨站脚本攻击（XSS）攻击"></a>跨站脚本攻击（XSS）攻击</h1><p>跨站脚本攻击（Cross-site scripting，简称 XSS）是一种常见的网络攻击方式，攻击者利用网站存在漏洞，将恶意代码注入到网页中，使得用户在访问受攻击的页面时，浏览器会执行这些恶意代码，从而导致信息泄漏或者账号被盗用等危险后果。</p>
 <ul>
 <li>产生层面：通常在前端界面，JavaScript代码可以实现的地方</li>
 </ul>
@@ -149,110 +150,75 @@
 <p>xss主要分三类：反射型xss、存储型xss、DOM型xss。</p>
 <p>常见的XSS攻击用的代码：</p>
 <ul>
-<li><pre><code class="html">&lt;script&gt;alert(document.cookie)&lt;/script&gt;  //弹出当前页面cookie值
-
-&lt;script&gt;alert(&#39;hello，gaga!&#39;);&lt;/script&gt; //经典语句，哈哈！
-
-&gt;&quot;&#39;&gt;&lt;img src=&quot;javascript.:alert(&#39;XSS&#39;)&quot;&gt;
-
-&gt;&quot;&#39;&gt;&lt;script&gt;alert(&#39;XSS&#39;)&lt;/script&gt;
-
-&lt;table background=&#39;javascript.:alert(([code])&#39;&gt;&lt;/table&gt;
-
-&lt;object type=text/html data=&#39;javascript.:alert(([code]);&#39;&gt;&lt;/object&gt;
-
-&quot;+alert(&#39;XSS&#39;)+&quot;
-
-&#39;&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;
-
-=&#39;&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;
-<pre class="line-numbers language-none"><code class="language-none">
-
-
-## XSS的分类
-###  1.反射型XSS
-
-攻击者在诱骗用户点击包含恶意代码的链接时，通过Web应用程序反射（Reflect）这些恶意代码，并将其发送给成功发起请求的用户，再由用户的浏览器解析执行，造成危害。
-
-1. 出现场景：
-
-   通常不会出现在服务端，会出现在网页搜索页面，需要构造植入的web界面。
-
-2. 攻击方式：
-
-   - 欺骗用户点击恶意链接。如我们构造一个网址&#96;http:&#x2F;&#x2F;example.com&#x2F;video?id&#x3D;&lt;script&gt;alert(‘You are hacked’)&lt;&#x2F;script&gt;&#96;，并欺骗用户为视频网址，待用户点击之后便会被攻击。
-   
-   - 在注入漏洞的表单处提交恶意代码。如攻击者在用户登录、搜索、评论等地方写入此段代码&#96;search&#x3D;&lt;script&gt;alert(“You are hacked”)&lt;&#x2F;script&gt;&#96;,提交之后便会被攻击
-   
-3. 判断是否存在反射型xss漏洞并利用
-
-   查看url是否有用get传参传入值，并显示，若有，便可尝试构造代码进行攻击。
-
-###  2.存储型XSS
-
-存储型XSS（也叫持久性XSS）攻击是一种更危险的XSS攻击方式，攻击者将恶意脚本注入到Web应用程序的数据库中，当用户访问受到攻击的页面时，恶意脚本会从数据库中恢复并执行，从而实现恶意操作。存储型XSS攻击通常会导致用户信息被窃取、会话劫持甚至网站被完全控制的风险。
-
-1. 出现场景：
-
-   通常出现在博客评论，用户评论，留言板，聊天室，HTML 电子邮件，wikis等有储存功能的界面当中。当过滤不严格时，攻击者可以构造代码使用户在访问页面时，丢失自己的隐私信息。
-
-2. 攻击方式：
-
-   向数据库传入恶意代码，使用户在每次访问界面时，丢失自己的隐私信息。
-
-3. 判断是否存在存储型XSS漏洞：
-
-   在评论界面随意插入一段恶意代码&#96;&lt;img src&#x3D;&quot;1&quot; onerror&#x3D;&quot;alert(&#x2F;xss&#x2F;)&quot;&#x2F;&gt;&#96;，如果注入后重新刷新发现直接回显注入的东西，说明是存储型xss。
-
-###  3.DOM型XSS
-
-通过修改页面的DOM节点形成的XSS，称之为DOM Based XSS。
-
-DOM:
-
-简单来说DOM文档就是一份XML文档，当有了DOM标准之后，DOM便将前端html代码化为一个树状结构，方便程序和脚本能够轻松的动态访问和更新这个树状结构的内容、结构以及样式，且不需要经过服务端，所以DOM型xss在js前端自己就可以完成数据的输入输出，不与服务器产生交互。
-
-![](https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;9bb1631414374b5bad883e949c8259ad.png?x-oss-process&#x3D;image)
-
-所以说DOM型xss可以在前端通过js渲染来完成数据的交互，达到插入数据造成xss脚本攻击，且不经过服务器，所以即使抓包无无法抓取到这里的流量，而反射性与存储型xss需要与服务器交互，这便是三者的区别。
-
-1. 利用原理：
-
-   客户端JavaScript可以访问浏览器的DOM文本对象模型是利用的前提，当确认客户端代码中有DOM型XSS漏洞时，并且能诱使(钓鱼)一名用户访问自己构造的URL，就说明可以在受害者的客户端注入恶意脚本。
-
-2. 攻击方式：
-
-   与反射型类似。
-
-3. 判断是否有DOM型XSS漏洞：
-
-   与上边两种判断方式大致相似。
-
-   详情见：[快速入门xss 判断网站是否存在xss漏洞-腾讯云开发者社区-腾讯云 (tencent.com)](https:&#x2F;&#x2F;cloud.tencent.com&#x2F;developer&#x2F;article&#x2F;1352463)
-
-##  做题记录
-
-###  xss-laba的level3：
-
-在此关当中，我们输入的&#96;&lt;&gt;&#96;、&#96;&#x2F;&#96;被转义为其他符号了，导致我们无法执行JavaScript代码：
-
-![](F:\网络安全\图片资料\xss-labs level3.png)故我们需要找其他执行JavaScript代码的方式，除了用&lt;script&gt;&lt;&#x2F;script&gt;标签之外，我们还可以用超链接的型式，形式为   &#96;某某参数&#x3D;&quot;javascript:所要执行得代码语句&quot;，&#96;,通过这种形式，在此处，我们尝试构造两种特殊事件，才能执行Javascript代码
-
-1. **onmouseout事件**：指鼠标移出某个指点的HTML标签后，会出现什么效果。
-2. **onclick事件**：鼠标点击事件
-
-主要事件表：
-
- ![](F:\网络安全\图片资料\xss-主要事件.webp)
-
-构造处此语句：&#96;&#39; onclick&#x3D;Javascript:alert(&#39;1&#39;)  &#x2F;&#x2F;&#96;,接入输入框中，在点击上传之后，再点击输入框即可完成攻击。
-
-**原理**：
-
-在查看源码之后，我们发现他用了&#96;.htmlspecialchars&#96;函数，如下图所示：
-
-&#96;&#96;&#96;php+HTML
-&lt;h1 align&#x3D;center&gt;欢迎来到level3&lt;&#x2F;h1&gt;
+<li><p><code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;  //弹出当前页面cookie值</code></p>
+<p><code>&lt;script&gt;alert(&#39;hello，gaga!&#39;);&lt;/script&gt; //经典语句，哈哈！</code></p>
+<p><code>&quot;&#39;&gt;&lt;img src=&quot;javascript.:alert(&#39;XSS&#39;)&quot;&gt;</code></p>
+<p><code>&quot;&#39;&gt;&lt;script&gt;alert(&#39;XSS&#39;)&lt;/script&gt;</code></p>
+<p><code>&lt;table background=&#39;javascript.:alert(([code])&#39;&gt;&lt;/table&gt;</code></p>
+<p><code>&quot;+alert(&#39;XSS&#39;)+&quot;</code></p>
+<p><code>&#39;&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code></p>
+<p><code>=&#39;&gt;&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code></p>
+<p><code>&#39;&lt;object type=text/html data=&#39;javascript.:alert(([code]);&#39;&gt;&lt;/object&gt;</code></p>
+</li>
+</ul>
+<h2 id="XSS的分类"><a href="#XSS的分类" class="headerlink" title="XSS的分类"></a>XSS的分类</h2><h3 id="1-反射型XSS"><a href="#1-反射型XSS" class="headerlink" title="1.反射型XSS"></a>1.反射型XSS</h3><p>攻击者在诱骗用户点击包含恶意代码的链接时，通过Web应用程序反射（Reflect）这些恶意代码，并将其发送给成功发起请求的用户，再由用户的浏览器解析执行，造成危害。</p>
+<ol>
+<li><p>出现场景：</p>
+<p>通常不会出现在服务端，会出现在网页搜索页面，需要构造植入的web界面。</p>
+</li>
+<li><p>攻击方式：</p>
+<ul>
+<li><p>欺骗用户点击恶意链接。如我们构造一个网址<code>http://example.com/video?id=&lt;script&gt;alert(‘You are hacked’)&lt;/script&gt;</code>，并欺骗用户为视频网址，待用户点击之后便会被攻击。</p>
+</li>
+<li><p>在注入漏洞的表单处提交恶意代码。如攻击者在用户登录、搜索、评论等地方写入此段代码<code>search=&lt;script&gt;alert(“You are hacked”)&lt;/script&gt;</code>,提交之后便会被攻击</p>
+</li>
+</ul>
+</li>
+<li><p>判断是否存在反射型xss漏洞并利用</p>
+<p>查看url是否有用get传参传入值，并显示，若有，便可尝试构造代码进行攻击。</p>
+</li>
+</ol>
+<h3 id="2-存储型XSS"><a href="#2-存储型XSS" class="headerlink" title="2.存储型XSS"></a>2.存储型XSS</h3><p>存储型XSS（也叫持久性XSS）攻击是一种更危险的XSS攻击方式，攻击者将恶意脚本注入到Web应用程序的数据库中，当用户访问受到攻击的页面时，恶意脚本会从数据库中恢复并执行，从而实现恶意操作。存储型XSS攻击通常会导致用户信息被窃取、会话劫持甚至网站被完全控制的风险。</p>
+<ol>
+<li><p>出现场景：</p>
+<p>通常出现在博客评论，用户评论，留言板，聊天室，HTML 电子邮件，wikis等有储存功能的界面当中。当过滤不严格时，攻击者可以构造代码使用户在访问页面时，丢失自己的隐私信息。</p>
+</li>
+<li><p>攻击方式：</p>
+<p>向数据库传入恶意代码，使用户在每次访问界面时，丢失自己的隐私信息。</p>
+</li>
+<li><p>判断是否存在存储型XSS漏洞：</p>
+<p>在评论界面随意插入一段恶意代码<code>&lt;img src=&quot;1&quot; onerror=&quot;alert(/xss/)&quot;/&gt;</code>，如果注入后重新刷新发现直接回显注入的东西，说明是存储型xss。</p>
+</li>
+</ol>
+<h3 id="3-DOM型XSS"><a href="#3-DOM型XSS" class="headerlink" title="3.DOM型XSS"></a>3.DOM型XSS</h3><p>通过修改页面的DOM节点形成的XSS，称之为DOM Based XSS。</p>
+<p>DOM:</p>
+<p>简单来说DOM文档就是一份XML文档，当有了DOM标准之后，DOM便将前端html代码化为一个树状结构，方便程序和脚本能够轻松的动态访问和更新这个树状结构的内容、结构以及样式，且不需要经过服务端，所以DOM型xss在js前端自己就可以完成数据的输入输出，不与服务器产生交互。</p>
+<p><img src="https://img-blog.csdnimg.cn/9bb1631414374b5bad883e949c8259ad.png?x-oss-process=image"></p>
+<p>所以说DOM型xss可以在前端通过js渲染来完成数据的交互，达到插入数据造成xss脚本攻击，且不经过服务器，所以即使抓包无无法抓取到这里的流量，而反射性与存储型xss需要与服务器交互，这便是三者的区别。</p>
+<ol>
+<li><p>利用原理：</p>
+<p>客户端JavaScript可以访问浏览器的DOM文本对象模型是利用的前提，当确认客户端代码中有DOM型XSS漏洞时，并且能诱使(钓鱼)一名用户访问自己构造的URL，就说明可以在受害者的客户端注入恶意脚本。</p>
+</li>
+<li><p>攻击方式：</p>
+<p>与反射型类似。</p>
+</li>
+<li><p>判断是否有DOM型XSS漏洞：</p>
+<p>与上边两种判断方式大致相似。</p>
+<p>详情见：<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1352463">快速入门xss 判断网站是否存在xss漏洞-腾讯云开发者社区-腾讯云 (tencent.com)</a></p>
+</li>
+</ol>
+<h2 id="做题记录"><a href="#做题记录" class="headerlink" title="做题记录"></a>做题记录</h2><h3 id="xss-laba的level3："><a href="#xss-laba的level3：" class="headerlink" title="xss-laba的level3："></a>xss-laba的level3：</h3><p>在此关当中，我们输入的<code>&lt;&gt;</code>、<code>/</code>被转义为其他符号了，导致我们无法执行JavaScript代码：</p>
+<p>![](F:\网络安全\图片资料\xss-labs level3.png)故我们需要找其他执行JavaScript代码的方式，除了用<script></script>标签之外，我们还可以用超链接的型式，形式为   <code>某某参数=&quot;javascript:所要执行得代码语句&quot;，</code>,通过这种形式，在此处，我们尝试构造两种特殊事件，才能执行Javascript代码</p>
+<ol>
+<li><strong>onmouseout事件</strong>：指鼠标移出某个指点的HTML标签后，会出现什么效果。</li>
+<li><strong>onclick事件</strong>：鼠标点击事件</li>
+</ol>
+<p>主要事件表：</p>
+<p> <img src="F:\网络安全\图片资料\xss-主要事件.webp"></p>
+<p>构造处此语句：<code>&#39; onclick=Javascript:alert(&#39;1&#39;)  //</code>,接入输入框中，在点击上传之后，再点击输入框即可完成攻击。</p>
+<p><strong>原理</strong>：</p>
+<p>在查看源码之后，我们发现他用了<code>.htmlspecialchars</code>函数，如下图所示：</p>
+<pre class="line-numbers language-php+HTML" data-language="php+HTML"><code class="language-php+HTML">&lt;h1 align&#x3D;center&gt;欢迎来到level3&lt;&#x2F;h1&gt;
 &lt;?php 
 ini_set(&quot;display_errors&quot;, 0);
 $str &#x3D; $_GET[&quot;keyword&quot;];
@@ -260,10 +226,8 @@ echo &quot;&lt;h2 align&#x3D;center&gt;没有找到和&quot;.htmlspecialchars($s
 &lt;form action&#x3D;level3.php method&#x3D;GET&gt;
 &lt;input name&#x3D;keyword  value&#x3D;&#39;&quot;.htmlspecialchars($str).&quot;&#39;&gt;	
 &lt;input type&#x3D;submit name&#x3D;submit value&#x3D;搜索 &#x2F;&gt;
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</code></pre>
-</li>
-</ul>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <p>将我们输入值中的特殊符号进行转义，导致其不具有原本的含义，在此时常用的标签代码构造便无法使用，于是我们要尝试其他方法构造代码，将JavaScript代码嵌入到HTML标记中的事件处理程序属性中，常见事件如上表所示；我们选择鼠标单击事件，便于控制。</p>
 <p>当我们在输入框中输入：<code>&#39; onclick=Javascript:alert(&#39;1&#39;)  //</code>代码时，在此段代码后边的东西会被注释，在我们点击输入框时就会实现攻击。</p>
 <h3 id=""><a href="#" class="headerlink" title=""></a></h3>
@@ -278,8 +242,8 @@ echo &quot;&lt;h2 align&#x3D;center&gt;没有找到和&quot;.htmlspecialchars($s
     
     <div class="card-text">
       
-        <a href="/2023/06/19/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">(no title)</h2>
+        <a href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">文件上传笔记</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -287,20 +251,6 @@ echo &quot;&lt;h2 align&#x3D;center&gt;没有找到和&quot;.htmlspecialchars($s
   </article>
 </div>
           
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-    <div class="card-text">
-      
-        <a href="/2023/06/19/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">(no title)</h2>
-        </a>
-      
-      <div class="card-text--row">Older</div>
-    </div>
-  </article>
-</div>
           
         </nav>
       
@@ -336,7 +286,7 @@ echo &quot;&lt;h2 align&#x3D;center&gt;没有找到和&quot;.htmlspecialchars($s
         <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
 </svg>
-        <span>4</span>
+        <span>7</span>
       </div>
       <div class="count-box--item">
         <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -348,7 +298,7 @@ echo &quot;&lt;h2 align&#x3D;center&gt;没有找到和&quot;.htmlspecialchars($s
         <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
 </svg>
-        0
+        1
       </div>
     </div>
   </div>
@@ -365,7 +315,7 @@ echo &quot;&lt;h2 align&#x3D;center&gt;没有找到和&quot;.htmlspecialchars($s
     <span>NOTICE</span>
   </div>
   <div class="widget-body">
-    <p>flex-block主题部分重构，详情查看https://github.com/miiiku/flex-block</p>
+    <p>芜湖~~~~~~~~~~~~</p>
   </div>
 </section>
 
@@ -393,7 +343,7 @@ echo &quot;&lt;h2 align&#x3D;center&gt;没有找到和&quot;.htmlspecialchars($s
   </div>
   <div class="widget-body">
     <div class="tags-cloud">
-      
+      <a href="/tags/web%E5%AE%89%E5%85%A8/" style="font-size: 10px;" class="tags-cloud-0">web安全</a>
     </div>
   </div>
 </section>
@@ -431,7 +381,7 @@ echo &quot;&lt;h2 align&#x3D;center&gt;没有找到和&quot;.htmlspecialchars($s
       
     </div>
      
-    <p>&copy; 2023 <a href="/" target="_blank">John Doe</a></p>
+    <p>&copy; 2023 <a href="/" target="_blank">阿巴</a></p>
 
     
 

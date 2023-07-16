@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6"/>
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+
+
+  <meta name="generator" content="Hexo 6.3.0">
+
+  
+    <meta name="description" content="仰天大笑出门去，我辈岂是蓬蒿人">
+  
+
+  
+
+  
+    <meta name="author" content="阿巴">
+  
+
+  
+
+  
+
+  <title>服务器端请求伪造漏洞 | 阿巴</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          阿巴
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">首页</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">友链</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">关于</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">服务器端请求伪造漏洞</h1>
+          <h2 class="title-sub-wrap">
+            <strong>阿巴</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2023-07-16T06:35:17.000Z" itemprop="datePublished">2023-07-16</time>
+          </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/web%E5%AE%89%E5%85%A8/">🏷️ web安全</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <span id="more"></span>
+
+<h1 id="服务器端请求伪造漏洞"><a href="#服务器端请求伪造漏洞" class="headerlink" title="服务器端请求伪造漏洞"></a>服务器端请求伪造漏洞</h1><h2 id="一-漏洞介绍"><a href="#一-漏洞介绍" class="headerlink" title="一.漏洞介绍"></a>一.漏洞介绍</h2><p>SSRF (Server-Side Request Forgery,服务器端请求伪造)是一种由攻击者构造请求，由服务端发起请求的安全漏洞。一般情况下，SSRF攻击的目标是外网无法访问的内部系统(正因为请求是由服务端发起的，所以服务端能请求到与自身相连而与外网隔离的内部系统)。</p>
+<p><strong>漏洞成因</strong></p>
+<p>在某些情况下，服务端的服务程序需要其他服务端的数据，假如服务器没有对其请求的目标地址做过滤和限制，导致黑客可以利用此缺陷请求任意服务器资源，其中就包含隐匿在内网的应用。</p>
+<p><strong>出现地点</strong></p>
+<ul>
+<li>服务器主动发起网络请求，例如HTTP／HTTPS／Socket</li>
+<li>分享功能，通过URL分享网页内容，<a href="https://link.zhihu.com/?target=http://www.360bug.net/index.php/archives/49/?from=timeline&isappinstalled=0">微博SSRF</a></li>
+<li>图片加载、下载功能</li>
+<li>邮件系统</li>
+<li>api远程调用</li>
+<li>只要是服务器可以主动发起网络请求便可能出现</li>
+</ul>
+<p><strong>漏洞危害</strong></p>
+<ol>
+<li>对目标服务器所在的内网进行IP存活性扫描和端口扫描</li>
+<li>利用扫描的指纹信息判断开放的服务，从而对内网的主机进行攻击</li>
+<li>识别内网WEB应用指纹，判断应用类型进行攻击</li>
+<li>使用特定协议攻击应用（gopher、dict、file、FTP／SFTP等）</li>
+</ol>
+<h2 id="二-漏洞分类"><a href="#二-漏洞分类" class="headerlink" title="二.漏洞分类"></a>二.漏洞分类</h2><h3 id="1-跨站请求伪造（CSRF）"><a href="#1-跨站请求伪造（CSRF）" class="headerlink" title="1.跨站请求伪造（CSRF）"></a>1.跨站请求伪造（CSRF）</h3><p><strong>漏洞简介</strong></p>
+<p>CSRF（Cross-Site Request Forgery）跨站请求伪造，又称为“One-Click Attack”或“Session Riding”，是一种常见的Web应用程序安全漏洞。它利用用户在受攻击网站的有效会话中的身份进行攻击，通过诱导用户在另一个网站上执行恶意操作，执行伪造请求来欺骗并利用目标网站的功能。</p>
+<p><strong>攻击原理</strong></p>
+<p>用户在正常使用账号密码登录a网站之后，a网站回返回一个cookie给用户，用户在没有登出a网站时，访问了b网站（由黑客构造），</p>
+<p>b网站在收到用户请求之后，返回攻击语句，构造访问a网站的语句，浏览器在收到攻击语句之后，携带着a网站返回给用户的cookie访问a网站，a网站如果缺少检测，就会以用户的权限处理b网站的操作。</p>
+<p><strong>漏洞判断</strong></p>
+<ol>
+<li>抓取一个正常请求的数据包，如果没有Referer字段和token，那么极有可能存在CSRF漏洞</li>
+<li>如果有Referer字段，但是去掉Referer字段后再重新提交，如果该提交还有效，那么基本上可以确定存在CSRF漏洞。</li>
+<li>利用工具进行CSRF检测。如：CSRFTESTER，CSRF REQUEST BUILDER等</li>
+</ol>
+<p><strong>漏洞分类</strong></p>
+<ul>
+<li><p>get型：假设一个网站可以通过get请求来修改用户的邮箱，如：http:&#x2F;&#x2F;***&#x2F;user.php?id&#x3D;1&amp;email&#x3D;<a href="mailto:&#49;&#50;&#51;&#64;&#x31;&#54;&#x33;&#x2e;&#x63;&#111;&#x6d;">&#49;&#50;&#51;&#64;&#x31;&#54;&#x33;&#x2e;&#x63;&#111;&#x6d;</a> ,j假设这个请求的的意义为将用户id为一的用户的邮箱改为<a href="mailto:&#x32;&#51;&#x34;&#64;&#49;&#54;&#x33;&#46;&#99;&#x6f;&#x6d;">&#x32;&#51;&#x34;&#64;&#49;&#54;&#x33;&#46;&#99;&#x6f;&#x6d;</a>得话，我们便可以构造链接将<a href="mailto:&#49;&#x32;&#51;&#64;&#49;&#54;&#51;&#46;&#x63;&#x6f;&#x6d;">&#49;&#x32;&#51;&#64;&#49;&#54;&#51;&#46;&#x63;&#x6f;&#x6d;</a>改为<a href="mailto:&#x61;&#x62;&#x63;&#x40;&#x31;&#54;&#x33;&#46;&#x63;&#111;&#109;">&#x61;&#x62;&#x63;&#x40;&#x31;&#54;&#x33;&#46;&#x63;&#111;&#109;</a>。再引诱户点击此链接，用户的邮箱便可能被改为我们所指定的邮箱。</p>
+</li>
+<li><p>post型：在普通用户的眼中，点击网页-&gt;打开试看视频-&gt;购买视频是一个很正常的一个流程。可是在攻击者的眼中可以算正常，但又不正常的，当然不正常的情况下，是在开发者安全意识不足所造成的。攻击者在购买处抓到购买时候网站处理购买(扣除)用户余额的地址。比如：&#x2F;coures&#x2F;user&#x2F;handler&#x2F;25332&#x2F;buy.php 。通过提交表单，buy.php处理购买的信息，这里的25532为视频ID。那么攻击者现在构造一个链接，链接中包含以下内容</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">&lt;form action=/coures/user/handler/25332/buy method=POST>
+&lt;input type="text" name="xx" value="xx" />
+&lt;/form>
+&lt;script> document.forms[0].submit(); &lt;/script> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>当用户访问该页面后，表单会自动提交，相当于模拟用户完成了一次POST操作，自动购买了id为25332的视频，从而导致受害者余额扣除</p>
+</li>
+</ul>
+<h3 id="2-服务器端请求伪造-SSRF"><a href="#2-服务器端请求伪造-SSRF" class="headerlink" title="2.服务器端请求伪造(SSRF)"></a>2.服务器端请求伪造(SSRF)</h3><p><strong>漏洞简介</strong></p>
+<p>SSRF（Server-Side Request Forgery）服务器端请求伪造是一种常见的Web应用程序安全漏洞。它允许攻击者在服务器端发起请求，绕过服务器的访问限制，访问服务器本地的资源或与内部网络通信</p>
+<p><strong>攻击原理</strong></p>
+<p>在一般情况下，用户无法直接访问内网，只能访问一个与外网连接的服务器，但当这个外部服务器存在ssrf漏洞时，我们便可以通过这个服务器，对内网进行访问。</p>
+<p><strong>常用函数与协议</strong></p>
+<ul>
+<li><p>HTTP&#x2F;HTTPS协议：SSRF漏洞常用来利用服务器发起对内部或外部Web应用的HTTP&#x2F;HTTPS请求，对目标服务器进行攻击或者获取敏感信息。</p>
+</li>
+<li><p>file协议：攻击者可以通过此协议来访问系统中的文件内容</p>
+</li>
+<li><p>ftp协议：攻击者可以利用SSRF漏洞通过FTP协议访问内部系统中的敏感文件，如果FTP服务器开启了匿名访问，则可以直接获取敏感文件。</p>
+</li>
+<li><p>gopher协议：Gopher是一种早期的互联网协议，类似于HTTP协议，用于检索和浏览文档。攻击者可以利用Gopher协议来进行SSRF攻击，通过构造恶意的Gopher请求来访问内部系统的敏感信息或发起攻击。其中该协议的url格式如下：<code>gopher://host:port/path</code>，其中host是目标服务器的主机名或IP地址，port是Gopher服务的端口号（<strong>默认为70</strong>），path是要访问的资源路径。Gopher协议格式：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token constant">URL</span><span class="token punctuation">:</span>gopher<span class="token punctuation">:</span><span class="token comment">//&lt;host>:&lt;port>/&lt;gopher-path>_后接TCP数据流</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>gopher的默认端口是70</li>
+<li>如果发起post请求，回车换行需要使用%0d%0a，如果多个参数，参数之间的&amp;也需要进行URL编码</li>
+</ul>
+<p>关于此协议的用法详情见：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/112055947">Gopher协议在SSRF漏洞中的深入研究（附视频讲解） - 知乎 (zhihu.com)</a></p>
+</li>
+<li><p>dict:&#x2F;&#x2F; 字典服务器协议，访问字典资源，如，dict:&#x2F;&#x2F;&#x2F;ip:6739&#x2F;info：</p>
+</li>
+<li><p>sftp:&#x2F;&#x2F; SSH文件传输协议或安全文件传输协议</p>
+</li>
+<li><p>ldap:&#x2F;&#x2F; 轻量级目录访问协议</p>
+</li>
+<li><p>tftp:&#x2F;&#x2F; 简单文件传输协议</p>
+</li>
+</ul>
+<p>具体介绍见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43378996/article/details/124050308">SSRF漏洞原理攻击与防御(超详细总结)_零点敲代码的博客-CSDN博客</a></p>
+<p><strong>漏洞检测</strong></p>
+<ol>
+<li>排除法：查看是否是在本地进行了请求比如： 请求链接为：<a target="_blank" rel="noopener" href="http://www.xxx.com/a.php?image=%60http://www.baidu.com/img/logo.png%60,%E5%8F%B3%E9%94%AE%E6%96%B0%E7%AA%97%E5%8F%A3%E6%89%93%E5%BC%80%E5%9B%BE%E7%89%87%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%8D%E6%98%AFhttp://www.baidu.com/img/logo.png%E5%B0%B1%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8SSRF%E6%BC%8F%E6%B4%9E">http://www.xxx.com/a.php?image=`http://www.baidu.com/img/logo.png`,右键新窗口打开图片，如果不是http://www.baidu.com/img/logo.png就可能存在SSRF漏洞</a></li>
+<li>用dnslog等平台进行测试，看是否有IP把请求资源换成dnslog平台URL</li>
+<li>burpsuite抓包，分析发送的请求是不是通过服务端发送的，因为SSRF要求是从服务端发起的请求，本地请求中不应该包含存在对资源的请求请求链接：<a target="_blank" rel="noopener" href="http://www.xxx.com/a.php?image=%60http://www.baidu.com/img/logo.png%60%EF%BC%8C%E6%8A%93%E5%8C%85%E5%A6%82%E6%9E%9C%E5%8F%91%E7%8E%B0%E8%AF%B7%E6%B1%82%E5%8C%85%E4%B8%AD%E6%9C%89%60GET">http://www.xxx.com/a.php?image=`http://www.baidu.com/img/logo.png`，抓包如果发现请求包中有`GET</a> &#x2F;img&#x2F;logo.png HTTP&#x2F;1.1&#96;、Host:<a href="http://www.baidu.com……之类的字眼，就说明不是SSRF。">www.baidu.com……之类的字眼，就说明不是SSRF。</a></li>
+</ol>
+<p><strong>产生漏洞的常见函数</strong></p>
+<ol>
+<li><strong>file_get_contents</strong>：PHP中的file_get_contents函数用于从文件或URL中读取内容。如果应用程序接受用户输入的URL作为函数参数，并未对输入进行充分的验证和过滤，攻击者可以通过注入恶意URL来触发SSRF漏洞。</li>
+<li>**sockopen()**：sockopen()是一个网络编程函数，通常用于在PHP中建立与远程服务器的网络连接。它的作用是打开一个网络套接字连接到指定的主机和端口。</li>
+</ol>
+<h3 id="3-常用绕过方法"><a href="#3-常用绕过方法" class="headerlink" title="3.常用绕过方法"></a>3.常用绕过方法</h3><ol>
+<li><p><strong>限制为<code>http://www.xxx.com </code>域名时（利用@）</strong>：可以尝试采用http基本身份认证的方式绕过如：<code>http://www.aaa.com@www.bbb.com@www.ccc.com</code>，在对@解析域名中，不同的处理函数存在处理差异在PHP的parse_url中会识别<a target="_blank" rel="noopener" href="http://www.ccc.com,而libcurl则识别为www.bbb.com/">www.ccc.com，而libcurl则识别为www.bbb.com</a></p>
+</li>
+<li><p><strong>采用短网址绕过</strong>：短网址绕过的原理是基于短网址服务的重定向机制。一般来说，短网址服务会将用户提供的长网址映射到一个较短的别名，并将该别名与原始的长网址进行关联。即将目标地址改为我们选择的短网址，如：<code>https://example.com/show-image?url=https://goo.gl/abc123</code>。</p>
+</li>
+<li><p><strong>采用进制转换</strong>：运用网上的地址进制转换器将地址转换之后也可以访问，如：127.0.0.1转换为十进制为：2130706433；转换为十六进制为：7F000001</p>
+</li>
+<li><p><strong>利用特殊域名</strong>：利用特殊域名的原理是指攻击者通过使用某些特殊的域名或 IP 地址来绕过目标服务器对目标地址的验证和过滤。这些特殊的域名或 IP 地址可以是指向内部网络、本地主机或其他受限资源的地址。</p>
+<p>下面是一些常见的特殊域名：</p>
+<ul>
+<li><p><code>localhost</code>和<code>1.7.0.0.1</code>：指向本地主机，一般用于指定目标地址为本地服务。例如，<code>http://localhost:8080</code>。</p>
+</li>
+<li><p>内部网：</p>
+<p><code>10.0.0.0</code> - <code>10.255.255.255</code>：用于私有网络。</p>
+<p><code>172.16.0.0</code> - <code>172.31.255.255</code>：用于私有网络。</p>
+<p><code>192.168.0.0</code> - <code>192.168.255.255</code>：用于私有网络。</p>
+</li>
+<li><p><code>169.254.x.x</code>：这是保留的自动配置IPv4地址，用于本地链路本地连接。虽然通常用于DHCP配置失败的自动配置，但攻击者可能会利用它来访问内部资源</p>
+</li>
+<li><p>内部域名：这些域名通常用于内部网络和本地开发环境，如：</p>
+<p><code>intranet.example.com</code></p>
+<p><code>internal.example.com</code></p>
+<p><code>dev.local</code></p>
+</li>
+</ul>
+</li>
+<li><p>**利用<code>[::]</code>**：该符号与127.0.0.1等效，可以利用他来绕过127.0.0.1或localhost</p>
+</li>
+<li><p><strong>利用句号</strong>：将地址中用来隔开的点换位句号，在部分情况同样可以使用。</p>
+</li>
+<li><p><strong>CRLF 编码绕过</strong></p>
+<blockquote>
+<p>%0d-&gt;0x0d-&gt;\r回车<br>%0a-&gt;0x0a-&gt;\n换行<br>进行HTTP头部注入</p>
+</blockquote>
+</li>
+<li><p>利用封闭的字母数字</p>
+<p>利用Enclosed alphanumerics<br>ⓔⓧⓐⓜⓟⓛⓔ.ⓒⓞⓜ &gt;&gt;&gt; example.com<br><a href="http://169.254.169.254>>>http://[::①⑥⑨｡②⑤④｡⑯⑨｡②⑤④]">http://169.254.169.254&gt;&gt;&gt;http://[::①⑥⑨｡②⑤④｡⑯⑨｡②⑤④]</a><br>List:<br>① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ⑪ ⑫ ⑬ ⑭ ⑮ ⑯ ⑰ ⑱ ⑲ ⑳<br>⑴ ⑵ ⑶ ⑷ ⑸ ⑹ ⑺ ⑻ ⑼ ⑽ ⑾ ⑿ ⒀ ⒁ ⒂ ⒃ ⒄ ⒅ ⒆ ⒇<br>⒈ ⒉ ⒊ ⒋ ⒌ ⒍ ⒎ ⒏ ⒐ ⒑ ⒒ ⒓ ⒔ ⒕ ⒖ ⒗ ⒘ ⒙ ⒚ ⒛<br>⒜ ⒝ ⒞ ⒟ ⒠ ⒡ ⒢ ⒣ ⒤ ⒥ ⒦ ⒧ ⒨ ⒩ ⒪ ⒫ ⒬ ⒭ ⒮ ⒯ ⒰ ⒱ ⒲ ⒳ ⒴ ⒵<br>Ⓐ Ⓑ Ⓒ Ⓓ Ⓔ Ⓕ Ⓖ Ⓗ Ⓘ Ⓙ Ⓚ Ⓛ Ⓜ Ⓝ Ⓞ Ⓟ Ⓠ Ⓡ Ⓢ Ⓣ Ⓤ Ⓥ Ⓦ Ⓧ Ⓨ Ⓩ<br>ⓐ ⓑ ⓒ ⓓ ⓔ ⓕ ⓖ ⓗ ⓘ ⓙ ⓚ ⓛ ⓜ ⓝ ⓞ ⓟ ⓠ ⓡ ⓢ ⓣ ⓤ ⓥ ⓦ ⓧ ⓨ ⓩ<br>⓪ ⓫ ⓬ ⓭ ⓮ ⓯ ⓰ ⓱ ⓲ ⓳ ⓴<br>⓵ ⓶ ⓷ ⓸ ⓹ ⓺ ⓻ ⓼ ⓽ ⓾ ⓿</p>
+</li>
+</ol>
+<h2 id="三-漏洞的利用"><a href="#三-漏洞的利用" class="headerlink" title="三.漏洞的利用"></a>三.漏洞的利用</h2><ol>
+<li><p>内网访问</p>
+<p>用HTTP协议来对内网的web进行访问，如：?url&#x3D;<a target="_blank" rel="noopener" href="http://127.0.0.1/flag.php">http://127.0.0.1/flag.php</a></p>
+</li>
+<li><p>伪协议读取文件</p>
+<p>这里的伪协议包括php伪协议和PHP支持的伪协议常见的如下</p>
+<pre class="line-numbers language-none"><code class="language-none">file:&#x2F;&#x2F; — 访问本地文件系统
+http:&#x2F;&#x2F; — 访问 HTTP(s) 网址
+ftp:&#x2F;&#x2F; — 访问 FTP(s) URLs
+php:&#x2F;&#x2F; — 访问各个输入&#x2F;输出流（I&#x2F;O streams）
+zlib:&#x2F;&#x2F; — 压缩流
+data:&#x2F;&#x2F; — 数据（RFC 2397）
+glob:&#x2F;&#x2F; — 查找匹配的文件路径模式
+phar:&#x2F;&#x2F; — PHP 归档
+ssh2:&#x2F;&#x2F; — Secure Shell 2
+rar:&#x2F;&#x2F; — RAR
+ogg:&#x2F;&#x2F; — 音频流
+expect:&#x2F;&#x2F; — 处理交互式的流<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>端口扫描</p>
+<p>在SSRF中，dict协议与http协议可以用来探测内网主机存活与端口开放情况。</p>
+<pre class="line-numbers language-none"><code class="language-none">?url&#x3D;dict:&#x2F;&#x2F;127.0.0.1:8000<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>用burp，在intruder中，将端口设置为变量。使用Simple List扫描常用端口，或者使用NumerList进行枚举。当发现长度不同的数据包时，再用<code>http</code>协议进一步探测。</p>
+<pre class="line-numbers language-none"><code class="language-none">?url&#x3D;http:&#x2F;&#x2F;127.0.0.1:8111<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>发送POST请求</p>
+<p>若要发送POST请求，则需要Gopher协议的利用，协议的用法在上边已经说明，但要注意的一点是：在get传参中，构造<code>HTTP</code>数据包，<code>URL</code>编码、替换回车换行为<code>%0d%0a</code>，<code>HTTP</code>包最后加<code>%0d%0a</code>代表消息结束，发送<code>gopher</code>协议, 协议后的<code>IP</code>一定要接端口。</p>
+<p>在post传参当中：<code>POST</code>与<code>GET</code>传参的区别：它有<code>4</code>个参数为必要参数，需要传递<code>Content-Type</code>,<code>Content-Length</code>,<code>host</code>,<code>post</code>的参数</p>
+</li>
+<li><p>提交文件</p>
+<p>先正常抓取一个文件上传的包，再将其改为gopher协议的格式，便可以传输文件了。</p>
+</li>
+<li><p>攻击FastCGI协议</p>
+<p>首先我们要说明，什么是FastCGI协议？</p>
+<p>该协议是改进web服务器与应用程序之间的通讯协议，</p>
+<p>该协议用法具体见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/mysteryflower/article/details/94386461">Fastcgi协议分析 &amp;&amp; PHP-FPM未授权访问漏洞 &amp;&amp; Exp编写_mysteryflower的博客-CSDN博客</a></p>
+</li>
+</ol>
+<p> 全部用法详情见详细解释见：<a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/265646.html">SSRF的利用方式 - FreeBuf网络安全行业门户</a></p>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2023/07/16/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">sql注入学习笔记</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">文件上传笔记</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img src="https://s.gravatar.com/avatar/2d6b803eea37de0257620d5fabee7e64?s=200&amp;r=g&amp;d=retro" class="soft-size--round soft-style--box" alt="Creeper">
+    
+    
+      <h2>Creeper</h2>
+    
+    
+      <p>贵在坚持</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>7</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        0
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        1
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>芜湖~~~~~~~~~~~~</p>
+  </div>
+</section>
+
+
+      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+    <span>CATEGORYS</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categorys-list">
+      
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/web%E5%AE%89%E5%85%A8/" style="font-size: 10px;" class="tags-cloud-0">web安全</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/621779/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+          <a href="https://twitter.com/guanquanhong" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-twitter" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M962.285714 233.142857q-38.285714 56-92.571429 95.428571 0.571429 8 0.571429 24 0 74.285714-21.714286 148.285714t-66 142-105.428571 120.285714-147.428571 83.428571-184.571429 31.142857q-154.857143 0-283.428571-82.857143 20 2.285714 44.571429 2.285714 128.571429 0 229.142857-78.857143-60-1.142857-107.428571-36.857143t-65.142857-91.142857q18.857143 2.857143 34.857143 2.857143 24.571429 0 48.571429-6.285714-64-13.142857-106-63.714286t-42-117.428571l0-2.285714q38.857143 21.714286 83.428571 23.428571-37.714286-25.142857-60-65.714286t-22.285714-88q0-50.285714 25.142857-93.142857 69.142857 85.142857 168.285714 136.285714t212.285714 56.857143q-4.571429-21.714286-4.571429-42.285714 0-76.571429 54-130.571429t130.571429-54q80 0 134.857143 58.285714 62.285714-12 117.142857-44.571429-21.142857 65.714286-81.142857 101.714286 53.142857-5.714286 106.285714-28.571429z"></path>
+</svg>
+          </a>
+        
+      
+    </div>
+     
+    <p>&copy; 2023 <a href="/" target="_blank">阿巴</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  <!-- aplayer -->
+
+
+<!-- dplayer -->
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+</body>
+</html>
