@@ -108,7 +108,7 @@
           
             <h2 class="title-sub-wrap new-date">
               <span>最后更新于</span>
-              <time  class="article-updated" datetime="2023-07-18T13:29:06.249Z" itemprop="dateUpdated">2023-07-18</time>
+              <time  class="article-updated" datetime="2023-07-18T13:31:16.428Z" itemprop="dateUpdated">2023-07-18</time>
             </h2>
           
           
@@ -143,7 +143,6 @@
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
         <span id="more"></span>
 
-<p><img src="/images/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/html%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95.png"></p>
 <h1 id="sql注入学习笔记"><a href="#sql注入学习笔记" class="headerlink" title="sql注入学习笔记"></a>sql注入学习笔记</h1><h2 id="1-MySQL注入类型"><a href="#1-MySQL注入类型" class="headerlink" title="1.MySQL注入类型"></a>1.MySQL注入类型</h2><p>可以按照两个分类标准来进行分类，当然常见的就是按照注入方式的不同将其分类为：</p>
 <ol>
 <li><p>联合查询注入：可以明确判断回显位置的情况下使用</p>
@@ -296,7 +295,7 @@
 <p>判断方法，在id&#x3D;1之后加一个分号，如过报错或无法运行，则表示无法进行堆叠注入，如果正常运行，则表示可以进行堆叠注入。</p>
 <p>该方法优势：该方法相较于联合查询语句，它可以将数据库中的数据进行修改，而联合查询只能执行查询语句。</p>
 <h2 id="5-二次注入"><a href="#5-二次注入" class="headerlink" title="5.二次注入"></a>5.二次注入</h2><p>原理：</p>
-<p><img src="https://img-blog.csdnimg.cn/9dd485b00d2f4a7384ebc465b369d689.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSx5o6n55qE6I-c6bih546p5a62,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<p><img src="/images/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%8C%E6%AC%A1%E6%B3%A8%E5%85%A5.png"></p>
 <p>简单点说就是第一次输入时进了过滤，第二次取出时未进行处理，直接进行第二此注入，就会产生漏洞。</p>
 <h2 id="6-过滤注入"><a href="#6-过滤注入" class="headerlink" title="6.过滤注入"></a>6.过滤注入</h2><ol>
 <li><p>过滤注释符号：即传入的注释符号被删除，即出现<code>--</code>或<code>#</code>号时，直接删除掉，解决过滤时，可以用括号<code>（’</code>符号进行注释,具体情况具体分析。</p>
@@ -408,8 +407,8 @@ WHERE condition;<span aria-hidden="true" class="line-numbers-rows"><span></span>
     
     <div class="card-text">
       
-        <a href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">文件上传笔记</h2>
+        <a href="/2023/07/16/PHP%E7%89%B9%E6%80%A7/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">sql注入学习笔记</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -423,8 +422,8 @@ WHERE condition;<span aria-hidden="true" class="line-numbers-rows"><span></span>
     
     <div class="card-text">
       
-        <a href="/2023/07/16/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%88XSS%EF%BC%89%E6%94%BB%E5%87%BB/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">跨站脚本攻击（XSS）攻击</h2>
+        <a href="/2023/07/16/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">RCE学习笔记</h2>
         </a>
       
       <div class="card-text--row">Older</div>

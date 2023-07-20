@@ -26,7 +26,7 @@
 
   
 
-  <title>PHP特性 | 阿巴</title>
+  <title>sql注入学习笔记 | 阿巴</title>
 
   
 
@@ -99,12 +99,17 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">PHP特性</h1>
+          <h1 class="title-wrap">sql注入学习笔记</h1>
           <h2 class="title-sub-wrap">
             <strong>阿巴</strong>
             <span>发布于</span>
             <time  class="article-date" datetime="2023-07-16T06:35:17.000Z" itemprop="datePublished">2023-07-16</time>
           </h2>
+          
+            <h2 class="title-sub-wrap new-date">
+              <span>最后更新于</span>
+              <time  class="article-updated" datetime="2023-07-19T13:29:29.706Z" itemprop="dateUpdated">2023-07-19</time>
+            </h2>
           
           
           <ul class="wrap-list dark">
@@ -138,9 +143,57 @@
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
         <span id="more"></span>
 
-<h1 id="PHP特性"><a href="#PHP特性" class="headerlink" title="PHP特性"></a>PHP特性</h1><h2 id="1-元字符"><a href="#1-元字符" class="headerlink" title="1.元字符"></a>1.元字符</h2><p><img src="F:\网络安全\图片资料\php特性.png"></p>
+<h1 id="PHP特性"><a href="#PHP特性" class="headerlink" title="PHP特性"></a>PHP特性</h1><p>php松散比较表：<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/types.comparisons.php">PHP: PHP 类型比较表 - Manual</a></p>
+<h2 id="0-基本弱类型"><a href="#0-基本弱类型" class="headerlink" title="0.基本弱类型"></a>0.基本弱类型</h2><ol>
+<li><p>数组比较：在php手册中写道，当数组(array)与任何非数组进行比较时，数组总是最大的，所以有以下结果“</p>
+<pre class="line-numbers language-none"><code class="language-none">var_dump([]&gt;0); &#x2F;&#x2F;bool(true)
+var_dump([]&gt;9999); &#x2F;&#x2F;bool(true)
+var_dump([]&gt;&#39;a&#39;); &#x2F;&#x2F;bool(true) #数组大于字符串
+var_dump([[]]&gt;[]); &#x2F;&#x2F;bool(true) #自然二位数组大于一维数组<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>bool类型的true比较* bool类型的true跟任意字符可以弱类型相等</p>
+</li>
+</ol>
+   <pre class="line-numbers language-none"><code class="language-none">var_dump(true &#x3D;&#x3D; &#39;a&#39;); &#x2F;&#x2F;bool(true)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ol start="3">
+<li><code>==</code>与<code>===</code>的区别：</li>
+</ol>
+<ul>
+<li><p>在进行比较时，向将两边的类型转化成相同类型再进行比较，如果涉及到数值内容的字符串，则字符串会被转化成数值（通过<code>intval()</code>函数），并且按照数值大小进行比较（<code>&gt;</code>、<code>&lt;</code>同理）。 <strong>补充</strong>： - “根据php手册中所讲，字符串的开头决定了它转换后的值，如果该字符串以合法的数值开始，则使用该合法数值，否则其值为0” - 如果字符创中没有包含<code>.</code>、<code>e</code>、<code>E</code>并且其数值在整形范围内，该字符被当做int来取值，其他所有情况都被作为float来取值。 - 0e开头的字符串被认为是科学技术计数法，且0e开头的数值为0 - 当一个整形与其他类型进行比较时，会先把其他类型进行<code>intval()</code>后再进行比较 所以有如下结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">var_dump(1 &#x3D;&#x3D; &#39;1&#39;); &#x2F;&#x2F;bool(true)
+var_dump(1 &#x3D;&#x3D; &#39;1a&#39;); &#x2F;&#x2F;bool(true)
+var_dump(0 &#x3D;&#x3D; &#39;0exxx&#39;); &#x2F;&#x2F;bool(true)
+var_dump(0 &#x3D;&#x3D; &#39;a1&#39;); &#x2F;&#x2F;bool(true)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<ol start="4">
+<li><code>strcmp()</code>、<code>strcasecmp()</code>函数* <code>strcmp(string1, string2)</code>、<code>strcasecmp(string1, string2)</code> 比较两个字</li>
+</ol>
+<p>   符串，前者不区分大小写，后者区分大小写。若<code>string1 &gt; string2</code>，返回<code>&gt; 0</code>；若<code>string1 &lt; string2</code>，返回&#96;&lt;</p>
+<p>   0<code>;若</code>string1 &#x3D; string2<code>，返回</code>0<code>。然而该函数无法处理数组，当出现数组时，返回</code>null&#96;。(下例中@表示忽略警</p>
+<p>   告)：</p>
+   <pre class="line-numbers language-none"><code class="language-none">var_dump(@strcmp([],1));                &#x2F;&#x2F;NULL
+var_dump(@strcmp([],&#39;flag&#39;) &#x3D;&#x3D; 0);    &#x2F;&#x2F;bool(true)
+var_dump(@strcmp([],&#39;flag&#39;) &#x3D;&#x3D;&#x3D; 0);    &#x2F;&#x2F;bool(false)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ol start="5">
+<li><p><code>switch()</code>函数* switch()语句用于根据多个不同的条件执行不同的动作。</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token variable">$n</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'2a'</span><span class="token punctuation">;</span>
+  <span class="token keyword">switch</span><span class="token punctuation">(</span><span class="token variable">$n</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+      <span class="token keyword">case</span> <span class="token number">2</span><span class="token punctuation">:</span>
+          <span class="token keyword">echo</span> <span class="token string single-quoted-string">'yes'</span><span class="token punctuation">;</span>          
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
+      <span class="token keyword">default</span><span class="token punctuation">:</span>
+          <span class="token keyword">echo</span> <span class="token string single-quoted-string">'no'</span><span class="token punctuation">;</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>此例中，为数值类型的case，switch会将参数转换为数值（此处可理解为通过&#x3D;&#x3D;进行比较。）。</p>
+</li>
+</ol>
+<h2 id="1-元字符"><a href="#1-元字符" class="headerlink" title="1.元字符"></a>1.元字符</h2><p><img src="/images/PHP%E7%89%B9%E6%80%A7/php%E7%89%B9%E6%80%A7.png"></p>
 <p>关于正则表达式的详细介绍见：<a target="_blank" rel="noopener" href="https://www.runoob.com/regexp/regexp-metachar.html">正则表达式 – 元字符 | 菜鸟教程 (runoob.com)</a>。</p>
-<h2 id="2-模式修正符："><a href="#2-模式修正符：" class="headerlink" title="2.模式修正符："></a>2.模式修正符：</h2><p><img src="F:\网络安全\图片资料\php特性1.png"></p>
+<h2 id="2-模式修正符："><a href="#2-模式修正符：" class="headerlink" title="2.模式修正符："></a>2.模式修正符：</h2><p><img src="/images/PHP%E7%89%B9%E6%80%A7/php%E7%89%B9%E6%80%A71.png"></p>
 <p>对于模式修正符的介绍与使用见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_54646993/article/details/116097222%E3%80%82">https://blog.csdn.net/weixin_54646993/article/details/116097222。</a></p>
 <h2 id="3-preg-match-函数"><a href="#3-preg-match-函数" class="headerlink" title="3.preg_match()函数"></a>3.preg_match()函数</h2><p>该函数用于执行一个正则表达式匹配，语法如下：</p>
 <pre class="line-numbers language-none"><code class="language-none">int preg_match ( string $pattern , string $subject [, array &amp;$matches [, int $flags &#x3D; 0 [, int $offset &#x3D; 0 ]]] )<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -261,6 +314,57 @@ r<span class="token operator">=</span>requests<span class="token punctuation">.<
 
 <p>这道题在上边的基础上加了一个0的过滤，故无法用进制转换绕过，只能通过小数点，使得intval()转变为int()；所以我们传数字<code>num=4476.0</code></p>
 </li>
+<li><p>左移绕过：通过位运算符<code>&lt;&lt;</code>和<code>&gt;&gt;</code>，我们可以控制数的大小，用法如下：</p>
+<ul>
+<li><p>“&lt;&lt;” 左移运算符：将一个数的二进制表示向左移动指定的位数，右侧用零填充。移位后的数相当于乘以2的移动的位数次幂。</p>
+<p>示例：</p>
+<pre class="line-numbers language-none"><code class="language-none">$num &#x3D; 5;  &#x2F;&#x2F; 二进制表示为 00000101
+$result &#x3D; $num &lt;&lt; 2;  &#x2F;&#x2F; 向左移动2位
+echo $result;  &#x2F;&#x2F; 输出 20，相当于 5 * (2的2次幂) &#x3D; 20<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>“&gt;&gt;” 右移运算符：将一个数的二进制表示向右移动指定的位数，左侧用符号位填充（即对于正数用0填充，对于负数用1填充）。移位后的数相当于除以2的移动的位数次幂。</p>
+<p>示例：</p>
+<pre class="line-numbers language-none"><code class="language-none">$num &#x3D; 16;  &#x2F;&#x2F; 二进制表示为 00010000
+$result &#x3D; $num &gt;&gt; 2;  &#x2F;&#x2F; 向右移动2位
+echo $result;  &#x2F;&#x2F; 输出 4，相当于 16 &#x2F; (2的2次幂) &#x3D; 4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<p>如下例题：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token comment"># 包含数据库连接文件</span>
+<span class="token keyword">include</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"config.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment"># 判断get提交的参数id是否存在</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'id'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token variable">$id</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'id'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"/or|\+/i"</span><span class="token punctuation">,</span><span class="token variable">$id</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"id error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment"># 判断id的值是否大于999</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">intval</span><span class="token punctuation">(</span><span class="token variable">$id</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">999</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token comment"># id 大于 999 直接退出并返回错误</span>
+        <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"id error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+        <span class="token comment"># id 小于 999 拼接sql语句</span>
+        <span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"select * from article where id = <span class="token interpolation"><span class="token variable">$id</span></span> order by id limit 1 "</span><span class="token punctuation">;</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"执行的sql为：<span class="token interpolation"><span class="token variable">$sql</span></span>&lt;br>"</span><span class="token punctuation">;</span>
+        <span class="token comment"># 执行sql 语句</span>
+        <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$conn</span><span class="token operator">-></span><span class="token function">query</span><span class="token punctuation">(</span><span class="token variable">$sql</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment"># 判断有没有查询结果</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$result</span><span class="token operator">-></span><span class="token property">num_rows</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment"># 如果有结果，获取结果对象的值$row</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token variable">$row</span> <span class="token operator">=</span> <span class="token variable">$result</span><span class="token operator">-></span><span class="token function">fetch_assoc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">echo</span> <span class="token string double-quoted-string">"id: "</span> <span class="token operator">.</span> <span class="token variable">$row</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"id"</span><span class="token punctuation">]</span><span class="token operator">.</span> <span class="token string double-quoted-string">" - title: "</span> <span class="token operator">.</span> <span class="token variable">$row</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"title"</span><span class="token punctuation">]</span><span class="token operator">.</span> <span class="token string double-quoted-string">" &lt;br>&lt;hr>"</span> <span class="token operator">.</span> <span class="token variable">$row</span><span class="token punctuation">[</span><span class="token string double-quoted-string">"content"</span><span class="token punctuation">]</span><span class="token operator">.</span> <span class="token string double-quoted-string">"&lt;br>"</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment"># 关闭数据库连接</span>
+        <span class="token variable">$conn</span><span class="token operator">-></span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+<span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+    <span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这个题目当中，目标id&#x3D;1000，我们要绕过intval()函数，该函数使用前几种方法的值大小都不会改变，但由于该函数有<strong>intval()而言，如果参数是字符串，则返回字符串中第一个不是数字的字符之前的数字串所代表的整数值</strong>此条性质，我们便可以将<code>id=%0a125&lt;&lt;3</code>，此时，该函数读取到的数是123，但该数实际值却是1000，这样，便可以成功绕过。</p>
+</li>
 </ul>
 <h2 id="5-strpos-函数"><a href="#5-strpos-函数" class="headerlink" title="5.strpos()函数"></a>5.strpos()函数</h2><p>此函数是查询某字符在字符串中第一次出现的位置，且区分大小写，语法格式如下：</p>
 <p><code>strpos(string,find,start)</code></p>
@@ -300,7 +404,7 @@ strrpos() - 查找字符串在另一字符串中最后一次出现的位置（�
 <li><p>根据逻辑关系直接绕过：这种情况出现较少，在遇到题目之后再做记录。</p>
 </li>
 </ul>
-<h2 id="6-MD5"><a href="#6-MD5" class="headerlink" title="6.MD5"></a>6.MD5</h2><p>该函数用于将一字符串进行md5编码后输出，语法格式如下：</p>
+<h2 id="6-MD5和sha1-函数"><a href="#6-MD5和sha1-函数" class="headerlink" title="6.MD5和sha1()函数"></a>6.MD5和sha1()函数</h2><h3 id="md5"><a href="#md5" class="headerlink" title="md5"></a>md5</h3><p>该函数用于将一字符串进行md5编码后输出，语法格式如下：</p>
 <p><code>md5(string,raw)</code></p>
 <table>
 <thead>
@@ -338,7 +442,7 @@ strrpos() - 查找字符串在另一字符串中最后一次出现的位置（�
 <p><strong>绕过方法</strong>：</p>
 <ul>
 <li><p>数组绕过：将需要我们传入的数据设置为数组，在此种情况下，会产生报错，但返回值为真：</p>
-<p><img src="F:\网络安全\图片资料\md5数组绕过.png"></p>
+<p><img src="/images/PHP%E7%89%B9%E6%80%A7/md5%E6%95%B0%E7%BB%84%E7%BB%95%E8%BF%87.png"></p>
 <p>在此题目当中，可以得到NULL&#x3D;&#x3D;NULL，便可以成功绕过。（注意：假如对参数进行了过滤，此种方法便不再可行。）</p>
 </li>
 <li><p>常规的0e绕过：”0e”绕过是指通过寻找特定输入，使其MD5值以”0e”开头，后跟一系列数字，同时该MD5值被解释为科学计数法中的0乘以10的指数，也就是成为<code>0=0</code>，便可以绕过。这可能导致验证代码中的类型转换错误，从而导致绕过某些安全检查；常见开头为0e的md5值的字符串有以下：</p>
@@ -358,6 +462,16 @@ strrpos() - 查找字符串在另一字符串中最后一次出现的位置（�
 <p>经过MySQL编码后会变成’or’6xxx,使SQL恒成立,相当于万能密码,可以绕过md5()函数的加密</p>
 </li>
 </ul>
+<h3 id="sha1-函数"><a href="#sha1-函数" class="headerlink" title="sha1()函数"></a>sha1()函数</h3><p>sha()函数大致与md5函数相同，同样无法处理数组，遇到数组会警告并返回NULL，0e同样可以绕过该函数，也同样可以MySQL注入，但与md5函数的不同；下列是sha1()函数的0e绕过的特殊数</p>
+<pre class="line-numbers language-none"><code class="language-none">sha1(&#39;aaroZmOk&#39;) &#x2F;&#x2F;0e66507019969427134894567494305185566735
+sha1(&#39;aaK1STfY&#39;) &#x2F;&#x2F;0e76658526655756207688271159624026011393
+sha1(&#39;aaO8zKZF&#39;) &#x2F;&#x2F;0e89257456677279068558073954252716165668
+sha1(&#39;aa3OFF9m&#39;) &#x2F;&#x2F;0e36977786278517984959260394024281014729<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
 <h2 id="7-file-put-contents-函数"><a href="#7-file-put-contents-函数" class="headerlink" title="7.file_put_contents()函数"></a>7.file_put_contents()函数</h2><p>该函数把一个字符串写入文件中。</p>
 <p>该函数访问文件时，遵循以下规则：</p>
 <ol>
@@ -614,6 +728,161 @@ strrpos() - 查找字符串在另一字符串中最后一次出现的位置（�
 <li><p>get与post：http协议默认先以get方式获取数据，无论是否以哪种方式发起的，总是get方式优先，即通过get方式获取到了数据就不会再去通过post方式获取一遍，如果get方式获取不到，再以post方式获取。</p>
 </li>
 </ul>
+<h2 id="10-ReflectionClass反射类"><a href="#10-ReflectionClass反射类" class="headerlink" title="10.ReflectionClass反射类"></a>10.ReflectionClass反射类</h2><p>反射可以帮助我们动态地获取和分析代码的结构和信息。等遇到题目再结合分析。</p>
+<h2 id="11-is-numeric-函数"><a href="#11-is-numeric-函数" class="headerlink" title="11.is_numeric()函数"></a>11.is_numeric()函数</h2><p><strong>is_numeric()</strong> 函数用于检测变量是否为数字或数字字符串。语法如下：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword type-declaration">bool</span> <span class="token function">is_numeric</span> <span class="token punctuation">(</span> <span class="token keyword type-hint">mixed</span> <span class="token variable">$var</span> <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>$var：要检测的变量。</p>
+<p>返回值：如果指定的变量是数字和数字字符串则返回 TRUE，否则返回 FALSE。</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$var_name1</span><span class="token operator">=</span><span class="token number">678</span><span class="token punctuation">;</span>
+<span class="token variable">$var_name2</span><span class="token operator">=</span><span class="token string double-quoted-string">"a678"</span><span class="token punctuation">;</span>
+<span class="token variable">$var_name3</span><span class="token operator">=</span><span class="token string double-quoted-string">"678"</span><span class="token punctuation">;</span>
+<span class="token variable">$var_name4</span><span class="token operator">=</span><span class="token string double-quoted-string">"runoob.com"</span><span class="token punctuation">;</span>
+<span class="token variable">$var_name5</span><span class="token operator">=</span><span class="token number">698.99</span><span class="token punctuation">;</span>
+<span class="token variable">$var_name6</span><span class="token operator">=</span><span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"a1"</span><span class="token punctuation">,</span><span class="token string double-quoted-string">"a2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$var_name7</span><span class="token operator">=</span><span class="token operator">+</span><span class="token number">125689.66</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$var_name1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">echo</span> <span class="token string double-quoted-string">"<span class="token interpolation"><span class="token variable">$var_name1</span></span> 是数字"</span> <span class="token operator">.</span> <span class="token constant">PHP_EOL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">else</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">echo</span> <span class="token string double-quoted-string">"<span class="token interpolation"><span class="token variable">$var_name1</span></span> 不是数字"</span> <span class="token operator">.</span> <span class="token constant">PHP_EOL</span> <span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$var_name2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">echo</span> <span class="token string double-quoted-string">"<span class="token interpolation"><span class="token variable">$var_name2</span></span> 是数字"</span> <span class="token operator">.</span> <span class="token constant">PHP_EOL</span> <span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">else</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">echo</span> <span class="token string double-quoted-string">"<span class="token interpolation"><span class="token variable">$var_name2</span></span> 不是数字"</span> <span class="token operator">.</span> <span class="token constant">PHP_EOL</span> <span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token variable">$result</span><span class="token operator">=</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$var_name3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"[ <span class="token interpolation"><span class="token variable">$var_name3</span></span> 是数字吗? ]"</span> <span class="token operator">.</span><span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span> <span class="token operator">.</span> <span class="token constant">PHP_EOL</span><span class="token punctuation">;</span>
+<span class="token variable">$result</span><span class="token operator">=</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$var_name4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"[ <span class="token interpolation"><span class="token variable">$var_name4</span></span> 是数字吗? ]"</span> <span class="token operator">.</span><span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span> <span class="token operator">.</span> <span class="token constant">PHP_EOL</span><span class="token punctuation">;</span>
+<span class="token variable">$result</span><span class="token operator">=</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$var_name5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"[ <span class="token interpolation"><span class="token variable">$var_name5</span></span> 是数字吗? ]"</span> <span class="token operator">.</span><span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span> <span class="token operator">.</span> <span class="token constant">PHP_EOL</span><span class="token punctuation">;</span>
+<span class="token variable">$result</span><span class="token operator">=</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$var_name6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"[ <span class="token interpolation"><span class="token variable">$var_name6</span></span> 是数字吗? ]"</span> <span class="token operator">.</span><span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span> <span class="token operator">.</span> <span class="token constant">PHP_EOL</span><span class="token punctuation">;</span>
+<span class="token variable">$result</span><span class="token operator">=</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$var_name7</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string double-quoted-string">"[ <span class="token interpolation"><span class="token variable">$var_name7</span></span> 是数字吗? ]"</span> <span class="token operator">.</span><span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>结果如下：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token number">678</span> 是数字
+a678 不是数字
+<span class="token keyword type-declaration">bool</span><span class="token punctuation">(</span><span class="token constant boolean">true</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span> <span class="token number">678</span> 是数字吗<span class="token operator">?</span> <span class="token punctuation">]</span>
+<span class="token keyword type-declaration">bool</span><span class="token punctuation">(</span><span class="token constant boolean">false</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span> runoob<span class="token operator">.</span>com 是数字吗<span class="token operator">?</span> <span class="token punctuation">]</span>
+<span class="token keyword type-declaration">bool</span><span class="token punctuation">(</span><span class="token constant boolean">true</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span> <span class="token number">698.99</span> 是数字吗<span class="token operator">?</span> <span class="token punctuation">]</span>
+<span class="token keyword type-declaration">bool</span><span class="token punctuation">(</span><span class="token constant boolean">false</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span> <span class="token keyword type-declaration">Array</span> 是数字吗<span class="token operator">?</span> <span class="token punctuation">]</span>
+<span class="token keyword type-declaration">bool</span><span class="token punctuation">(</span><span class="token constant boolean">true</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span> <span class="token number">125689.66</span> 是数字吗<span class="token operator">?</span> <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这个函数和mysql结合起来就容易出问题，那是因为is_numeric判断的时候，当碰到16进制数的时候，也会判断成数字，is_numeric函数对于空字符%00，无论是%00放在前后都可以判断为非数值，而%20空格字符只能放在数值后。所以，查看函数发现该函数对对于第一个空格字符会跳过空格字符判断，接着后面的判断。在部分情况时，在数字后边接%00也可以成功绕过。</p>
+<h2 id="12-call-user-func回调函数"><a href="#12-call-user-func回调函数" class="headerlink" title="12.call_user_func回调函数"></a>12.call_user_func回调函数</h2><p>call_user_func — 把第一个参数作为回调函数调用；回调函数：指的是一个函数作为参数传递给另一个函数，并且可以在后者中被调用执行的函数。语法如下：</p>
+<p>call_user_func(<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.callable.php">callable</a> <code>$callback</code>, <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed">mixed</a> <code>...$args</code>): <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed">mixed</a></p>
+<p>参数解释：</p>
+<ul>
+<li><p><code>callback</code> 是被调用的回调函数，其余参数是回调函数的参数。</p>
+</li>
+<li><p>callback：将被调用的回调函数（<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.callable.php">callable</a>）</p>
+</li>
+<li><p>args：0个或以上的参数，被传入回调函数</p>
+</li>
+</ul>
+<p>如下例，此函数提供了一种特殊的函数调用方法：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">function</span> <span class="token function-definition function">nowamagic</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">,</span><span class="token variable">$b</span><span class="token punctuation">)</span>   
+<span class="token punctuation">&#123;</span>   
+    <span class="token keyword">echo</span> <span class="token variable">$a</span><span class="token punctuation">;</span>   
+    <span class="token keyword">echo</span> <span class="token variable">$b</span><span class="token punctuation">;</span>   
+<span class="token punctuation">&#125;</span>   
+<span class="token function">call_user_func</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'nowamagic'</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"111"</span><span class="token punctuation">,</span><span class="token string double-quoted-string">"222"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+<span class="token function">call_user_func</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'nowamagic'</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"333"</span><span class="token punctuation">,</span><span class="token string double-quoted-string">"444"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+<span class="token comment">//显示 111 222 333 444   </span>
+<span class="token delimiter important">?></span></span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>调用类内部时，用的是array：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">a</span> <span class="token punctuation">&#123;</span>   
+    <span class="token keyword">function</span> <span class="token function-definition function">b</span><span class="token punctuation">(</span><span class="token variable">$c</span><span class="token punctuation">)</span>   
+    <span class="token punctuation">&#123;</span>   
+        <span class="token keyword">echo</span> <span class="token variable">$c</span><span class="token punctuation">;</span>   
+    <span class="token punctuation">&#125;</span>   
+<span class="token punctuation">&#125;</span>   
+<span class="token function">call_user_func</span><span class="token punctuation">(</span><span class="token keyword">array</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"a"</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string double-quoted-string">"111"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   
+<span class="token comment">//显示 111   </span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="13-php伪协议"><a href="#13-php伪协议" class="headerlink" title="13.php伪协议"></a>13.php伪协议</h2><p>对于php伪协议的详细介绍见<a target="_blank" rel="noopener" href="https://621779.github.io/2023/07/16/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">RCE学习笔记 </a></p>
+<p><strong>常见用法</strong></p>
+<ol>
+<li><p>写文件：</p>
+<p>在有file_put_contents(v 3 , v3,v3,str)函数的帮助下，我们可以通过下面这句代码直接写入木马到某文件：</p>
+<p><code>v3=php://filter/write=convert.base64-decode/resource=1.php&amp;str=......</code></p>
+</li>
+<li><p>读文件：</p>
+<p>读文件跟写入大致相同，但不需要额外写入write，大致语法如下：</p>
+<p><code>php://filter/convert.base64-decode/resource=想读取的文件名</code></p>
+<p>部分情况会遇到过滤，看情况绕过即可，对于该协议的详细介绍，见开头的连接文章。</p>
+</li>
+</ol>
+<h2 id="14-is-file-函数"><a href="#14-is-file-函数" class="headerlink" title="14.is_file()函数"></a>14.is_file()函数</h2><p>is_file() 函数检查指定的文件名是否是正常的文件。语法：<code>is_file(file)</code></p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><em>file</em></td>
+<td align="left">必需。规定要检查的文件。</td>
+</tr>
+</tbody></table>
+<p>该变量可以为伪协议。</p>
+<p>返回值：如果文件存在且为正常的文件，则返回 true。</p>
+<p><strong>伪协议绕过</strong></p>
+<p>highlight_file()可以识别php伪协议 is_file()不能识别php伪协议，所以我们可以通过为协议来绕过。</p>
+<p><strong>目录溢出绕过</strong></p>
+<p>在linux中&#x2F;proc&#x2F;self&#x2F;root是指向根目录的 也就是如果在命令行中输入 ls &#x2F;proc&#x2F;self&#x2F;root，其实显示的内容是根目录下的内容 多次重复后绕过is_file。</p>
+<pre class="line-numbers language-none"><code class="language-none">file&#x3D;&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;proc&#x2F;self&#x2F;root&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="15-parse-str-函数"><a href="#15-parse-str-函数" class="headerlink" title="15.parse_str()函数"></a>15.parse_str()函数</h2><p>把查询字符串解析到变量中,如下例：</p>
+<p>有一个url：<code>http://example.com/page.php?name=John&amp;age=25</code>，利用此函数我们便可以将此url当中的变量分开：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token variable">$queryString</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"name=John&amp;age=25"</span><span class="token punctuation">;</span>
+<span class="token function">parse_str</span><span class="token punctuation">(</span><span class="token variable">$queryString</span><span class="token punctuation">,</span> <span class="token variable">$output</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">echo</span> <span class="token variable">$output</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'name'</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 输出：John</span>
+<span class="token keyword">echo</span> <span class="token variable">$output</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'age'</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 输出：25</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>语法：<code>parse_str(string,array)</code></p>
+<p>变量解释：</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><em>string</em></td>
+<td align="left">必需。规定要解析的字符串。</td>
+</tr>
+<tr>
+<td align="left"><em>array</em></td>
+<td align="left">可选。规定存储变量的数组的名称。该参数指示变量将被存储到数组中。</td>
+</tr>
+</tbody></table>
+<p><strong>注意</strong>：如果未设置 <em>array</em> 参数，则由该函数设置的变量将覆盖已存在的同名变量。php.ini 文件中的 magic_quotes_gpc 设置影响该函数的输出。如果已启用，那么在 parse_str() 解析之前，变量会被 addslashes() 转换。且若要post参数，需加引号。</p>
+<p><strong>变量覆盖漏洞</strong></p>
+<p>parse_str() 函数用于把查询字符串解析到变量中，如果没有array 参数，则由该函数设置的变量将覆盖已存在的同名变量。 极度不建议 在没有 array参数的情况下使用此函数，并且在 PHP 7.2 中将废弃不设置参数的行为。此函数没有返回值</p>
 
       </section>
 
@@ -641,8 +910,8 @@ strrpos() - 查找字符串在另一字符串中最后一次出现的位置（�
     
     <div class="card-text">
       
-        <a href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">文件上传笔记</h2>
+        <a href="/2023/07/16/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">sql注入学习笔记</h2>
         </a>
       
       <div class="card-text--row">Older</div>
