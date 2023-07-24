@@ -1,149 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="theme-color" content="#3367D6"/>
-  <link rel="apple-touch-icon" href="/icons-192.png">
-  <link rel="manifest" href="/manifest.json">
-  
-
-
-  <meta name="generator" content="Hexo 6.3.0">
-
-  
-    <meta name="description" content="仰天大笑出门去，我辈岂是蓬蒿人">
-  
-
-  
-
-  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
     <meta name="author" content="阿巴">
-  
-
-  
-
-  
-
-  <title>PHP特性 | 阿巴</title>
-
-  
-
-  
-    <link rel="shortcut icon" href="/favicon.ico">
-  
-
-  
-
-  
-
-  
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/07/16/php特性/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="[TOC] PHP特性php松散比较表：PHP: PHP 类型比较表 - Manual  0.基本弱类型 数组比较：在php手册中写道，当数组(array)与任何非数组进行比较时，数组总是最大的，所以有以下结果“ var_dump([]&gt;0); &#x2F;&#x2F;bool(true) var_dump([]&gt;9999); &#x2F;&#x2F;bool(true) var_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP特性">
+<meta property="og:url" content="http://example.com/2023/07/16/PHP%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:site_name" content="阿巴">
+<meta property="og:description" content="[TOC] PHP特性php松散比较表：PHP: PHP 类型比较表 - Manual  0.基本弱类型 数组比较：在php手册中写道，当数组(array)与任何非数组进行比较时，数组总是最大的，所以有以下结果“ var_dump([]&gt;0); &#x2F;&#x2F;bool(true) var_dump([]&gt;9999); &#x2F;&#x2F;bool(true) var_">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/PHP%E7%89%B9%E6%80%A7/php%E7%89%B9%E6%80%A7-16902013667631.png">
+<meta property="og:image" content="http://example.com/images/PHP%E7%89%B9%E6%80%A7/php%E7%89%B9%E6%80%A71-16902013871722.png">
+<meta property="og:image" content="http://example.com/images/PHP%E7%89%B9%E6%80%A7/md5%E6%95%B0%E7%BB%84%E7%BB%95%E8%BF%87-16902014284863.png">
+<meta property="og:image" content="http://example.com/images/PHP%E7%89%B9%E6%80%A7/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%961.png">
+<meta property="article:published_time" content="2023-07-16T06:35:17.000Z">
+<meta property="article:modified_time" content="2023-07-24T12:27:45.413Z">
+<meta property="article:author" content="阿巴">
+<meta property="article:tag" content="web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/PHP%E7%89%B9%E6%80%A7/php%E7%89%B9%E6%80%A7-16902013667631.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            PHP特性 -
+        
+        |｡･㉨･)っ♡　喜欢你♪
+    </title>
+    
 <link rel="stylesheet" href="/css/style.css">
 
-</head>
-<body>
-  <div class="root-container">
     
-<!-- header container -->
-<header class="header-container post">
-  
-    <div class="post-image" style="background-image: url(https://qiniu.sukoshi.xyz/src/images/68686407_p0.jpg)"></div>
-  
+<link rel="stylesheet" href="/fonts/fonts.css">
 
-  <!-- navbar -->
-<nav class="navbar">
-  <div class="navbar-content">
-    <!-- logo -->
-    <div class="navbar-logo">
-      <a href="/">
-        
-          阿巴
-        
-      </a>
-    </div>
-    <!-- link -->
-    <div class="navbar-link">
-      <div class="navbar-btn">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <ul class="navbar-list">
-        
-          <li class="navbar-list-item"><a href="/">首页</a></li>
-        
-          <li class="navbar-list-item"><a href="/links">友链</a></li>
-        
-          <li class="navbar-list-item"><a href="/about">关于</a></li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
 
-  
-  
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
 
-  
-  
+    <!--- Font Part-->
+    
+    
+    
+    
 
-  
-  
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Theme Redefine","subtitle":{"text":[],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.2.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
 
-  
-  
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
 
-  
-  
-    <div class="header-content">
-      <div class="post-text layout-block">
-        <div class="layout-margin">
-          <h1 class="title-wrap">PHP特性</h1>
-          <h2 class="title-sub-wrap">
-            <strong>阿巴</strong>
-            <span>发布于</span>
-            <time  class="article-date" datetime="2023-07-16T06:35:17.000Z" itemprop="datePublished">2023-07-16</time>
-          </h2>
-          
-            <h2 class="title-sub-wrap new-date">
-              <span>最后更新于</span>
-              <time  class="article-updated" datetime="2023-07-20T02:51:44.851Z" itemprop="dateUpdated">2023-07-20</time>
-            </h2>
-          
-          
-          <ul class="wrap-list dark">
-  
-</ul>
-          <ul class="wrap-list dark">
-  
-    <li><a href="/tags/web%E5%AE%89%E5%85%A8/">🏷️ web安全</a></li>
-  
-</ul>
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                |｡･㉨･)っ♡　喜欢你♪
+                
+            </a>
         </div>
-      </div>
-    </div>
-  
 
-  
-  
-  
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        HOME
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                HOME
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
 </header>
 
-    <!-- 文章 -->
 
-<!-- 文章内容 -->
-<div class="body-container">
-  <article class="content-container layout-block post-container">
-    <div class="article-info">
-      
-      
-      
-      
-      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <span id="more"></span>
+        </div>
 
-<h1 id="PHP特性"><a href="#PHP特性" class="headerlink" title="PHP特性"></a>PHP特性</h1><p>php松散比较表：<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/types.comparisons.php">PHP: PHP 类型比较表 - Manual</a></p>
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            <div class="article-title">
+                
+                  <h1 class="article-title-regular">PHP特性</h1>
+                
+              </div>
+              
+                     
+            
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/redefine-avatar.svg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">阿巴</span>
+                            
+                                <span class="author-label">Lv1</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-07-16 14:35:17</span>
+        <span class="mobile">2023-07-16 14:35:17</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-07-24 20:27:45</span>
+            <span class="mobile">2023-07-24 20:27:45</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <span id="more"></span>
+
+<p>[TOC]</p>
+<h1 id="PHP特性"><a href="#PHP特性" class="headerlink" title="PHP特性"></a>PHP特性</h1><p>php松散比较表：<a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/types.comparisons.php" >PHP: PHP 类型比较表 - Manual <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <h2 id="0-基本弱类型"><a href="#0-基本弱类型" class="headerlink" title="0.基本弱类型"></a>0.基本弱类型</h2><ol>
 <li><p>数组比较：在php手册中写道，当数组(array)与任何非数组进行比较时，数组总是最大的，所以有以下结果“</p>
 <pre class="line-numbers language-none"><code class="language-none">var_dump([]&gt;0); &#x2F;&#x2F;bool(true)
@@ -157,17 +289,19 @@ var_dump([[]]&gt;[]); &#x2F;&#x2F;bool(true) #自然二位数组大于一维数�
    <pre class="line-numbers language-none"><code class="language-none">var_dump(true &#x3D;&#x3D; &#39;a&#39;); &#x2F;&#x2F;bool(true)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ol start="3">
-<li><code>==</code>与<code>===</code>的区别：</li>
-</ol>
+<li><p><code>==</code>与<code>===</code>的区别：</p>
 <ul>
 <li><p>在进行比较时，向将两边的类型转化成相同类型再进行比较，如果涉及到数值内容的字符串，则字符串会被转化成数值（通过<code>intval()</code>函数），并且按照数值大小进行比较（<code>&gt;</code>、<code>&lt;</code>同理）。 <strong>补充</strong>： - “根据php手册中所讲，字符串的开头决定了它转换后的值，如果该字符串以合法的数值开始，则使用该合法数值，否则其值为0” - 如果字符创中没有包含<code>.</code>、<code>e</code>、<code>E</code>并且其数值在整形范围内，该字符被当做int来取值，其他所有情况都被作为float来取值。 - 0e开头的字符串被认为是科学技术计数法，且0e开头的数值为0 - 当一个整形与其他类型进行比较时，会先把其他类型进行<code>intval()</code>后再进行比较 所以有如下结果：</p>
 <pre class="line-numbers language-none"><code class="language-none">var_dump(1 &#x3D;&#x3D; &#39;1&#39;); &#x2F;&#x2F;bool(true)
 var_dump(1 &#x3D;&#x3D; &#39;1a&#39;); &#x2F;&#x2F;bool(true)
 var_dump(0 &#x3D;&#x3D; &#39;0exxx&#39;); &#x2F;&#x2F;bool(true)
-var_dump(0 &#x3D;&#x3D; &#39;a1&#39;); &#x2F;&#x2F;bool(true)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+var_dump(0 &#x3D;&#x3D; &#39;a1&#39;); &#x2F;&#x2F;bool(true)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li></li>
 </ul>
-<ol start="4">
-<li><code>strcmp()</code>、<code>strcasecmp()</code>函数* <code>strcmp(string1, string2)</code>、<code>strcasecmp(string1, string2)</code> 比较两个字</li>
+</li>
+<li><p><code>strcmp()</code>、<code>strcasecmp()</code>函数* <code>strcmp(string1, string2)</code>、<code>strcasecmp(string1, string2)</code> 比较两个字</p>
+</li>
 </ol>
 <p>   符串，前者不区分大小写，后者区分大小写。若<code>string1 &gt; string2</code>，返回<code>&gt; 0</code>；若<code>string1 &lt; string2</code>，返回&#96;&lt;</p>
 <p>   0<code>;若</code>string1 &#x3D; string2<code>，返回</code>0<code>。然而该函数无法处理数组，当出现数组时，返回</code>null&#96;。(下例中@表示忽略警</p>
@@ -191,10 +325,20 @@ var_dump(@strcmp([],&#39;flag&#39;) &#x3D;&#x3D;&#x3D; 0);    &#x2F;&#x2F;bool(f
 <p>此例中，为数值类型的case，switch会将参数转换为数值（此处可理解为通过&#x3D;&#x3D;进行比较。）。</p>
 </li>
 </ol>
-<h2 id="1-元字符"><a href="#1-元字符" class="headerlink" title="1.元字符"></a>1.元字符</h2><p><img src="/images/PHP%E7%89%B9%E6%80%A7/php%E7%89%B9%E6%80%A7.png"></p>
-<p>关于正则表达式的详细介绍见：<a target="_blank" rel="noopener" href="https://www.runoob.com/regexp/regexp-metachar.html">正则表达式 – 元字符 | 菜鸟教程 (runoob.com)</a>。</p>
-<h2 id="2-模式修正符："><a href="#2-模式修正符：" class="headerlink" title="2.模式修正符："></a>2.模式修正符：</h2><p><img src="/images/PHP%E7%89%B9%E6%80%A7/php%E7%89%B9%E6%80%A71.png"></p>
-<p>对于模式修正符的介绍与使用见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_54646993/article/details/116097222%E3%80%82">https://blog.csdn.net/weixin_54646993/article/details/116097222。</a></p>
+<h2 id="1-元字符"><a href="#1-元字符" class="headerlink" title="1.元字符"></a>1.元字符</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/PHP%E7%89%B9%E6%80%A7/php%E7%89%B9%E6%80%A7-16902013667631.png"
+                     
+                ></p>
+<p>关于正则表达式的详细介绍见：<a class="link"   target="_blank" rel="noopener" href="https://www.runoob.com/regexp/regexp-metachar.html" >正则表达式 – 元字符 | 菜鸟教程 (runoob.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。</p>
+<h2 id="2-模式修正符："><a href="#2-模式修正符：" class="headerlink" title="2.模式修正符："></a>2.模式修正符：</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/PHP%E7%89%B9%E6%80%A7/php%E7%89%B9%E6%80%A71-16902013871722.png"
+                     
+                ></p>
+<p>对于模式修正符的介绍与使用见：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_54646993/article/details/116097222%E3%80%82" >https://blog.csdn.net/weixin_54646993/article/details/116097222。 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <h2 id="3-preg-match-函数"><a href="#3-preg-match-函数" class="headerlink" title="3.preg_match()函数"></a>3.preg_match()函数</h2><p>该函数用于执行一个正则表达式匹配，语法如下：</p>
 <pre class="line-numbers language-none"><code class="language-none">int preg_match ( string $pattern , string $subject [, array &amp;$matches [, int $flags &#x3D; 0 [, int $offset &#x3D; 0 ]]] )<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -365,6 +509,28 @@ echo $result;  &#x2F;&#x2F; 输出 4，相当于 16 &#x2F; (2的2次幂) &#x3D; 
 
 <p>在这个题目当中，目标id&#x3D;1000，我们要绕过intval()函数，该函数使用前几种方法的值大小都不会改变，但由于该函数有<strong>intval()而言，如果参数是字符串，则返回字符串中第一个不是数字的字符之前的数字串所代表的整数值</strong>此条性质，我们便可以将<code>id=%0a125&lt;&lt;3</code>，此时，该函数读取到的数是123，但该数实际值却是1000，这样，便可以成功绕过。</p>
 </li>
+<li><p>按位或和按位异或绕过：</p>
+<ul>
+<li><p>按位或：</p>
+<p>按位或（|）是一种二进制的逻辑操作符，针对两个二进制数的对应位进行比较，只要有一个位上的数为1，结果就为1。其真值表如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">0 | 0 &#x3D; 0
+0 | 1 &#x3D; 1
+1 | 0 &#x3D; 1
+1 | 1 &#x3D; 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>例如，将十进制数5（二进制表示为101）与十进制数3（二进制表示为011）进行按位或运算，结果为7（二进制表示为111）。</p>
+</li>
+<li><p>按位异或：</p>
+<p>按位异或（^）也是一种二进制的逻辑操作符，针对两个二进制数的对应位进行比较，只有在两个位上的数不同时，结果才为1。其真值表如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">0 ^ 0 &#x3D; 0
+0 ^ 1 &#x3D; 1
+1 ^ 0 &#x3D; 1
+1 ^ 1 &#x3D; 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>例如，将十进制数5（二进制表示为101）与十进制数3（二进制表示为011）进行按位异或运算，结果为6（二进制表示为110）。</p>
+</li>
+</ul>
+</li>
 </ul>
 <h2 id="5-strpos-函数"><a href="#5-strpos-函数" class="headerlink" title="5.strpos()函数"></a>5.strpos()函数</h2><p>此函数是查询某字符在字符串中第一次出现的位置，且区分大小写，语法格式如下：</p>
 <p><code>strpos(string,find,start)</code></p>
@@ -402,6 +568,8 @@ strrpos() - 查找字符串在另一字符串中最后一次出现的位置（�
 <p>此时需要该函数的返回值不等于FALSE，故我们直接输入<code>?ctf[]</code>将该参数直接设为数组，该返回值为NULL，便可成功绕过。</p>
 </li>
 <li><p>根据逻辑关系直接绕过：这种情况出现较少，在遇到题目之后再做记录。</p>
+</li>
+<li><p>可以通过符号截断绕过，也可以通过科学计数法字母e来绕过</p>
 </li>
 </ul>
 <h2 id="6-MD5和sha1-函数"><a href="#6-MD5和sha1-函数" class="headerlink" title="6.MD5和sha1()函数"></a>6.MD5和sha1()函数</h2><h3 id="md5"><a href="#md5" class="headerlink" title="md5"></a>md5</h3><p>该函数用于将一字符串进行md5编码后输出，语法格式如下：</p>
@@ -442,7 +610,12 @@ strrpos() - 查找字符串在另一字符串中最后一次出现的位置（�
 <p><strong>绕过方法</strong>：</p>
 <ul>
 <li><p>数组绕过：将需要我们传入的数据设置为数组，在此种情况下，会产生报错，但返回值为真：</p>
-<p><img src="/images/PHP%E7%89%B9%E6%80%A7/md5%E6%95%B0%E7%BB%84%E7%BB%95%E8%BF%87.png"></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/PHP%E7%89%B9%E6%80%A7/md5%E6%95%B0%E7%BB%84%E7%BB%95%E8%BF%87-16902014284863.png"
+                     
+                ></p>
 <p>在此题目当中，可以得到NULL&#x3D;&#x3D;NULL，便可以成功绕过。（注意：假如对参数进行了过滤，此种方法便不再可行。）</p>
 </li>
 <li><p>常规的0e绕过：”0e”绕过是指通过寻找特定输入，使其MD5值以”0e”开头，后跟一系列数字，同时该MD5值被解释为科学计数法中的0乘以10的指数，也就是成为<code>0=0</code>，便可以绕过。这可能导致验证代码中的类型转换错误，从而导致绕过某些安全检查；常见开头为0e的md5值的字符串有以下：</p>
@@ -728,12 +901,14 @@ sha1(&#39;aa3OFF9m&#39;) &#x2F;&#x2F;0e36977786278517984959260394024281014729<sp
 <li><p>get与post：http协议默认先以get方式获取数据，无论是否以哪种方式发起的，总是get方式优先，即通过get方式获取到了数据就不会再去通过post方式获取一遍，如果get方式获取不到，再以post方式获取。</p>
 </li>
 </ul>
-<h2 id="10-ReflectionClass反射类"><a href="#10-ReflectionClass反射类" class="headerlink" title="10.ReflectionClass反射类"></a>10.ReflectionClass反射类</h2><p>反射可以帮助我们动态地获取和分析代码的结构和信息。等遇到题目再结合分析。</p>
+<h2 id="10-ReflectionClass反射类"><a href="#10-ReflectionClass反射类" class="headerlink" title="10.ReflectionClass反射类"></a>10.ReflectionClass反射类</h2><p>PHP中的扩展反射类，该扩展用来分析php程序，导出或提取出关于类、方法、属性、参数等的详细信息，包括注释</p>
 <h2 id="11-is-numeric-函数"><a href="#11-is-numeric-函数" class="headerlink" title="11.is_numeric()函数"></a>11.is_numeric()函数</h2><p><strong>is_numeric()</strong> 函数用于检测变量是否为数字或数字字符串。语法如下：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword type-declaration">bool</span> <span class="token function">is_numeric</span> <span class="token punctuation">(</span> <span class="token keyword type-hint">mixed</span> <span class="token variable">$var</span> <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>$var：要检测的变量。</p>
 <p>返回值：如果指定的变量是数字和数字字符串则返回 TRUE，否则返回 FALSE。</p>
+<p>特点：括号中的值会被弱类型替换。</p>
+<p>示例：</p>
 <pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
 <span class="token variable">$var_name1</span><span class="token operator">=</span><span class="token number">678</span><span class="token punctuation">;</span>
 <span class="token variable">$var_name2</span><span class="token operator">=</span><span class="token string double-quoted-string">"a678"</span><span class="token punctuation">;</span>
@@ -786,12 +961,12 @@ a678 不是数字
 
 <p>这个函数和mysql结合起来就容易出问题，那是因为is_numeric判断的时候，当碰到16进制数的时候，也会判断成数字，is_numeric函数对于空字符%00，无论是%00放在前后都可以判断为非数值，而%20空格字符只能放在数值后。所以，查看函数发现该函数对对于第一个空格字符会跳过空格字符判断，接着后面的判断。在部分情况时，在数字后边接%00也可以成功绕过。</p>
 <h2 id="12-call-user-func回调函数"><a href="#12-call-user-func回调函数" class="headerlink" title="12.call_user_func回调函数"></a>12.call_user_func回调函数</h2><p>call_user_func — 把第一个参数作为回调函数调用；回调函数：指的是一个函数作为参数传递给另一个函数，并且可以在后者中被调用执行的函数。语法如下：</p>
-<p>call_user_func(<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.callable.php">callable</a> <code>$callback</code>, <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed">mixed</a> <code>...$args</code>): <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed">mixed</a></p>
+<p>call_user_func(<a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.callable.php" >callable <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> <code>$callback</code>, <a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed" >mixed <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> <code>...$args</code>): <a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed" >mixed <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>参数解释：</p>
 <ul>
 <li><p><code>callback</code> 是被调用的回调函数，其余参数是回调函数的参数。</p>
 </li>
-<li><p>callback：将被调用的回调函数（<a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.callable.php">callable</a>）</p>
+<li><p>callback：将被调用的回调函数（<a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.callable.php" >callable <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>）</p>
 </li>
 <li><p>args：0个或以上的参数，被传入回调函数</p>
 </li>
@@ -820,7 +995,7 @@ a678 不是数字
 <span class="token comment">//显示 111   </span>
 <span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="13-php伪协议"><a href="#13-php伪协议" class="headerlink" title="13.php伪协议"></a>13.php伪协议</h2><p>对于php伪协议的详细介绍见<a target="_blank" rel="noopener" href="https://621779.github.io/2023/07/16/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">RCE学习笔记 </a></p>
+<h2 id="13-php伪协议"><a href="#13-php伪协议" class="headerlink" title="13.php伪协议"></a>13.php伪协议</h2><p>对于php伪协议的详细介绍见<a class="link"   target="_blank" rel="noopener" href="https://621779.github.io/2023/07/16/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >RCE学习笔记  <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p><strong>常见用法</strong></p>
 <ol>
 <li><p>写文件：</p>
@@ -882,205 +1057,744 @@ a678 不是数字
 </tbody></table>
 <p><strong>注意</strong>：如果未设置 <em>array</em> 参数，则由该函数设置的变量将覆盖已存在的同名变量。php.ini 文件中的 magic_quotes_gpc 设置影响该函数的输出。如果已启用，那么在 parse_str() 解析之前，变量会被 addslashes() 转换。且若要post参数，需加引号。</p>
 <p><strong>变量覆盖漏洞</strong></p>
-<p>parse_str() 函数用于把查询字符串解析到变量中，如果没有array 参数，则由该函数设置的变量将覆盖已存在的同名变量。 极度不建议 在没有 array参数的情况下使用此函数，并且在 PHP 7.2 中将废弃不设置参数的行为。此函数没有返回值</p>
+<p>parse_str() 函数用于把查询字符串解析到变量中，如果没有array 参数，则由该函数设置的变量将覆盖已存在的同名变量。 极度不建议 在没有 array参数的情况下使用此函数，并且在 PHP 7.2 中将废弃不设置参数的行为。此函数没有返回值。</p>
+<h2 id="16-ereg-截断漏洞"><a href="#16-ereg-截断漏洞" class="headerlink" title="16.ereg()截断漏洞"></a>16.ereg()截断漏洞</h2><p>ereg()函数用指定的模式搜索一个字符串中指定的字符串,如果匹配成功返回true,否则,则返回false。搜索字母的字符是大小写敏感的。可选的输入参数规则包含一个数组的所有匹配表达式,他们被正则表达式的括号分组。</p>
+<p>语法：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword type-declaration">int</span> <span class="token function">ereg</span><span class="token punctuation">(</span><span class="token keyword type-declaration">string</span> pattern<span class="token punctuation">,</span> <span class="token keyword type-declaration">string</span> originalstring<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token keyword type-declaration">array</span> regs<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-      </section>
+<p>返回值：</p>
+<p>如果有找到模式匹配，则返回<code>true</code>，否则返回<code>false</code>。</p>
+<p><strong>绕过方法</strong></p>
+<ol>
+<li><p>截断绕过：<code>ereg()</code>函数存在NULL截断漏洞，当传入的字符串包含%00时，只有%00前的字符串会传入函数并执行，而后半部分不会传入函数判断。因此可以使用%00截断，连接非法字符串，从而绕过函数。如下例题：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">include</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"flag.php"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-      
-      
-        <nav class="article-nav">
-          
-          
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-    <div class="card-text">
-      
-        <a href="/2023/07/16/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">RCE学习笔记</h2>
-        </a>
-      
-      <div class="card-text--row">Older</div>
-    </div>
-  </article>
-</div>
-          
-        </nav>
-      
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">ereg</span> <span class="token punctuation">(</span><span class="token string double-quoted-string">"^[a-zA-Z]+$"</span><span class="token punctuation">,</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">===</span><span class="token constant boolean">FALSE</span><span class="token punctuation">)</span>  <span class="token punctuation">&#123;</span>
+    <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'error'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">//只有36d的人才能看到flag</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">intval</span><span class="token punctuation">(</span><span class="token function">strrev</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">0x36d</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">echo</span> <span class="token variable">$flag</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-      <section class="page-message-container layout-padding">
+<p>在此题目当中，我们需要参数的值是<code>0x36d</code>，要包含字母，而且参数要反向，通过计算：0x36d&#x3D;(877)D，反向后是778，最后使用%00截断即：<code>payload:?c=a%00778</code>。</p>
+<p><strong>执行GET请求时会默认进行一次URL解码</strong>，由于%00是一个不可见字符，c的值实际是<code>a(invisible)778</code>。经过<code>ereg()</code>截断，前部分<code>a</code>通过匹配返回1，不会<code>die(&#39;error&#39;)</code>。再反向取值，0x36d比较后部分的<code>877</code>返回1，从而<code>echo $flag</code>。</p>
+</li>
+</ol>
+<h2 id="17-strrev-函数"><a href="#17-strrev-函数" class="headerlink" title="17.strrev()函数"></a>17.strrev()函数</h2><p>strrev()函数把字符串s的所有字符的顺序颠倒过来（不包括空字符NULL），返回指向颠倒顺序后的字符串指针。</p>
+<p>语法：<code>strrev(string)</code>，string字符串必须存在</p>
+<table>
+<thead>
+<tr>
+<th>返回值：</th>
+<th>返回已反转的字符串。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PHP 版本：</td>
+<td>4+</td>
+</tr>
+</tbody></table>
+<p><strong>函数特点</strong></p>
+<p>反转字符串，常出现在%00截断漏洞中。这个函数直接使用时不能颠倒例如以下的内容：</p>
+<pre class="line-numbers language-objectivec" data-language="objectivec"><code class="language-objectivec"><span class="token keyword">char</span> <span class="token operator">*</span>forward<span class="token operator">=</span><span class="token string">"string"</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>注：%00是一个整体，不会反转成00%</p>
+<h2 id="18-变量覆盖绕过"><a href="#18-变量覆盖绕过" class="headerlink" title="18.变量覆盖绕过"></a>18.变量覆盖绕过</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/PHP%E7%89%B9%E6%80%A7/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%961.png"
+                     
+                ></p>
+<ul>
+<li><p>全局变量覆盖：</p>
+<p>register_globals的意思就是注册为全局变量，所以<strong>当为On的时候，传递过来的值会被直接注册为全局变量直接使用，而Off的时候，我们需要到特定的数组里去得到它</strong>。简单来说，就是你定义了一个全局变量，在某个范围当中，你可以将它覆盖为其他值，如你传进来的值：</p>
+<pre class="line-numbers language-PHP" data-language="PHP"><code class="language-PHP">$globalVar &#x3D; &quot;Global&quot;;
+
+function test() &#123;
+    $localVar &#x3D; &quot;Local&quot;;
+    echo $localVar; &#x2F;&#x2F; 输出：Local
+
+    global $globalVar;
+    echo $globalVar; &#x2F;&#x2F; 输出：Global
+
+    $globalVar &#x3D; &quot;Modified&quot;;
+&#125;
+
+test();
+echo $globalVar; &#x2F;&#x2F; 输出：Modified<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如上述代码所示，在function函数当中，lobavar变量的值可以被覆盖。在部分情况会引发漏洞</p>
+</li>
+<li><p>$$引起的变量覆盖：<br>在PHP中，$$符号是一种变量间接引用的特殊语法。它允许使用一个变量的值作为另一个变量的名称。具体而言，当一个变量名通过$$符号包裹时，PHP将解释为变量名对应的变量的值。如下列代码：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token variable">$foo</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"bar"</span><span class="token punctuation">;</span>
+<span class="token variable">$bar</span> <span class="token operator">=</span> <span class="token string double-quoted-string">"Hello, World!"</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$$foo</span><span class="token punctuation">;</span> <span class="token comment">// 输出：Hello, World!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>extract()函数引起的变量覆盖：</p>
+<p>extract() 函数从数组中将变量导入到当前的符号表。该函数使用数组键名作为变量名，使用数组键值作为变量值。针对数组中的每个元素，将在当前符号表中创建对应的一个变量。该函数返回成功设置的变量数目。<br><code>extract(array,extract_rules,prefix)</code>实列如下：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">extract</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+
+<span class="token keyword">echo</span> <span class="token variable">$name</span><span class="token operator">.</span><span class="token string single-quoted-string">'&lt;br>'</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$age</span><span class="token operator">.</span><span class="token string single-quoted-string">'&lt;br>'</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$phone</span><span class="token operator">.</span><span class="token string single-quoted-string">'&lt;br>'</span><span class="token punctuation">;</span>
+
+<span class="token comment">//GET传参:?name=xiaohua&amp;age=22&amp;phone=112323123</span>
+<span class="token comment">//结果:</span>
+<span class="token comment">// xiaohua</span>
+<span class="token comment">// 22</span>
+<span class="token comment">// 112323123</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>parse_str()函数变量覆盖：</p>
+<p>parse_str() 函数把查询字符串解析到变量中。注释：<strong>如果未设置 array 参数，由该函数设置的变量将覆盖已存在的同名变量。</strong>且php.ini 文件中的 magic_quotes_gpc 设置影响该函数的输出。如果已启用，那么在 parse_str() 解析之前，变量会被 addslashes() 转换。</p>
+<p><code>parse_str(string,array)</code>   示例如下：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">parse_str</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"name=xiaohua&amp;age=22"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$name</span><span class="token operator">.</span><span class="token string double-quoted-string">"&lt;br>"</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$age</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?></span></span>
+//xiaohua
+//22<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>import_request_variables()函数变量覆盖：</p>
+<p> import_request_variables — 将 GET／POST／Cookie 变量导入到全局作用域中</p>
+<p>将 GET／POST／Cookie 变量导入到全局作用域中。如果你禁止了 <a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/ini.core.php#ini.register-globals" >register_globals <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，但又想用到一些全局变量，那么此函数就很有用。</p>
+<pre class="line-numbers language-none"><code class="language-none">import_request_variables ( string $types [, string $prefix ] ) : bool<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>使用范围：(PHP 4 &gt;&#x3D; 4.1.0, PHP 5 &lt; 5.4.0)。示例如下：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$num</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token comment">//include 'flag.php';</span>
+<span class="token function">import_request_variables</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'gp'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//导入get和post中变量</span>
+
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$num</span><span class="token operator">==</span><span class="token string double-quoted-string">"xiaohua"</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">echo</span> <span class="token string single-quoted-string">'flag&#123; xiaohua-2020-3-28&#125;'</span><span class="token punctuation">;</span>
+    <span class="token comment">// echo $flag.php;</span>
+<span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">echo</span> <span class="token string double-quoted-string">"NO!"</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token delimiter important">?></span></span> 
+//payload：http://127.0.0.1/test.php?num=xiaohua
+//flag&#123; xiaohua-2020-3-28&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h2 id="19-Exception异常处理类"><a href="#19-Exception异常处理类" class="headerlink" title="19.Exception异常处理类"></a>19.Exception异常处理类</h2><p>和ReflectionClass反射类用法相似，该类中常用的成员函数如下所示：</p>
+<pre class="line-numbers language-none"><code class="language-none">getMessage()：返回异常的消息内容；
+getCode()：以数字形式返回异常代码；
+getFile()：返回发生异常的文件名；
+getLine()：返回发生错误的代码行号；
+getTrace()：返回 backtrace() 数组；
+getTraceAsString()：返回已格式化成字符串的、由函数 getTrace() 函数所产生的信息；
+__toString()：产生异常的字符串信息，它可以重载。注意，该函数最前部是两个下划线。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以和system连用：</p>
+<p><code>Reflectionclass(system(&#39;cat </code>ls<code>&#39;));</code></p>
+<h2 id="20-FilesystemIterator类读取文件"><a href="#20-FilesystemIterator类读取文件" class="headerlink" title="20.FilesystemIterator类读取文件"></a>20.FilesystemIterator类读取文件</h2><p>FilesystemIterator获取指定目录下的所有文件<br>getcwd()函数：获取当前工作目录 返回当前工作目录</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token function">FilesystemIterator</span><span class="token punctuation">(</span><span class="token function">getcwd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h2 id="21-php变量"><a href="#21-php变量" class="headerlink" title="21.php变量"></a>21.php变量</h2><ul>
+<li><p>GLOBALS<br>GLOBALS是一个在PHP中预定义的全局变量，它是一个包含全局作用域中的所有全局变量的关联数组。通过GLOBALS数组，可以在函数内部访问和修改全局变量的值。数组的键是变量的名称，值是变量的值。通过GLOBALS数组的键是变量的名称，值是变量的值。通过GLOBALS[‘variable_name’]可以访问全局变量的variablename值。需要注意的是，如果变量是在函数内定义的，那么需要在函数内使用关键字声明变量为全局变量，才能在函数外部通过variablename的值。实例如下：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token variable">$globalVariable</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function-definition function">updateGlobalVariable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token variable">$GLOBALS</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'globalVariable'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function">updateGlobalVariable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token variable">$globalVariable</span><span class="token punctuation">;</span> <span class="token comment">// 输出 20</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>简单说就是在变量前标记此字符串，我们在这段代码的任何地方都可以访问到。</p>
+</li>
+<li><p>get_defined_vars()</p>
+<p>该函数会返回由所有已定义变量所组成的数组，该函数无需接受任何参数。使用方法如下代码展示所示：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span> 
+  
+<span class="token comment">// Declare an array and initialize it </span>
+<span class="token variable">$a</span> <span class="token operator">=</span> <span class="token keyword">array</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+  
+<span class="token comment">// Use get_defined_vars() function </span>
+<span class="token variable">$a</span> <span class="token operator">=</span> <span class="token function">get_defined_vars</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+  
+<span class="token comment">// Display the output </span>
+<span class="token function">print_r</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>输出结果如下：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">Array</span>
+<span class="token punctuation">(</span>
+    <span class="token punctuation">[</span><span class="token constant">_GET</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token keyword">Array</span>
+        <span class="token punctuation">(</span>
+        <span class="token punctuation">)</span>
+
+    <span class="token punctuation">[</span><span class="token constant">_POST</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token keyword">Array</span>
+        <span class="token punctuation">(</span>
+        <span class="token punctuation">)</span>
+
+    <span class="token punctuation">[</span><span class="token constant">_COOKIE</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token keyword">Array</span>
+        <span class="token punctuation">(</span>
+        <span class="token punctuation">)</span>
+
+    <span class="token punctuation">[</span><span class="token constant">_FILES</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token keyword">Array</span>
+        <span class="token punctuation">(</span>
+        <span class="token punctuation">)</span>
+
+    <span class="token punctuation">[</span>argv<span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token keyword">Array</span>
+        <span class="token punctuation">(</span>
+            <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token operator">/</span>home<span class="token operator">/</span><span class="token number">9485</span>b6f3bafb5e0e7b2d4580a85e639d<span class="token operator">.</span>php
+        <span class="token punctuation">)</span>
+
+    <span class="token punctuation">[</span>argc<span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token number">1</span>
+    <span class="token punctuation">[</span><span class="token constant">_SERVER</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token keyword">Array</span>
+        <span class="token punctuation">(</span>
+            <span class="token punctuation">[</span><span class="token constant">PHP_SELF</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token operator">/</span>home<span class="token operator">/</span><span class="token number">9485</span>b6f3bafb5e0e7b2d4580a85e639d<span class="token operator">.</span>php
+            <span class="token punctuation">[</span><span class="token constant">SCRIPT_NAME</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token operator">/</span>home<span class="token operator">/</span><span class="token number">9485</span>b6f3bafb5e0e7b2d4580a85e639d<span class="token operator">.</span>php
+            <span class="token punctuation">[</span><span class="token constant">SCRIPT_FILENAME</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token operator">/</span>home<span class="token operator">/</span><span class="token number">9485</span>b6f3bafb5e0e7b2d4580a85e639d<span class="token operator">.</span>php
+            <span class="token punctuation">[</span><span class="token constant">PATH_TRANSLATED</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token operator">/</span>home<span class="token operator">/</span><span class="token number">9485</span>b6f3bafb5e0e7b2d4580a85e639d<span class="token operator">.</span>php
+            <span class="token punctuation">[</span><span class="token constant">DOCUMENT_ROOT</span><span class="token punctuation">]</span> <span class="token operator">=></span> 
+            <span class="token punctuation">[</span><span class="token constant">REQUEST_TIME_FLOAT</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token number">1543316494.2727</span>
+            <span class="token punctuation">[</span><span class="token constant">REQUEST_TIME</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token number">1543316494</span>
+            <span class="token punctuation">[</span>argv<span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token keyword">Array</span>
+                <span class="token punctuation">(</span>
+                    <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token operator">/</span>home<span class="token operator">/</span><span class="token number">9485</span>b6f3bafb5e0e7b2d4580a85e639d<span class="token operator">.</span>php
+                <span class="token punctuation">)</span>
+
+            <span class="token punctuation">[</span>argc<span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token number">1</span>
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">[</span>a<span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token keyword">Array</span>
+        <span class="token punctuation">(</span>
+            <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token number">0</span>
+            <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token number">1</span>
+            <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token number">2</span>
+            <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token number">3</span>
+            <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=></span> <span class="token number">4</span>
+        <span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>变量命名</p>
+<p>PHP变量命名规则：只能包含：字母、数字、下划线，其中，只能以字母、下划线开头：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'CTF_SHOW'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">&amp;&amp;</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'CTF_SHOW.COM'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token operator">&amp;&amp;</span><span class="token operator">!</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'fl0g'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>php变量命名不允许出现 .（点号）,需要绕过’CTF_SHOW.COM’，GET或POST方式传进去的变量名,会自动将 <strong>空格 + . [</strong> 转换为 <em><strong>*_*</strong></em></p>
+<p>特殊字符[, GET或POST方式传参时,变量名中的[也会被替换为_,但其后的字符就不会被替换了。</p>
+<pre class="line-numbers language-none"><code class="language-none">CTF[SHOW.COM &#x3D;&gt; CTF_SHOW.COM<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+<h2 id="22-Fuzz测试"><a href="#22-Fuzz测试" class="headerlink" title="22.Fuzz测试"></a>22.Fuzz测试</h2><pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token variable">$num</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'num'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$num</span><span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token variable">$num</span><span class="token operator">!==</span><span class="token string single-quoted-string">'36'</span> <span class="token keyword">and</span> <span class="token function">trim</span><span class="token punctuation">(</span><span class="token variable">$num</span><span class="token punctuation">)</span><span class="token operator">!==</span><span class="token string single-quoted-string">'36'</span> <span class="token keyword">and</span> <span class="token function">filter</span><span class="token punctuation">(</span><span class="token variable">$num</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token string single-quoted-string">'36'</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$num</span><span class="token operator">==</span><span class="token string single-quoted-string">'36'</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">echo</span> <span class="token variable">$flag</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">echo</span> <span class="token string double-quoted-string">"hacker!!"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>is_numeric函数绕过</strong></p>
+<p>在本道题目当中，要求num变量为数字且不能为36。绕过方法同上所述。如下为一个小脚本：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token variable">$i</span><span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> <span class="token variable">$i</span> <span class="token operator">&lt;</span><span class="token number">128</span> <span class="token punctuation">;</span> <span class="token variable">$i</span><span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+    <span class="token variable">$x</span><span class="token operator">=</span><span class="token function">chr</span><span class="token punctuation">(</span><span class="token variable">$i</span><span class="token punctuation">)</span><span class="token operator">.</span><span class="token string single-quoted-string">'1'</span><span class="token punctuation">;</span>
+   <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">is_numeric</span><span class="token punctuation">(</span><span class="token variable">$x</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token constant boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">echo</span> <span class="token function">urlencode</span><span class="token punctuation">(</span><span class="token function">chr</span><span class="token punctuation">(</span><span class="token variable">$i</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">.</span><span class="token string double-quoted-string">"\n"</span><span class="token punctuation">;</span>
+   <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">//输出：%09 、%0A、 %0B、 %0C、 %0D、 +、 %2B、 -、 .（点）、</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>trim()函数绕过</strong></p>
+<p>trim() 函数移除字符串两侧的空白字符或其他预定义字符。语法如下：</p>
+<p><code>trim(string,charlist)</code></p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">string</td>
+<td align="left">必需。规定要检查的字符串。</td>
+</tr>
+<tr>
+<td align="left">charlist</td>
+<td align="left">可选。规定从字符串中删除哪些字符。如果被省略，则移除以下所有字符：”\0” - NULL；”\t” - 制表符；”\n” - 换行；”\x0B” - 垂直制表符；”\r” - 回车；” “ - 空格。</td>
+</tr>
+</tbody></table>
+<p><strong>技术细节</strong></p>
+<table>
+<thead>
+<tr>
+<th>返回值：</th>
+<th>返回被修改的字符串</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PHP 版本：</td>
+<td>4+</td>
+</tr>
+<tr>
+<td>更新日志：</td>
+<td>在 PHP 4.1 中，新增了 <em>charlist</em> 参数。</td>
+</tr>
+</tbody></table>
+<h2 id="23-assert-断言"><a href="#23-assert-断言" class="headerlink" title="23.assert()断言"></a>23.assert()断言</h2><p>断言是一种在代码中检查预期条件的方法。它用于在程序中插入断点，以确保运行时满足特定的条件或假设。断言通常用于调试和测试阶段，以验证代码的正确性。简单来说就是用于调试，判断其结果是否处错，可以用于命令执行。语法如下：</p>
+<p><code>assert(mixed$assertion, Throwable|string|null $description = null): bool</code></p>
+<pre class="line-numbers language-none"><code class="language-none">assert() 断言：
+
+PHP 5
+bool assert ( mixed $assertion [, string $description ] )
+
+PHP 7
+bool assert ( mixed $assertion [, Throwable $exception ] )
+
+如果 assertion 是字符串，它将会被 assert() 当做 PHP 代码来执行
+可见，eval和assert都可以将字符当作代码执行，只不过assert不需要严格遵从语法，比如语句末尾的分号可不加
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="24-gettext拓展"><a href="#24-gettext拓展" class="headerlink" title="24.gettext拓展"></a>24.gettext拓展</h2><p>在开启该拓展后 _() 等效于 gettext()</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">echo</span> <span class="token function">gettext</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"phpinfo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+结果  phpinfo
+<span class="token keyword">echo</span> <span class="token function">_</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"phpinfo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+结果 phpinfo <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="25-shell-exec-函数"><a href="#25-shell-exec-函数" class="headerlink" title="25.shell_exec()函数"></a>25.shell_exec()函数</h2><p>exec 是 bash 的内置命令，即内部命令；</p>
+<p>内部命令就是：内部命令是嵌入在shell解释器中的命令。它们是shell解释器的一部分，可以直接在shell进程中执行，无需创建新的子进程，如：<code>cd</code>、<code>echo</code>、<code>export</code>等命令都是内部命令。</p>
+<p>外部命令：外部命令是指存储在磁盘上的可执行程序或脚本文件。它们不是shell本身的一部分，而是独立存在的应用程序。如：在Unix&#x2F;Linux系统中，<code>ls</code>、<code>cp</code>、<code>grep</code>等命令都是外部命令。以下题为例：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$F</span> <span class="token operator">=</span> @<span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'F'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'/system|nc|wget|exec|passthru|netcat/i'</span><span class="token punctuation">,</span> <span class="token variable">$F</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token function">substr</span><span class="token punctuation">(</span><span class="token variable">$F</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们可以输入：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php">get传参   <span class="token constant">F</span><span class="token operator">=</span><span class="token string backtick-quoted-string">`$F `</span><span class="token punctuation">;</span>sleep <span class="token number">3</span>
+经过<span class="token function">substr</span><span class="token punctuation">(</span><span class="token variable">$F</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span>截取后 得到  <span class="token string backtick-quoted-string">`$F `</span><span class="token punctuation">;</span>
+也就是会执行 <span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"`<span class="token interpolation"><span class="token variable">$F</span></span> `;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+我们把原来的<span class="token variable">$F</span>带进去
+<span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"``<span class="token interpolation"><span class="token variable">$F</span></span> `;sleep 3`"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//``是shell_exec()函数的缩写</span>
+前面的命令我们不需要管，但是后面的命令我们可以自由控制。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="26-curl命令"><a href="#26-curl命令" class="headerlink" title="26.curl命令"></a>26.curl命令</h2><p>curl 是常用的命令行工具，用来请求 Web 服务器。详细接介绍使用方法的见：<a class="link"   target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2019/09/curl-reference.html" >curl 的用法指南 - 阮一峰的网络日志  <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h2 id="27-prase-str-和extract"><a href="#27-prase-str-和extract" class="headerlink" title="27.prase_str()和extract()"></a>27.prase_str()和extract()</h2><ul>
+<li><p>prase_str()函数：</p>
+<p>parse_str() 函数把查询字符串解析到变量中。注意：如果未设置 array 参数，由该函数设置的变量将覆盖已存在的同名变量，php.ini 文件中的 magic_quotes_gpc 设置影响该函数的输出。如果已启用，那么在 parse_str() 解析之前，变量会被 addslashes() 转换。</p>
+<p>语法：<code>parse_str(string,array)</code></p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><em>string</em></td>
+<td align="left">必需。规定要解析的字符串。</td>
+</tr>
+<tr>
+<td align="left"><em>array</em></td>
+<td align="left">可选。规定存储变量的数组名称。该参数指示变量存储到数组中。</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>extract()函数：</p>
+<p>extract()：从数组中将变量导入到当前的符号表。</p>
+</li>
+</ul>
+<p>注意区别： extract是将数组中元素分解,执行后数组的key值作为变量名，数组的value赋值给对应Key的变量，这样可以直接通过Key变量去访问，不用数组加key去访问。 即：从数组中创建变量；而parse_str是根据”&#x3D;”来分解字符串，主要用于对url参数的解析。</p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> PHP特性</li>
+        <li><strong>Author:</strong> 阿巴</li>
+        <li><strong>Created at:</strong> 2023-07-16 14:35:17</li>
         
-
-
-  
-  
-
-  
-  
-
-
-      </section>
-    </div>
-    <div class="widget-info">
-      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-body">
-    
-      <img src="https://s.gravatar.com/avatar/2d6b803eea37de0257620d5fabee7e64?s=200&amp;r=g&amp;d=retro" class="soft-size--round soft-style--box" alt="Creeper">
-    
-    
-      <h2>Creeper</h2>
-    
-    
-      <p>贵在坚持</p>
-    
-
-    <div class="count-box">
-      <div class="count-box--item">
-        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
-</svg>
-        <span>7</span>
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-        0
-      </div>
-      <div class="count-box--item">
-        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-        1
-      </div>
-    </div>
-  </div>
-</section>
-
-      
-
-      
-<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
-</svg>
-    <span>NOTICE</span>
-  </div>
-  <div class="widget-body">
-    <p>我可以孑然一身，但不能心无所属。</p>
-  </div>
-</section>
-
-
-      <section class="widget-categorys widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
-</svg>
-    <span>CATEGORYS</span>
-  </div>
-  <div class="widget-body">
-    <ul class="categorys-list">
-      
+            <li>
+                <strong>Updated at:</strong> 2023-07-24 20:27:45
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2023/07/16/PHP特性/
+        </li>
+        <li>
+            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+        </li>
     </ul>
-  </div>
-</section>
-
-      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
-  <div class="widget-title">
-    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
-</svg>
-    <span>TAGS</span>
-  </div>
-  <div class="widget-body">
-    <div class="tags-cloud">
-      <a href="/tags/web%E5%AE%89%E5%85%A8/" style="font-size: 10px;" class="tags-cloud-0">web安全</a>
-    </div>
-  </div>
-</section>
-    </div>
-  </article>
 </div>
 
-    <!-- footer container -->
-<footer id="footer" class="footer">
-  <div class="footer-container">
-    
-    <div class="social-icons">
-      
-        
-      
-        
-      
-        
-      
-        
-          <a href="https://github.com/621779/" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
-</svg>
-          </a>
-        
-      
-        
-          <a href="https://twitter.com/guanquanhong" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
-            <svg class="icon icon-twitter" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M962.285714 233.142857q-38.285714 56-92.571429 95.428571 0.571429 8 0.571429 24 0 74.285714-21.714286 148.285714t-66 142-105.428571 120.285714-147.428571 83.428571-184.571429 31.142857q-154.857143 0-283.428571-82.857143 20 2.285714 44.571429 2.285714 128.571429 0 229.142857-78.857143-60-1.142857-107.428571-36.857143t-65.142857-91.142857q18.857143 2.857143 34.857143 2.857143 24.571429 0 48.571429-6.285714-64-13.142857-106-63.714286t-42-117.428571l0-2.285714q38.857143 21.714286 83.428571 23.428571-37.714286-25.142857-60-65.714286t-22.285714-88q0-50.285714 25.142857-93.142857 69.142857 85.142857 168.285714 136.285714t212.285714 56.857143q-4.571429-21.714286-4.571429-42.285714 0-76.571429 54-130.571429t130.571429-54q80 0 134.857143 58.285714 62.285714-12 117.142857-44.571429-21.142857 65.714286-81.142857 101.714286 53.142857-5.714286 106.285714-28.571429z"></path>
-</svg>
-          </a>
-        
-      
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/web%E5%AE%89%E5%85%A8/">#web安全</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/07/16/CTFshow_php%E7%89%B9%E6%80%A7/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">CTFshow_php特性</span>
+                                    <span class="post-nav-item">Prev posts</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/07/16/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">RCE学习笔记</span>
+                                    <span class="post-nav-item">Next posts</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+                <div class="comment-container">
+                    <div class="comments-container">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
     </div>
-     
-    <p>&copy; 2023 <a href="/" target="_blank">阿巴</a></p>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-pjax>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://example.example.com',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+                </div>
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">PHP特性</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP%E7%89%B9%E6%80%A7"><span class="nav-text">PHP特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E5%9F%BA%E6%9C%AC%E5%BC%B1%E7%B1%BB%E5%9E%8B"><span class="nav-text">0.基本弱类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%85%83%E5%AD%97%E7%AC%A6"><span class="nav-text">1.元字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%A8%A1%E5%BC%8F%E4%BF%AE%E6%AD%A3%E7%AC%A6%EF%BC%9A"><span class="nav-text">2.模式修正符：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-preg-match-%E5%87%BD%E6%95%B0"><span class="nav-text">3.preg_match()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-intval-%E5%87%BD%E6%95%B0"><span class="nav-text">4.intval()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-strpos-%E5%87%BD%E6%95%B0"><span class="nav-text">5.strpos()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-MD5%E5%92%8Csha1-%E5%87%BD%E6%95%B0"><span class="nav-text">6.MD5和sha1()函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#md5"><span class="nav-text">md5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sha1-%E5%87%BD%E6%95%B0"><span class="nav-text">sha1()函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-file-put-contents-%E5%87%BD%E6%95%B0"><span class="nav-text">7.file_put_contents()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-in-array-%E5%87%BD%E6%95%B0"><span class="nav-text">8.in_array()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-text">9.优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-ReflectionClass%E5%8F%8D%E5%B0%84%E7%B1%BB"><span class="nav-text">10.ReflectionClass反射类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-is-numeric-%E5%87%BD%E6%95%B0"><span class="nav-text">11.is_numeric()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-call-user-func%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-text">12.call_user_func回调函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-php%E4%BC%AA%E5%8D%8F%E8%AE%AE"><span class="nav-text">13.php伪协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-is-file-%E5%87%BD%E6%95%B0"><span class="nav-text">14.is_file()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-parse-str-%E5%87%BD%E6%95%B0"><span class="nav-text">15.parse_str()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-ereg-%E6%88%AA%E6%96%AD%E6%BC%8F%E6%B4%9E"><span class="nav-text">16.ereg()截断漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-strrev-%E5%87%BD%E6%95%B0"><span class="nav-text">17.strrev()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E7%BB%95%E8%BF%87"><span class="nav-text">18.变量覆盖绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-Exception%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%B1%BB"><span class="nav-text">19.Exception异常处理类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-FilesystemIterator%E7%B1%BB%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-text">20.FilesystemIterator类读取文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-php%E5%8F%98%E9%87%8F"><span class="nav-text">21.php变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-Fuzz%E6%B5%8B%E8%AF%95"><span class="nav-text">22.Fuzz测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#23-assert-%E6%96%AD%E8%A8%80"><span class="nav-text">23.assert()断言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24-gettext%E6%8B%93%E5%B1%95"><span class="nav-text">24.gettext拓展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#25-shell-exec-%E5%87%BD%E6%95%B0"><span class="nav-text">25.shell_exec()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#26-curl%E5%91%BD%E4%BB%A4"><span class="nav-text">26.curl命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#27-prase-str-%E5%92%8Cextract"><span class="nav-text">27.prase_str()和extract()</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">阿巴</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        VISITOR COUNT&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        TOTAL PAGE VIEWS&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <br>
+            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.2.2</a>
+        </div>
+        
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
 
     
 
-    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/miiiku/flex-block" target="_blank" rel="noopener noreferrer author">flex-block</a></p>
 
-    <p>
-      <a href="javascript:;" id="theme-light">🌞 浅色</a>
-      <a href="javascript:;" id="theme-dark">🌛 深色</a>
-      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
-    </p>
-  </div>
-</footer>
-  </div>
+</main>
 
-  <div class="back-to-top-fixed soft-size--round soft-style--box">
-    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
-      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
-      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
-    </svg>
-  </div>
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
 
   
-  <!-- aplayer -->
-
-
-<!-- dplayer -->
-
-
-
+<script src="/js/libs/Typed.min.js"></script>
 
   
-
-
-  
-
-
-  
+<script src="/js/plugins/typed.js"></script>
 
 
 
 
-<script src="/js/script.js"></script>
 
 
-  
-  <!-- 尾部用户自定义相关内容 -->
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
 </body>
 </html>
