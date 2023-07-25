@@ -447,8 +447,8 @@ rce漏洞：远程命令&#x2F;代码执行漏洞，简称RCE漏洞，可以让�
                 
 
                 <h3 class="home-article-title">
-                    <a href="/2023/07/16/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                        sql注入学习笔记
+                    <a href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/">
+                        文件上传笔记
                     </a>
                 </h3>
 
@@ -457,13 +457,13 @@ rce漏洞：远程命令&#x2F;代码执行漏洞，简称RCE漏洞，可以让�
                         
 
 [toc]
-sql注入学习笔记1.MySQL注入类型可以按照两个分类标准来进行分类，当然常见的就是按照注入方式的不同将其分类为：
+文件上传笔记文件上传漏洞常触发点：相册、头像上传、视频、照片分享、附件上传（论坛发帖、邮箱）、文件管理器等。
+漏洞形成条件：
 
-联合查询注入：可以明确判断回显位置的情况下使用
-
-报错注入：无回显位置，可以有报错输出的情况可以使用
-
-布尔盲注：...
+文件能够通过前端和后端过滤和文件处理
+文件内容不会改变，能够被正确存储
+存储位置在Web容器控制范围内
+攻...
                     
                 </div>
 
@@ -492,7 +492,7 @@ sql注入学习笔记1.MySQL注入类型可以按照两个分类标准来进行�
         
     </div>
 
-    <a href="/2023/07/16/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Read more<span class="seo-reader-text">sql注入学习笔记</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/">Read more<span class="seo-reader-text">文件上传笔记</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
             </li>
@@ -560,8 +560,8 @@ var_dump([]&gt;0...
                 
 
                 <h3 class="home-article-title">
-                    <a href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/">
-                        文件上传笔记
+                    <a href="/2023/07/16/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                        sql注入学习笔记
                     </a>
                 </h3>
 
@@ -570,13 +570,13 @@ var_dump([]&gt;0...
                         
 
 [toc]
-文件上传笔记文件上传漏洞常触发点：相册、头像上传、视频、照片分享、附件上传（论坛发帖、邮箱）、文件管理器等。
-漏洞形成条件：
+sql注入学习笔记1.MySQL注入类型可以按照两个分类标准来进行分类，当然常见的就是按照注入方式的不同将其分类为：
 
-文件能够通过前端和后端过滤和文件处理
-文件内容不会改变，能够被正确存储
-存储位置在Web容器控制范围内
-攻...
+联合查询注入：可以明确判断回显位置的情况下使用
+
+报错注入：无回显位置，可以有报错输出的情况可以使用
+
+布尔盲注：...
                     
                 </div>
 
@@ -605,59 +605,7 @@ var_dump([]&gt;0...
         
     </div>
 
-    <a href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/">Read more<span class="seo-reader-text">文件上传笔记</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/07/16/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88SSRF%EF%BC%89%E6%BC%8F%E6%B4%9E/">
-                        服务器端请求伪造漏洞
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-
-[toc]
-服务器端请求伪造漏洞一.漏洞介绍SSRF (Server-Side Request Forgery,服务器端请求伪造)是一种由攻击者构造请求，由服务端发起请求的安全漏洞。一般情况下，SSRF攻击的目标是外网无法访问的内部系统(正因为请...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Sun Jul 16 2023 14:35:17 GMT+0800">
-                
-                    2023-07-16
-                
-            </span>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/07/16/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88SSRF%EF%BC%89%E6%BC%8F%E6%B4%9E/">Read more<span class="seo-reader-text">服务器端请求伪造漏洞</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+    <a href="/2023/07/16/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Read more<span class="seo-reader-text">sql注入学习笔记</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
             </li>
@@ -710,6 +658,58 @@ var_dump([]&gt;0...
     </div>
 
     <a href="/2023/07/16/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%88XSS%EF%BC%89%E6%94%BB%E5%87%BB/">Read more<span class="seo-reader-text">跨站脚本攻击（XSS）攻击</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
+
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+                
+
+                <h3 class="home-article-title">
+                    <a href="/2023/07/16/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88SSRF%EF%BC%89%E6%BC%8F%E6%B4%9E/">
+                        服务器端请求伪造漏洞
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        
+
+[toc]
+服务器端请求伪造漏洞一.漏洞介绍SSRF (Server-Side Request Forgery,服务器端请求伪造)是一种由攻击者构造请求，由服务端发起请求的安全漏洞。一般情况下，SSRF攻击的目标是外网无法访问的内部系统(正因为请...
+                    
+                </div>
+
+                <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sun Jul 16 2023 14:35:17 GMT+0800">
+                
+                    2023-07-16
+                
+            </span>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
+    </div>
+
+    <a href="/2023/07/16/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88SSRF%EF%BC%89%E6%BC%8F%E6%B4%9E/">Read more<span class="seo-reader-text">服务器端请求伪造漏洞</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
 </div>
 
             </li>
