@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://example.com/images/PHP%E7%89%B9%E6%80%A7/md5%E6%95%B0%E7%BB%84%E7%BB%95%E8%BF%87-16902014284863.png">
 <meta property="og:image" content="http://example.com/images/PHP%E7%89%B9%E6%80%A7/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%961.png">
 <meta property="article:published_time" content="2023-07-16T06:35:17.000Z">
-<meta property="article:modified_time" content="2023-07-24T12:27:45.413Z">
+<meta property="article:modified_time" content="2023-07-27T12:10:14.970Z">
 <meta property="article:author" content="阿巴">
 <meta property="article:tag" content="web安全">
 <meta name="twitter:card" content="summary">
@@ -236,8 +236,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-07-24 20:27:45</span>
-            <span class="mobile">2023-07-24 20:27:45</span>
+            <span class="desktop">2023-07-27 20:10:14</span>
+            <span class="mobile">2023-07-27 20:10:14</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -291,7 +291,7 @@ var_dump([[]]&gt;[]); &#x2F;&#x2F;bool(true) #自然二位数组大于一维数�
 <ol start="3">
 <li><p><code>==</code>与<code>===</code>的区别：</p>
 <ul>
-<li><p>在进行比较时，向将两边的类型转化成相同类型再进行比较，如果涉及到数值内容的字符串，则字符串会被转化成数值（通过<code>intval()</code>函数），并且按照数值大小进行比较（<code>&gt;</code>、<code>&lt;</code>同理）。 <strong>补充</strong>： - “根据php手册中所讲，字符串的开头决定了它转换后的值，如果该字符串以合法的数值开始，则使用该合法数值，否则其值为0” - 如果字符创中没有包含<code>.</code>、<code>e</code>、<code>E</code>并且其数值在整形范围内，该字符被当做int来取值，其他所有情况都被作为float来取值。 - 0e开头的字符串被认为是科学技术计数法，且0e开头的数值为0 - 当一个整形与其他类型进行比较时，会先把其他类型进行<code>intval()</code>后再进行比较 所以有如下结果：</p>
+<li><p><code>==</code>在进行比较时，向将两边的类型转化成相同类型再进行比较，如果涉及到数值内容的字符串，则字符串会被转化成数值（通过<code>intval()</code> 函数），并且按照数值大小进行比较（<code>&gt;</code>、<code>&lt;</code>同理）。 <strong>补充</strong>： - “根据php手册中所讲，字符串的开头决定了它转换后的值，如果该字符串以合法的数值开始，则使用该合法数值，否则其值为0” - 如果字符创中没有包含<code>.</code>、<code>e</code>、<code>E</code>并且其数值在整形范围内，该字符被当做int来取值，其他所有情况都被作为float来取值。 - 0e开头的字符串被认为是科学技术计数法，且0e开头的数值为0 - 当一个整形与其他类型进行比较时，会先把其他类型进行<code>intval()</code>后再进行比较 所以有如下结果：</p>
 <pre class="line-numbers language-none"><code class="language-none">var_dump(1 &#x3D;&#x3D; &#39;1&#39;); &#x2F;&#x2F;bool(true)
 var_dump(1 &#x3D;&#x3D; &#39;1a&#39;); &#x2F;&#x2F;bool(true)
 var_dump(0 &#x3D;&#x3D; &#39;0exxx&#39;); &#x2F;&#x2F;bool(true)
@@ -960,6 +960,7 @@ a678 不是数字
 <span class="token punctuation">[</span> <span class="token number">125689.66</span> 是数字吗<span class="token operator">?</span> <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这个函数和mysql结合起来就容易出问题，那是因为is_numeric判断的时候，当碰到16进制数的时候，也会判断成数字，is_numeric函数对于空字符%00，无论是%00放在前后都可以判断为非数值，而%20空格字符只能放在数值后。所以，查看函数发现该函数对对于第一个空格字符会跳过空格字符判断，接着后面的判断。在部分情况时，在数字后边接%00也可以成功绕过。</p>
+<p>(注意：<code>+</code>号与<code>-</code>在判定时只有在数字前才会被判定为数字，在数字之后会判定为一个字符串，无论你这两个符号后有没有数字，都会被判定为字符串，其他的部分符号也一样，也会有这种特性)</p>
 <h2 id="12-call-user-func回调函数"><a href="#12-call-user-func回调函数" class="headerlink" title="12.call_user_func回调函数"></a>12.call_user_func回调函数</h2><p>call_user_func — 把第一个参数作为回调函数调用；回调函数：指的是一个函数作为参数传递给另一个函数，并且可以在后者中被调用执行的函数。语法如下：</p>
 <p>call_user_func(<a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.callable.php" >callable <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> <code>$callback</code>, <a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed" >mixed <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> <code>...$args</code>): <a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.types.declarations.php#language.types.declarations.mixed" >mixed <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 <p>参数解释：</p>
@@ -1403,7 +1404,26 @@ bool assert ( mixed $assertion [, Throwable $exception ] )
 </li>
 </ul>
 <p>注意区别： extract是将数组中元素分解,执行后数组的key值作为变量名，数组的value赋值给对应Key的变量，这样可以直接通过Key变量去访问，不用数组加key去访问。 即：从数组中创建变量；而parse_str是根据”&#x3D;”来分解字符串，主要用于对url参数的解析。</p>
-
+<h2 id="28-目录穿越漏洞"><a href="#28-目录穿越漏洞" class="headerlink" title="28.目录穿越漏洞"></a>28.目录穿越漏洞</h2><p><strong>漏洞介绍</strong>：</p>
+<p>目录遍历（目录穿越）是一个Web安全漏洞，攻击者可以利用该漏洞读取运行应用程序的服务器上的任意文件。 这可能包括应用程序代码和数据，后端系统的登录信息以及敏感的操作系统文件。</p>
+<p><strong>漏洞原理</strong>：</p>
+<p>在部分情况下，如读取图片时，会用这种方法显示,<code>&lt;img src=&quot;/loadImage?filename=214.png&quot;&gt;</code>,使用filename参数加载图像文件，图片文件位置可能映射在 <code>/var/www/images/ </code>上，所以真实的路径是<code>/var/www/images/214.png</code>,这就导致了攻击者可以读取服务器上的任意文件。</p>
+<p><u>在Unix操作系统上，..&#x2F; 是一个标准的返回上一级路径的语法；</p>
+<p>在Windows操作系统上， ..&#x2F; 和 ..\ 都是返回上一级的语句。</u></p>
+<p><strong>绕过方法</strong>：</p>
+<ul>
+<li><p>编码绕过：对构造的url进行编码，可以绕过部分对<code>/</code>和<code>.</code>符号的过滤</p>
+</li>
+<li><p>绝对路径配合绕过：在部分网站中，会检查你是否为绝对路径开头，此时：<br><code>filename=/var/www/images/../../../etc/passwd</code></p>
+<p>用<code>/../</code>可以成功绕过，在部分情况下。</p>
+</li>
+<li><p>截断绕过：通过%00字符，在某写情况下可以绕过对文件后缀的过滤，跟文件上传00截断相差不大。</p>
+</li>
+<li><p>根据过滤方式绕过：部分过滤情况只会过滤<code>/</code>或者<code>./</code>,再或者过滤<code>../</code>，在这种情况下，我们就可以根据过滤方法来针对绕过。</p>
+</li>
+</ul>
+<p>在特性题目当中，在部分文件读取的情况下可以通过目录穿越绕过，或者伪协议。</p>
+<h2 id="29-mt-rand函数（伪随机数）"><a href="#29-mt-rand函数（伪随机数）" class="headerlink" title="29.mt_rand函数（伪随机数）"></a>29.mt_rand函数（伪随机数）</h2>
             </div>
 
             
@@ -1415,7 +1435,7 @@ bool assert ( mixed $assertion [, Throwable $exception ] )
         <li><strong>Created at:</strong> 2023-07-16 14:35:17</li>
         
             <li>
-                <strong>Updated at:</strong> 2023-07-24 20:27:45
+                <strong>Updated at:</strong> 2023-07-27 20:10:14
             </li>
         
         <li>
@@ -1448,33 +1468,18 @@ bool assert ( mixed $assertion [, Throwable $exception ] )
                         <div class="article-prev">
                             <a class="prev"
                             rel="prev"
-                            href="/2023/07/16/CTFshow_php%E7%89%B9%E6%80%A7/"
+                            href="/2023/07/16/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%88XSS%EF%BC%89%E6%94%BB%E5%87%BB/"
                             >
                                 <span class="left arrow-icon flex-center">
                                     <i class="fa-solid fa-chevron-left"></i>
                                 </span>
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">CTFshow_php特性</span>
+                                    <span class="post-nav-title-item">跨站脚本攻击（XSS）攻击</span>
                                     <span class="post-nav-item">Prev posts</span>
                                 </span>
                             </a>
                         </div>
                     
-                    
-                        <div class="article-next">
-                            <a class="next"
-                            rel="next"
-                            href="/2023/07/16/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
-                            >
-                                <span class="title flex-center">
-                                    <span class="post-nav-title-item">RCE学习笔记</span>
-                                    <span class="post-nav-item">Next posts</span>
-                                </span>
-                                <span class="right arrow-icon flex-center">
-                                    <i class="fa-solid fa-chevron-right"></i>
-                                </span>
-                            </a>
-                        </div>
                     
                 </div>
             
@@ -1489,7 +1494,7 @@ bool assert ( mixed $assertion [, Throwable $exception ] )
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">PHP特性</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP%E7%89%B9%E6%80%A7"><span class="nav-text">PHP特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E5%9F%BA%E6%9C%AC%E5%BC%B1%E7%B1%BB%E5%9E%8B"><span class="nav-text">0.基本弱类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%85%83%E5%AD%97%E7%AC%A6"><span class="nav-text">1.元字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%A8%A1%E5%BC%8F%E4%BF%AE%E6%AD%A3%E7%AC%A6%EF%BC%9A"><span class="nav-text">2.模式修正符：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-preg-match-%E5%87%BD%E6%95%B0"><span class="nav-text">3.preg_match()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-intval-%E5%87%BD%E6%95%B0"><span class="nav-text">4.intval()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-strpos-%E5%87%BD%E6%95%B0"><span class="nav-text">5.strpos()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-MD5%E5%92%8Csha1-%E5%87%BD%E6%95%B0"><span class="nav-text">6.MD5和sha1()函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#md5"><span class="nav-text">md5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sha1-%E5%87%BD%E6%95%B0"><span class="nav-text">sha1()函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-file-put-contents-%E5%87%BD%E6%95%B0"><span class="nav-text">7.file_put_contents()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-in-array-%E5%87%BD%E6%95%B0"><span class="nav-text">8.in_array()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-text">9.优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-ReflectionClass%E5%8F%8D%E5%B0%84%E7%B1%BB"><span class="nav-text">10.ReflectionClass反射类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-is-numeric-%E5%87%BD%E6%95%B0"><span class="nav-text">11.is_numeric()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-call-user-func%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-text">12.call_user_func回调函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-php%E4%BC%AA%E5%8D%8F%E8%AE%AE"><span class="nav-text">13.php伪协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-is-file-%E5%87%BD%E6%95%B0"><span class="nav-text">14.is_file()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-parse-str-%E5%87%BD%E6%95%B0"><span class="nav-text">15.parse_str()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-ereg-%E6%88%AA%E6%96%AD%E6%BC%8F%E6%B4%9E"><span class="nav-text">16.ereg()截断漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-strrev-%E5%87%BD%E6%95%B0"><span class="nav-text">17.strrev()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E7%BB%95%E8%BF%87"><span class="nav-text">18.变量覆盖绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-Exception%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%B1%BB"><span class="nav-text">19.Exception异常处理类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-FilesystemIterator%E7%B1%BB%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-text">20.FilesystemIterator类读取文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-php%E5%8F%98%E9%87%8F"><span class="nav-text">21.php变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-Fuzz%E6%B5%8B%E8%AF%95"><span class="nav-text">22.Fuzz测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#23-assert-%E6%96%AD%E8%A8%80"><span class="nav-text">23.assert()断言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24-gettext%E6%8B%93%E5%B1%95"><span class="nav-text">24.gettext拓展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#25-shell-exec-%E5%87%BD%E6%95%B0"><span class="nav-text">25.shell_exec()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#26-curl%E5%91%BD%E4%BB%A4"><span class="nav-text">26.curl命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#27-prase-str-%E5%92%8Cextract"><span class="nav-text">27.prase_str()和extract()</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PHP%E7%89%B9%E6%80%A7"><span class="nav-text">PHP特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E5%9F%BA%E6%9C%AC%E5%BC%B1%E7%B1%BB%E5%9E%8B"><span class="nav-text">0.基本弱类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%85%83%E5%AD%97%E7%AC%A6"><span class="nav-text">1.元字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%A8%A1%E5%BC%8F%E4%BF%AE%E6%AD%A3%E7%AC%A6%EF%BC%9A"><span class="nav-text">2.模式修正符：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-preg-match-%E5%87%BD%E6%95%B0"><span class="nav-text">3.preg_match()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-intval-%E5%87%BD%E6%95%B0"><span class="nav-text">4.intval()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-strpos-%E5%87%BD%E6%95%B0"><span class="nav-text">5.strpos()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-MD5%E5%92%8Csha1-%E5%87%BD%E6%95%B0"><span class="nav-text">6.MD5和sha1()函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#md5"><span class="nav-text">md5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sha1-%E5%87%BD%E6%95%B0"><span class="nav-text">sha1()函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-file-put-contents-%E5%87%BD%E6%95%B0"><span class="nav-text">7.file_put_contents()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-in-array-%E5%87%BD%E6%95%B0"><span class="nav-text">8.in_array()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-text">9.优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-ReflectionClass%E5%8F%8D%E5%B0%84%E7%B1%BB"><span class="nav-text">10.ReflectionClass反射类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-is-numeric-%E5%87%BD%E6%95%B0"><span class="nav-text">11.is_numeric()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-call-user-func%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-text">12.call_user_func回调函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-php%E4%BC%AA%E5%8D%8F%E8%AE%AE"><span class="nav-text">13.php伪协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-is-file-%E5%87%BD%E6%95%B0"><span class="nav-text">14.is_file()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-parse-str-%E5%87%BD%E6%95%B0"><span class="nav-text">15.parse_str()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-ereg-%E6%88%AA%E6%96%AD%E6%BC%8F%E6%B4%9E"><span class="nav-text">16.ereg()截断漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-strrev-%E5%87%BD%E6%95%B0"><span class="nav-text">17.strrev()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E7%BB%95%E8%BF%87"><span class="nav-text">18.变量覆盖绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-Exception%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%B1%BB"><span class="nav-text">19.Exception异常处理类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-FilesystemIterator%E7%B1%BB%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-text">20.FilesystemIterator类读取文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-php%E5%8F%98%E9%87%8F"><span class="nav-text">21.php变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-Fuzz%E6%B5%8B%E8%AF%95"><span class="nav-text">22.Fuzz测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#23-assert-%E6%96%AD%E8%A8%80"><span class="nav-text">23.assert()断言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#24-gettext%E6%8B%93%E5%B1%95"><span class="nav-text">24.gettext拓展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#25-shell-exec-%E5%87%BD%E6%95%B0"><span class="nav-text">25.shell_exec()函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#26-curl%E5%91%BD%E4%BB%A4"><span class="nav-text">26.curl命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#27-prase-str-%E5%92%8Cextract"><span class="nav-text">27.prase_str()和extract()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#28-%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A%E6%BC%8F%E6%B4%9E"><span class="nav-text">28.目录穿越漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#29-mt-rand%E5%87%BD%E6%95%B0%EF%BC%88%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%EF%BC%89"><span class="nav-text">29.mt_rand函数（伪随机数）</span></a></li></ol></li></ol>
 
     </div>
 </div>
