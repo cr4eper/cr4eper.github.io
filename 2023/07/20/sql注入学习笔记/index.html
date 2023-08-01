@@ -13,28 +13,28 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/2023/07/16/sql注入学习笔记/"/>
+    <link rel="canonical" href="http://example.com/2023/07/20/sql注入学习笔记/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="[toc] sql注入学习笔记1.MySQL注入类型可以按照两个分类标准来进行分类，当然常见的就是按照注入方式的不同将其分类为：  联合查询注入：可以明确判断回显位置的情况下使用  报错注入：无回显位置，可以有报错输出的情况可以使用  布尔盲注：关闭错误回显和数据回显，但是页面会根据我们的输入对错变化。可以使用。  时间盲注：无任何形式的回显，但是仅仅对睡眠函数有响应，可以使用时间盲注。  堆">
+        <meta name="description" content="sql注入学习笔记1.MySQL注入类型可以按照两个分类标准来进行分类，当然常见的就是按照注入方式的不同将其分类为：  联合查询注入：可以明确判断回显位置的情况下使用  报错注入：无回显位置，可以有报错输出的情况可以使用  布尔盲注：关闭错误回显和数据回显，但是页面会根据我们的输入对错变化。可以使用。  时间盲注：无任何形式的回显，但是仅仅对睡眠函数有响应，可以使用时间盲注。  堆叠注入：堆叠">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sql注入学习笔记">
-<meta property="og:url" content="http://example.com/2023/07/16/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:url" content="http://example.com/2023/07/20/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="阿巴">
-<meta property="og:description" content="[toc] sql注入学习笔记1.MySQL注入类型可以按照两个分类标准来进行分类，当然常见的就是按照注入方式的不同将其分类为：  联合查询注入：可以明确判断回显位置的情况下使用  报错注入：无回显位置，可以有报错输出的情况可以使用  布尔盲注：关闭错误回显和数据回显，但是页面会根据我们的输入对错变化。可以使用。  时间盲注：无任何形式的回显，但是仅仅对睡眠函数有响应，可以使用时间盲注。  堆">
+<meta property="og:description" content="sql注入学习笔记1.MySQL注入类型可以按照两个分类标准来进行分类，当然常见的就是按照注入方式的不同将其分类为：  联合查询注入：可以明确判断回显位置的情况下使用  报错注入：无回显位置，可以有报错输出的情况可以使用  布尔盲注：关闭错误回显和数据回显，但是页面会根据我们的输入对错变化。可以使用。  时间盲注：无任何形式的回显，但是仅仅对睡眠函数有响应，可以使用时间盲注。  堆叠注入：堆叠">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/images/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5.png">
-<meta property="og:image" content="http://example.com/images/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%8C%E6%AC%A1%E6%B3%A8%E5%85%A5.png">
-<meta property="og:image" content="http://example.com/images/Screenshot_2023-05-07-12-53-46-802_tv.danmaku.bil.jpg">
-<meta property="og:image" content="http://example.com/images/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020081511261330.png">
-<meta property="article:published_time" content="2023-07-16T06:35:17.000Z">
-<meta property="article:modified_time" content="2023-07-24T12:56:27.461Z">
+<meta property="og:image" content="d:\Git\blog\myblog\source\images\%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9dd485b00d2f4a7384ebc465b369d689.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSx5o6n55qE6I-c6bih546p5a62,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="d:\Git\blog\myblog\source\images\Screenshot_2023-05-07-12-53-46-802_tv.danmaku.bil.jpg">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020081511261330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2h4aHhoeGh4eA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2023-07-20T12:19:18.000Z">
+<meta property="article:modified_time" content="2023-08-01T02:55:02.558Z">
 <meta property="article:author" content="阿巴">
 <meta property="article:tag" content="web安全">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5.png">
+<meta name="twitter:image" content="d:\Git\blog\myblog\source\images\%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5.png">
     
     
     <!--- Icon Part-->
@@ -222,22 +222,22 @@
                         <div class="author">
                             <span class="name">阿巴</span>
                             
-                                <span class="author-label">Lv1</span>
+                                <span class="author-label">Lv2</span>
                             
                         </div>
                         <div class="meta-info">
                             <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2023-07-16 14:35:17</span>
-        <span class="mobile">2023-07-16 14:35:17</span>
+        <span class="desktop">2023-07-20 20:19:18</span>
+        <span class="mobile">2023-07-20 20:19:18</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-07-24 20:56:27</span>
-            <span class="mobile">2023-07-24 20:56:27</span>
+            <span class="desktop">2023-08-01 10:55:02</span>
+            <span class="mobile">2023-08-01 10:55:02</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -274,7 +274,6 @@
             <div class="article-content markdown-body">
                 <span id="more"></span>
 
-<p>[toc]</p>
 <h1 id="sql注入学习笔记"><a href="#sql注入学习笔记" class="headerlink" title="sql注入学习笔记"></a>sql注入学习笔记</h1><h2 id="1-MySQL注入类型"><a href="#1-MySQL注入类型" class="headerlink" title="1.MySQL注入类型"></a>1.MySQL注入类型</h2><p>可以按照两个分类标准来进行分类，当然常见的就是按照注入方式的不同将其分类为：</p>
 <ol>
 <li><p>联合查询注入：可以明确判断回显位置的情况下使用</p>
@@ -348,39 +347,40 @@
 <li><p>判断其为字符型注入还是整数型输入时只需将参数与语句用引号括起来，或者拼接字符（通过and拼接两个字符可以判断）；如果报错，则表示为整数型注入，不报错，则表示为字符型注入。</p>
 </li>
 <li><p>运用order by 查询其数据库中表的数量，其使用方法为：</p>
-<pre><code>        <pre class="line-numbers language-中文" data-language="中文"><code class="language-中文">以下是一些常用的sqlmap代码及其含义：
-
-1. 基本参数
-
-- -u，指定要测试的URL地址。
-- --level，指定注入测试的难度，取值范围为1~5，数字越大难度越高。
-- --dbms，指定目标所使用的数据库类型，支持多种数据库类型，例如MySQL、MSSQL、Oracle等。
-- --dbs，列出目标所使用的所有数据库的名称。
-- --tables，列出目标数据库中所有表的名称。
- --columns，列出目标数据库中所有列的名称。
- -p，指定要测试的参数名。
-
-1. 注入方法
-
-- --technique，指定使用的注入技术，包括UNION、Error-based、Blind等。
-- --skip-waf，跳过Web应用程序防火墙（WAF）的检测，尝试进行注入攻击。
- --tamper，指定使用的字符转换技术，旨在绕过WAF和其他防御机制，例如进行URL编码、十六进制编码等。
-
-1. 攻击选项
-
-- --dump，导出整个数据库或数据表中的数据。
-- --dump-all，导出所有数据库、数据表中的数据。
- --dump-format，指定导出数据的格式，包括HTML、CSV、XML、SQL等。
-- --os-shell，尝试在目标服务器上打开一个交互式操作系统Shell。
-
-1. 其他选项
-
-- --batch，自动处理所有提示信息，不需要交互。
-- -v，输出详细的注入信息和调试信息。
-- --users，列出目标数据库中所有用户的信息。
-- --passwords，列出目标数据库用户的密码信息。
-
-需要注意的是，使用sqlmap进行注入攻击时需要严格遵守法律规定，得到合法的授权，避免非法使用。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>        以下是一些常用的sqlmap代码及其含义：
+        
+        1. 基本参数
+        
+        - -u，指定要测试的URL地址。
+        - --level，指定注入测试的难度，取值范围为1~5，数字越大难度越高。
+        - --dbms，指定目标所使用的数据库类型，支持多种数据库类型，例如MySQL、MSSQL、Oracle等。
+        - --dbs，列出目标所使用的所有数据库的名称。
+        - --tables，列出目标数据库中所有表的名称。
+         --columns，列出目标数据库中所有列的名称。
+         -p，指定要测试的参数名。
+        
+        1. 注入方法
+        
+        - --technique，指定使用的注入技术，包括UNION、Error-based、Blind等。
+        - --skip-waf，跳过Web应用程序防火墙（WAF）的检测，尝试进行注入攻击。
+         --tamper，指定使用的字符转换技术，旨在绕过WAF和其他防御机制，例如进行URL编码、十六进制编码等。
+        
+        1. 攻击选项
+        
+        - --dump，导出整个数据库或数据表中的数据。
+        - --dump-all，导出所有数据库、数据表中的数据。
+         --dump-format，指定导出数据的格式，包括HTML、CSV、XML、SQL等。
+        - --os-shell，尝试在目标服务器上打开一个交互式操作系统Shell。
+        
+        1. 其他选项
+        
+        - --batch，自动处理所有提示信息，不需要交互。
+        - -v，输出详细的注入信息和调试信息。
+        - --users，列出目标数据库中所有用户的信息。
+        - --passwords，列出目标数据库用户的密码信息。
+        
+        需要注意的是，使用sqlmap进行注入攻击时需要严格遵守法律规定，得到合法的授权，避免非法使用。
+        
         sqlmap详细操作见：https://zhuanlan.zhihu.com/p/397917097的知乎文章。
 </code></pre>
 </li>
@@ -426,7 +426,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/images/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5.png"
+                     data-src="D:\Git\blog\myblog\source\images\堆叠注入.png"
                      
                 ></p>
 <p>判断方法，在id&#x3D;1之后加一个分号，如过报错或无法运行，则表示无法进行堆叠注入，如果正常运行，则表示可以进行堆叠注入。</p>
@@ -435,7 +435,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/images/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E4%BA%8C%E6%AC%A1%E6%B3%A8%E5%85%A5.png"
+                     data-src="https://img-blog.csdnimg.cn/9dd485b00d2f4a7384ebc465b369d689.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBA5aSx5o6n55qE6I-c6bih546p5a62,size_20,color_FFFFFF,t_70,g_se,x_16"
                      
                 ></p>
 <p>简单点说就是第一次输入时进了过滤，第二次取出时未进行处理，直接进行第二此注入，就会产生漏洞。</p>
@@ -448,7 +448,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/images/Screenshot_2023-05-07-12-53-46-802_tv.danmaku.bil.jpg"
+                     data-src="D:\Git\blog\myblog\source\images\Screenshot_2023-05-07-12-53-46-802_tv.danmaku.bil.jpg"
                      
                 ></p>
 <p>还可以使用报错注入，使其不出现空格。</p>
@@ -479,7 +479,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/images/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2020081511261330.png"
+                     data-src="https://img-blog.csdnimg.cn/2020081511261330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2h4aHhoeGh4eA==,size_16,color_FFFFFF,t_70#pic_center"
                      
                 ></p>
 <p>万能密码表：</p>
@@ -547,7 +547,7 @@ WHERE condition;<span aria-hidden="true" class="line-numbers-rows"><span></span>
 <p>注册页面如果有注入漏洞的话，一般是insert类型的，因为注册相当于往数据库的表中插入一行新数据信息。再联合其他注入方式便可以成功注入</p>
 <h2 id="14-order-by后注入"><a href="#14-order-by后注入" class="headerlink" title="14.order by后注入"></a>14.order by后注入</h2><p>与其他注入大致相同，不过注入点在order by语句的后面，不过在此之前我们需要学会判断其是否在order by后面，方法很简单，在参数后面加个asc（结果升序显示）、desc（结果降序显示）来观察其顺序是否改变就行了（此适应于显示了表的情况）。接下来我们判断order by后面接的参数有没有影响，尝试注入：<code>left(version()</code>,1)和<code>right(version(),1)</code>，发现结果没影响，说明后面参数随意，则此时我们可以进行注入。接下来我们可以通过构造报错语句，盲注语句和联合查询语句，便可以进行注入了。</p>
 <p>详情见：<a class="link"   target="_blank" rel="noopener" href="https://www.jianshu.com/p/4d7deb4d524a" >SQL注入 order by后的注入(Less-46) - 简书 (jianshu.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h2 id="15-Quine注入"><a href="#15-Quine注入" class="headerlink" title="15.Quine注入"></a>15.Quine注入</h2>
+
             </div>
 
             
@@ -556,14 +556,14 @@ WHERE condition;<span aria-hidden="true" class="line-numbers-rows"><span></span>
     <ul>
         <li><strong>Title:</strong> sql注入学习笔记</li>
         <li><strong>Author:</strong> 阿巴</li>
-        <li><strong>Created at:</strong> 2023-07-16 14:35:17</li>
+        <li><strong>Created at:</strong> 2023-07-20 20:19:18</li>
         
             <li>
-                <strong>Updated at:</strong> 2023-07-24 20:56:27
+                <strong>Updated at:</strong> 2023-08-01 10:55:02
             </li>
         
         <li>
-            <strong>Link:</strong> https://redefine.ohevan.com/2023/07/16/sql注入学习笔记/
+            <strong>Link:</strong> https://redefine.ohevan.com/2023/07/20/sql注入学习笔记/
         </li>
         <li>
             <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
@@ -592,7 +592,7 @@ WHERE condition;<span aria-hidden="true" class="line-numbers-rows"><span></span>
                         <div class="article-prev">
                             <a class="prev"
                             rel="prev"
-                            href="/2023/07/16/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+                            href="/2023/07/20/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
                             >
                                 <span class="left arrow-icon flex-center">
                                     <i class="fa-solid fa-chevron-left"></i>
@@ -608,10 +608,10 @@ WHERE condition;<span aria-hidden="true" class="line-numbers-rows"><span></span>
                         <div class="article-next">
                             <a class="next"
                             rel="next"
-                            href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/"
+                            href="/2023/07/16/PHP%E7%89%B9%E6%80%A7/"
                             >
                                 <span class="title flex-center">
-                                    <span class="post-nav-title-item">文件上传笔记</span>
+                                    <span class="post-nav-title-item">PHP特性</span>
                                     <span class="post-nav-item">Next posts</span>
                                 </span>
                                 <span class="right arrow-icon flex-center">
@@ -633,7 +633,7 @@ WHERE condition;<span aria-hidden="true" class="line-numbers-rows"><span></span>
     <div class="post-toc">
         <div class="toc-title">On this page</div>
         <div class="page-title">sql注入学习笔记</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="nav-text">sql注入学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MySQL%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="nav-text">1.MySQL注入类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%81%94%E5%90%88%E6%B3%A8%E5%85%A5"><span class="nav-text">2.联合注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="nav-text">2.报错注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="nav-text">3.布尔盲注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="nav-text">4.堆叠注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%BA%8C%E6%AC%A1%E6%B3%A8%E5%85%A5"><span class="nav-text">5.二次注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%BF%87%E6%BB%A4%E6%B3%A8%E5%85%A5"><span class="nav-text">6.过滤注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-waf%E7%BB%95%E8%BF%87"><span class="nav-text">7.waf绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-MySQL%E7%BB%93%E6%9E%84%E5%9E%8B%E6%B3%A8%E5%85%A5"><span class="nav-text">8.MySQL结构型注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E4%B8%87%E8%83%BD%E5%AF%86%E7%A0%81"><span class="nav-text">9.万能密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="nav-text">10.宽字节注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-where%E5%90%8E%E6%B3%A8%E5%85%A5"><span class="nav-text">11.where后注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-update%E6%B3%A8%E5%85%A5"><span class="nav-text">12.update注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-insert%E6%B3%A8%E5%85%A5"><span class="nav-text">13.insert注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-order-by%E5%90%8E%E6%B3%A8%E5%85%A5"><span class="nav-text">14.order by后注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-Quine%E6%B3%A8%E5%85%A5"><span class="nav-text">15.Quine注入</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="nav-text">sql注入学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MySQL%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="nav-text">1.MySQL注入类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%81%94%E5%90%88%E6%B3%A8%E5%85%A5"><span class="nav-text">2.联合注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="nav-text">2.报错注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="nav-text">3.布尔盲注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="nav-text">4.堆叠注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%BA%8C%E6%AC%A1%E6%B3%A8%E5%85%A5"><span class="nav-text">5.二次注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%BF%87%E6%BB%A4%E6%B3%A8%E5%85%A5"><span class="nav-text">6.过滤注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-waf%E7%BB%95%E8%BF%87"><span class="nav-text">7.waf绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-MySQL%E7%BB%93%E6%9E%84%E5%9E%8B%E6%B3%A8%E5%85%A5"><span class="nav-text">8.MySQL结构型注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E4%B8%87%E8%83%BD%E5%AF%86%E7%A0%81"><span class="nav-text">9.万能密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-%E5%AE%BD%E5%AD%97%E8%8A%82%E6%B3%A8%E5%85%A5"><span class="nav-text">10.宽字节注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-where%E5%90%8E%E6%B3%A8%E5%85%A5"><span class="nav-text">11.where后注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-update%E6%B3%A8%E5%85%A5"><span class="nav-text">12.update注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-insert%E6%B3%A8%E5%85%A5"><span class="nav-text">13.insert注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-order-by%E5%90%8E%E6%B3%A8%E5%85%A5"><span class="nav-text">14.order by后注入</span></a></li></ol></li></ol>
 
     </div>
 </div>
