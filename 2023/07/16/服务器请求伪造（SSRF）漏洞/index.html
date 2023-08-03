@@ -25,11 +25,13 @@
 <meta property="og:site_name" content="阿巴">
 <meta property="og:description" content="[toc] 服务器端请求伪造漏洞一.漏洞介绍SSRF (Server-Side Request Forgery,服务器端请求伪造)是一种由攻击者构造请求，由服务端发起请求的安全漏洞。一般情况下，SSRF攻击的目标是外网无法访问的内部系统(正因为请求是由服务端发起的，所以服务端能请求到与自身相连而与外网隔离的内部系统)。 漏洞成因 在某些情况下，服务端的服务程序需要其他服务端的数据，假如服务器没">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88SSRF%EF%BC%89%E6%BC%8F%E6%B4%9E/fastCGI.png">
 <meta property="article:published_time" content="2023-07-16T06:35:17.000Z">
-<meta property="article:modified_time" content="2023-07-24T12:56:43.326Z">
+<meta property="article:modified_time" content="2023-08-02T12:42:25.798Z">
 <meta property="article:author" content="阿巴">
 <meta property="article:tag" content="web安全">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88SSRF%EF%BC%89%E6%BC%8F%E6%B4%9E/fastCGI.png">
     
     
     <!--- Icon Part-->
@@ -231,8 +233,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-07-24 20:56:43</span>
-            <span class="mobile">2023-07-24 20:56:43</span>
+            <span class="desktop">2023-08-02 20:42:25</span>
+            <span class="mobile">2023-08-02 20:42:25</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -302,7 +304,7 @@
 </ol>
 <p><strong>漏洞分类</strong></p>
 <ul>
-<li><p>get型：假设一个网站可以通过get请求来修改用户的邮箱，如：http:&#x2F;&#x2F;***&#x2F;user.php?id&#x3D;1&amp;email&#x3D;<a class="link"   href="mailto:&#x31;&#x32;&#x33;&#64;&#x31;&#x36;&#x33;&#x2e;&#99;&#111;&#109;" >&#x31;&#x32;&#x33;&#64;&#x31;&#x36;&#x33;&#x2e;&#99;&#111;&#109; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ,j假设这个请求的的意义为将用户id为一的用户的邮箱改为<a class="link"   href="mailto:&#x32;&#x33;&#52;&#x40;&#x31;&#x36;&#x33;&#46;&#x63;&#x6f;&#109;" >&#x32;&#x33;&#52;&#x40;&#x31;&#x36;&#x33;&#46;&#x63;&#x6f;&#109; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>得话，我们便可以构造链接将<a class="link"   href="mailto:&#x31;&#50;&#x33;&#64;&#49;&#54;&#51;&#x2e;&#x63;&#111;&#x6d;" >&#x31;&#50;&#x33;&#64;&#49;&#54;&#51;&#x2e;&#x63;&#111;&#x6d; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>改为<a class="link"   href="mailto:&#x61;&#98;&#99;&#64;&#49;&#54;&#x33;&#46;&#x63;&#111;&#109;" >&#x61;&#98;&#99;&#64;&#49;&#54;&#x33;&#46;&#x63;&#111;&#109; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。再引诱户点击此链接，用户的邮箱便可能被改为我们所指定的邮箱。</p>
+<li><p>get型：假设一个网站可以通过get请求来修改用户的邮箱，如：http:&#x2F;&#x2F;***&#x2F;user.php?id&#x3D;1&amp;email&#x3D;<a class="link"   href="mailto:&#49;&#x32;&#51;&#64;&#x31;&#54;&#x33;&#46;&#99;&#x6f;&#109;" >&#49;&#x32;&#51;&#64;&#x31;&#54;&#x33;&#46;&#99;&#x6f;&#109; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> ,j假设这个请求的的意义为将用户id为一的用户的邮箱改为<a class="link"   href="mailto:&#50;&#51;&#52;&#x40;&#49;&#54;&#x33;&#46;&#x63;&#x6f;&#x6d;" >&#50;&#51;&#52;&#x40;&#49;&#54;&#x33;&#46;&#x63;&#x6f;&#x6d; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>得话，我们便可以构造链接将<a class="link"   href="mailto:&#49;&#x32;&#x33;&#x40;&#49;&#x36;&#x33;&#x2e;&#99;&#x6f;&#109;" >&#49;&#x32;&#x33;&#x40;&#49;&#x36;&#x33;&#x2e;&#99;&#x6f;&#109; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>改为<a class="link"   href="mailto:&#97;&#x62;&#x63;&#x40;&#x31;&#x36;&#x33;&#46;&#99;&#x6f;&#x6d;" >&#97;&#x62;&#x63;&#x40;&#x31;&#x36;&#x33;&#46;&#99;&#x6f;&#x6d; <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>。再引诱户点击此链接，用户的邮箱便可能被改为我们所指定的邮箱。</p>
 </li>
 <li><p>post型：在普通用户的眼中，点击网页-&gt;打开试看视频-&gt;购买视频是一个很正常的一个流程。可是在攻击者的眼中可以算正常，但又不正常的，当然不正常的情况下，是在开发者安全意识不足所造成的。攻击者在购买处抓到购买时候网站处理购买(扣除)用户余额的地址。比如：&#x2F;coures&#x2F;user&#x2F;handler&#x2F;25332&#x2F;buy.php 。通过提交表单，buy.php处理购买的信息，这里的25532为视频ID。那么攻击者现在构造一个链接，链接中包含以下内容</p>
 <pre class="line-numbers language-text" data-language="text"><code class="language-text">&lt;form action=/coures/user/handler/25332/buy method=POST>
@@ -427,12 +429,111 @@ expect:&#x2F;&#x2F; — 处理交互式的流<span aria-hidden="true" class="lin
 <li><p>提交文件</p>
 <p>先正常抓取一个文件上传的包，再将其改为gopher协议的格式，便可以传输文件了。</p>
 </li>
-<li><p>攻击FastCGI协议</p>
-<p>首先我们要说明，什么是FastCGI协议？</p>
-<p>该协议是改进web服务器与应用程序之间的通讯协议，</p>
-<p>该协议用法具体见：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/mysteryflower/article/details/94386461" >Fastcgi协议分析 &amp;&amp; PHP-FPM未授权访问漏洞 &amp;&amp; Exp编写_mysteryflower的博客-CSDN博客 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-</li>
 </ol>
+<p>下面讲的这两个协议的利用是重点。</p>
+<h4 id="攻击FastCGI协议"><a href="#攻击FastCGI协议" class="headerlink" title="攻击FastCGI协议"></a>攻击FastCGI协议</h4><p>首先我们要说明，什么是FastCGI协议？<br>该协议是改进web服务器与应用程序之间的通讯协议，fastcgi协议则是服务器中间件和某个语言后端进行数据交换的协议。Fastcgi协议由多个record组成，record也有header和body一说，服务器中间件将这二者按照fastcgi的规则封装好发送给语言后端，语言后端解码以后拿到具体数据，进行指定操作，并将结果再按照该协议封装好后返回给服务器中间件。record头固定有八个，其有如下格式：</p>
+   <pre class="line-numbers language-none"><code class="language-none">typedef struct &#123;
+  &#x2F;* Header *&#x2F;
+  unsigned char version; &#x2F;&#x2F; 版本
+  unsigned char type; &#x2F;&#x2F; 本次record的类型
+  unsigned char requestIdB1; &#x2F;&#x2F; 本次record对应的请求id
+  unsigned char requestIdB0;
+  unsigned char contentLengthB1; &#x2F;&#x2F; body体的大小
+  unsigned char contentLengthB0;
+  unsigned char paddingLength; &#x2F;&#x2F; 额外块大小
+  unsigned char reserved; 
+ 
+  &#x2F;* Body *&#x2F;
+  unsigned char contentData[contentLength];
+  unsigned char paddingData[paddingLength];
+&#125; FCGI_Record;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>PHP—FPM</strong></p>
+<p>FastCGI的进程管理工具，即FastCGI的具体实现，在其中的进程中，包含了master和worker进程，其中master 进程负责与 Web 服务器进行通信，接收 HTTP 请求，再将请求转发给 worker 进程进行处理，worker 进程主要负责动态执行 PHP 代码，处理完成后，将处理结果返回给 Web 服务器，再由 Web 服务器将结果发送给客户端。简单来说的话就是解析器，流程如下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../images/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88SSRF%EF%BC%89%E6%BC%8F%E6%B4%9E/fastCGI.png"
+                     
+                ></p>
+<p>假设用户访问<a class="link"   target="_blank" rel="noopener" href="http://127.0.0.1/index.php?a=1&b=2%EF%BC%8C%E5%A6%82%E6%9E%9Cweb%E7%9B%AE%E5%BD%95%E6%98%AF/var/www/html%EF%BC%8C%E9%82%A3%E4%B9%88Nginx%E4%BC%9A%E5%B0%86%E8%BF%99%E4%B8%AA%E8%AF%B7%E6%B1%82%E5%8F%98%E6%88%90%E5%A6%82%E4%B8%8Bkey-value%E5%AF%B9%EF%BC%9A" >http://127.0.0.1/index.php?a=1&amp;b=2，如果web目录是/var/www/html，那么Nginx会将这个请求变成如下key-value对： <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;
+    &#39;GATEWAY_INTERFACE&#39;: &#39;FastCGI&#x2F;1.0&#39;,
+    &#39;REQUEST_METHOD&#39;: &#39;GET&#39;,
+    &#39;SCRIPT_FILENAME&#39;: &#39;&#x2F;var&#x2F;www&#x2F;html&#x2F;index.php&#39;,
+    &#39;SCRIPT_NAME&#39;: &#39;&#x2F;index.php&#39;,
+    &#39;QUERY_STRING&#39;: &#39;?a&#x3D;1&amp;b&#x3D;2&#39;,
+    &#39;REQUEST_URI&#39;: &#39;&#x2F;index.php?a&#x3D;1&amp;b&#x3D;2&#39;,
+    &#39;DOCUMENT_ROOT&#39;: &#39;&#x2F;var&#x2F;www&#x2F;html&#39;,
+    &#39;SERVER_SOFTWARE&#39;: &#39;php&#x2F;fcgiclient&#39;,
+    &#39;REMOTE_ADDR&#39;: &#39;127.0.0.1&#39;,
+    &#39;REMOTE_PORT&#39;: &#39;12345&#39;,
+    &#39;SERVER_ADDR&#39;: &#39;127.0.0.1&#39;,
+    &#39;SERVER_PORT&#39;: &#39;80&#39;,
+    &#39;SERVER_NAME&#39;: &quot;localhost&quot;,
+    &#39;SERVER_PROTOCOL&#39;: &#39;HTTP&#x2F;1.1&#39;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>攻击原理</strong></p>
+<p>PHP-FPM默认监听的端口是9000，一般情况会只会接受127.0.0.1的请求，但假设这个端口可以在公网中访问到，我们便可以借用此协议对内网进行访问，这里就就牵扯到了FPM接收数据包中的一个值了：SCRIPT_FILENAME，这个值指向的就是要执行的文件，只要我们自己构造这个值，就可以执行任意PHP文件。并且，我们只能执行服务器上现有的PHP文件。故这里建议在生成攻击url时用kali上的Gopherus工具生成比较简单</p>
+<p>该协议用法具体见：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/mysteryflower/article/details/94386461" >Fastcgi协议分析 &amp;&amp; PHP-FPM未授权访问漏洞 &amp;&amp; Exp编写_mysteryflower的博客-CSDN博客 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h4 id="攻击Redis协议"><a href="#攻击Redis协议" class="headerlink" title="攻击Redis协议"></a>攻击Redis协议</h4><p><strong>简介</strong></p>
+<p>redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string、list、set、zset和hash。这些数据类型都支持push&#x2F;pop、add&#x2F;remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。</p>
+<p><strong>常用命令</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">set xz &quot;Hacker&quot;                     # 设置键xz的值为字符串Hacker
+get xz                              # 获取键xz的内容
+SET score 857                       # 设置键score的值为857
+      INCR score                          # 使用INCR命令将score的值增加1
+      GET score                           # 获取键score的内容
+      keys *                              # 列出当前数据库中所有的键
+      config set protected-mode no        # 关闭安全模式
+      get anotherkey                      # 获取一个不存在的键的值
+      config set dir &#x2F;root&#x2F;redis          # 设置保存目录
+      config set dbfilename redis.rdb     # 设置保存文件名
+      config get dir                      # 查看保存目录
+      config get dbfilename               # 查看保存文件名
+      save                                # 进行一次备份操作
+      flushall                            # 删除所有数据
+      del key                             # 删除键为key的数据
+      slaveof ip port                 # 设置主从关系
+      redis-cli -h ip -p 6379 -a passwd   # 外部连接<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>基本操作</strong></p>
+<p>1.使用SET和GET命令，可以完成基本的赋值和取值操作； </p>
+<p>2.Redis是不区分命令的大小写的，set和SET是同一个意思； </p>
+<p>3.使用keys *可以列出当前数据库中的所有键；</p>
+<p>4.当尝试获取一个不存在的键的值时，Redis会返回空，即(nil)； </p>
+<p>5.如果键的值中有空格，需要使用双引号括起来，如”Hello World”；</p>
+<p><strong>各参数含义</strong></p>
+<p>port参数</p>
+<pre class="line-numbers language-none"><code class="language-none">格式为port后面接端口号，如port 6379，表示Redis服务器将在6379端口上进行监听来等待客户端的连接。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>bind参数</p>
+<pre class="line-numbers language-none"><code class="language-none">格式为bind后面接IP地址，可以同时绑定在多个IP地址上，IP地址之间用空格分离，如bind 192.168.1.100 10.0.0.1，表允许192.168.1.100和10.0.0.1两个IP连接。如果设置为0.0.0.0则表示任意ip都可连接，说白了就是白名单。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>save参数</p>
+<pre class="line-numbers language-none"><code class="language-none">格式为save &lt;秒数&gt; &lt;变化数&gt;，表示在指定的秒数内数据库存在指定的改变数时自动进行备份（Redis是内存数据库，这里的备份就是指把内存中的数据备份到磁盘上）。可以同时指定多个save参数，如：
+save 900 1
+save 300 10
+save 60 10000
+表示如果数据库的内容在60秒后产生了10000次改变，或者300秒后产生了10次改变，或者900秒后产生了1次改变，那么立即进行备份操作。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>requirepass参数</p>
+<pre class="line-numbers language-none"><code class="language-none">格式为requirepass后接指定的密码，用于指定客户端在连接Redis服务器时所使用的密码。Redis默认的密码参数是空的，说明不需要密码即可连接；同时，配置文件有一条注释了的requirepass foobared命令，如果去掉注释，表示需要使用foobared密码才能连接Redis数据库。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>dir参数</p>
+<pre class="line-numbers language-none"><code class="language-none">格式为dir后接指定的路径，默认为dir .&#x2F;，指明Redis的工作目录为当前目录，即redis-server文件所在的目录。注意，Redis产生的备份文件将放在这个目录下。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>dbfilename参数</p>
+<pre class="line-numbers language-none"><code class="language-none">格式为dbfilename后接指定的文件名称，用于指定Redis备份文件的名字，默认为dbfilename dump.rdb，即备份文件的名字为dump.rdb。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>config命令</p>
+<pre class="line-numbers language-none"><code class="language-none">通过config命令可以读取和设置dir参数以及dbfilename参数，因为这条命令比较危险（实验将进行详细介绍），所以Redis在配置文件中提供了rename-command参数来对其进行重命名操作，如rename-command CONFIG HTCMD，可以将CONFIG命令重命名为HTCMD。配置文件默认是没有对CONFIG命令进行重命名操作的。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>protected-mode参数</p>
+<pre class="line-numbers language-none"><code class="language-none">redis3.2之后添加了protected-mode安全模式，默认值为yes，开启后禁止外部连接，所以在测试时，先在配置中修改为no。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>攻击方式主要是利用redis协议的未授权访问。</p>
 <p> 全部用法详情见详细解释见：<a class="link"   target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/265646.html" >SSRF的利用方式 - FreeBuf网络安全行业门户 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 
             </div>
@@ -446,7 +547,7 @@ expect:&#x2F;&#x2F; — 处理交互式的流<span aria-hidden="true" class="lin
         <li><strong>Created at:</strong> 2023-07-16 14:35:17</li>
         
             <li>
-                <strong>Updated at:</strong> 2023-07-24 20:56:43
+                <strong>Updated at:</strong> 2023-08-02 20:42:25
             </li>
         
         <li>
