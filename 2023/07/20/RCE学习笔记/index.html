@@ -26,19 +26,19 @@
 <meta property="og:description" content="RCE学习笔记 rce漏洞：远程命令&#x2F;代码执行漏洞，简称RCE漏洞，可以让攻击者直接向后台服务器远程注入操作系统命令或者代码，从而控制后台系统。RCE分为远程命令执行ping和远程代码执行evel。 产生原因：服务器没有针对执行函数做过滤，导致在没有指定绝对路径的情况下就执行命令。  此处就需要我们了解一个命令，ping命令，此命令用于测试本机与网络上的另一主机是否可以联通，如果pi">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%9B%9E%E7%8E%B0rce.png">
-<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce-16908563303081.png">
-<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce1-16908565083762.png">
-<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce2-16908567473243.png">
-<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce3-16908571700535.png">
-<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce4-16908571877486.png">
-<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce5-16908575777859.png">
-<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce6-169085769148010.png">
-<meta property="og:image" content="http://example.com/">
-<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce8-169085785450712.png">
-<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce10-169085794352314.png">
-<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8Drce1-169085831076615.png">
+<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce3-16918258317862.png">
+<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce2-16918259474885.png">
+<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce2-16918259755716.png">
+<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce3-16918260050927.png">
+<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce4-169182647421215.png">
+<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce5-16918262358019.png">
+<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce6-169182626331010.png">
+<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce8-169182629262111.png">
+<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce9-169182643483514.png">
+<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce10-169182640782513.png">
+<meta property="og:image" content="http://example.com/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8Drce1-169182654778616.png">
 <meta property="article:published_time" content="2023-07-20T12:19:18.000Z">
-<meta property="article:modified_time" content="2023-08-01T02:54:42.594Z">
+<meta property="article:modified_time" content="2023-08-13T08:25:23.979Z">
 <meta property="article:author" content="阿巴">
 <meta property="article:tag" content="web安全">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                         <div class="author">
                             <span class="name">阿巴</span>
                             
-                                <span class="author-label">Lv2</span>
+                                <span class="author-label">Lv3</span>
                             
                         </div>
                         <div class="meta-info">
@@ -244,8 +244,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-08-01 10:54:42</span>
-            <span class="mobile">2023-08-01 10:54:42</span>
+            <span class="desktop">2023-08-13 16:25:23</span>
+            <span class="mobile">2023-08-13 16:25:23</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -318,7 +318,31 @@ command1 | command2 : 只执行command2
 command1 || command2 : command1执行失败， 再执行command2(若command1执行成功，就不再执行command2)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>常见的linux测试命令<br> ls 列出目录<br> ls &#x2F; 列出根目录<br> cat 文件名 显示文件内容<br> cat &#x2F;etc&#x2F;passwd 显示用户信息文件</p>
-<p>关于其他特殊符号的详细用法见：<a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45970619/article/details/106975847" > Linux特殊符号使用及含义_”Blue”的博客-CSDN博客 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>linux通配符：</p>
+<pre class="line-numbers language-none"><code class="language-none">|     #管道符，或者（正则）
+&gt;     #输出重定向
+&gt;&gt;    #输出追加重定向
+&lt;     #输入重定向
+&lt;&lt;    #追加输入重定向
+~     #当前用户家目录
+&#96;&#96; $() #引用命令被执行后的结果
+$     #以。。。结尾（正则）
+^     #以。。。开头（正则）
+*     #匹配全部字符，通配符
+？    #任意一个字符，通配符
+#       #注释
+&amp;       #让程序或脚本切换到后台执行
+&amp;&amp;      #并且 同时成立
+[]      #表示一个范围（正则，通配符）
+&#123;&#125;      #产生一个序列（通配符）
+.       #当前目录的硬链接
+..      #上级目录的硬链接<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>关于其他特殊符号的详细用法见：</p>
+<ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/u012060033/article/details/104310372" >Linux中特殊符号的作用_linux中特殊符号的用法_爱吃牛肉的大老虎的博客-CSDN博客 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45970619/article/details/106975847" > Linux特殊符号使用及含义_”Blue”的博客-CSDN博客 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
 <h2 id="1-php外部命令执行"><a href="#1-php外部命令执行" class="headerlink" title="1.php外部命令执行"></a>1.php外部命令执行</h2><p>php外部命令执行主要通过三个函数system，exec，passthru这三个函数。</p>
 <ol>
 <li><p>system函数：用于执行外部程序，用法通常为system(‘所需执行的命令’)，该函数输出并返回最后一行shell结果。（shell：Shell是一个命令行解释器，可以让我们用命令来控制计算机操作系统。它将我们输入的命令翻译成计算机能够理解的指令，并将结果返回给我们，简单说就是命令执行结果。），常见用法如下：</p>
@@ -335,10 +359,10 @@ command1 || command2 : command1执行失败， 再执行command2(若command1执�
 </li>
 <li><p>passthru函数：<code>passthru()</code> 函数是 PHP 中的一个系统函数，它用于执行外部命令并直接输出结果，类似于在终端中输入命令并输出结果。常见格式如下：</p>
 <pre class="line-numbers language-none"><code class="language-none">passthru (string $command [, int &amp;$return_var ]): void
-其中，参数 $command 表示要执行的系统命令，参数 $return_var 是一个引用参数，用于返回命令的返回值。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-</li>
+其中，参数 $command 表示要执行的系统命令，参数 $return_var 是一个引用参数，用于返回命令的返回值。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ol>
+<p>代码执行函数：</p>
+<ol>
 <li><p>eval()函数： <code>eval()</code> 函数是 PHP 中非常危险的函数，它可以执行字符串形式的 PHP 代码。由于 <code>eval()</code> 函数的存在，攻击者可以通过注入可执行代码的方式来控制应用程序。</p>
 <pre class="line-numbers language-none"><code class="language-none">eval (string $code_str): mixed
 其中，$code_str 参数是一个包含可执行代码的字符串。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -357,7 +381,7 @@ command1 || command2 : command1执行失败， 再执行command2(若command1执�
 </li>
 <li><p>echo函数：<code>echo ls | sh</code> 通过这样的句子可以执行函数，还可以执行被base64编码，hex编码之后的命令。</p>
 </li>
-<li><p>include函数：</p>
+<li><p>include函数：他可以包含其他文件，也可以用于代码执行，或用于文件读取，如：include $_POST[‘h’];便可以用于命令执行和文件读取。在过滤括号的情况下非常好用。</p>
 </li>
 <li><p>其他：</p>
 <ul>
@@ -397,6 +421,7 @@ command1 || command2 : command1执行失败， 再执行command2(若command1执�
 <p>解决方法：</p>
 <ul>
 <li>代替法：用其他意义相同的命令来代替此命令；如<code>cat</code>{查看命令}可以用:<code>less</code>{逐页查看}、<code>head</code>{查看文件开头几行}、<code>grep</code>{从文件中查找到某个关键字，并将该行显示出来}。具体使用方法见：<a class="link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145366493" >Linux常用文件查看命令 - 知乎 (zhihu.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+<li>在过滤php关键字时，假如我们又需要构造php代码，我们可以用<code>&lt;?= ?&gt;</code>来等效替代<code>&lt;?php ?&gt;</code>,其是一种简写形式用于输出一个表达式的值。等价于 <code>&lt;?php echo $expression; ?&gt;</code>。</li>
 </ul>
 </li>
 </ol>
@@ -639,7 +664,7 @@ echo  file_get_contents ( &#39;data:&#x2F;&#x2F;text&#x2F;plain;base64,SSBsb3ZlI
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce-16908563303081.png"
+                     data-src="/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce3-16918258317862.png"
                      
                 ></p>
 <p>这段代码的核心就是只允许函数而不允许函数中的参数，就是说传进去的值是一个字符串接一个<code>()</code>，那么这个字符串就会被替换为空，如果替换后只剩下<code>;</code>，那么这段代码就会被<code>eval</code>执行。而且因为这个正则表达式是递归调用的，所以说像<code>a(b(c()));</code>第一次匹配后就还剩</p>
@@ -660,7 +685,7 @@ echo  file_get_contents ( &#39;data:&#x2F;&#x2F;text&#x2F;plain;base64,SSBsb3ZlI
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce1-16908565083762.png"
+                     data-src="/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce2-16918259474885.png"
                      
                 ></p>
 <p>可以看出，他打印出来了头部信息的数组，通常，我们用<code>end()</code>函数把最后一位取出来，再将var_dump改为eval()便可以执行函数了</p>
@@ -668,14 +693,14 @@ echo  file_get_contents ( &#39;data:&#x2F;&#x2F;text&#x2F;plain;base64,SSBsb3ZlI
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce2-16908567473243.png"
+                     data-src="/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce2-16918259755716.png"
                      
                 ></p>
 <p>它并不是获取的<code>headers</code>，而是获取的四个全局变量<code>$_GET $_POST $_FILES $_COOKIE</code>，而它的返回值是一个二维数组，我们利用<code>GET</code>方式传入的参数在第一个数组中。这里我们用到<code>current()</code>函数，这个函数的作用是返回数组中的当前单元，而它的默认是第一个单元，也就是我们GET方式传入的参数，即<code>flag=111</code>.</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce3-16908571700535.png"
+                     data-src="/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce3-16918260050927.png"
                      
                 ></p>
 <p>取出get传参的值之后，依旧可以使用end函数来取出最后一个值来当命令执行。</p>
@@ -683,7 +708,7 @@ echo  file_get_contents ( &#39;data:&#x2F;&#x2F;text&#x2F;plain;base64,SSBsb3ZlI
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce4-16908571877486.png"
+                     data-src="/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce4-169182647421215.png"
                      
                 ></p>
 <p>但这里要注意的是，<code>PHPSESSIID</code>中只能有<code>A-Z a-z 0-9</code>，<code>-</code>，所以说我们要先将恶意代码16进制编码以后再插入进去，而在php中，将16进制转换为字符串的函数为<code>hex2bin</code>。</p>
@@ -691,7 +716,7 @@ echo  file_get_contents ( &#39;data:&#x2F;&#x2F;text&#x2F;plain;base64,SSBsb3ZlI
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce5-16908575777859.png"
+                     data-src="/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce5-16918262358019.png"
                      
                 ></p>
 <p>我们可以利用<code>current()</code>函数将这个点取出来的。</p>
@@ -699,7 +724,7 @@ echo  file_get_contents ( &#39;data:&#x2F;&#x2F;text&#x2F;plain;base64,SSBsb3ZlI
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce6-169085769148010.png"
+                     data-src="/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce6-169182626331010.png"
                      
                 ></p>
 <h5 id="current-pos"><a href="#current-pos" class="headerlink" title="current(pos)"></a>current(pos)</h5><p><code>pos()</code>函数是<code>current()</code>函数的别名，两者用法相同。</p>
@@ -707,19 +732,20 @@ echo  file_get_contents ( &#39;data:&#x2F;&#x2F;text&#x2F;plain;base64,SSBsb3ZlI
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/"
-                     
-                ><img  
+                     data-src="/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce8-169182629262111.png"
+                      alt="无参数rce8"
+                ></p>
+<p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce8-169085785450712.png"
-                      alt="无参数rce8"
+                     data-src="/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce9-169182643483514.png"
+                     
                 ></p>
 <h5 id="chdir"><a href="#chdir" class="headerlink" title="chdir()"></a>chdir()</h5><p>这个函数是用来跳目录的，有时想读的文件不在当前目录下就用这个来切换，因为<code>scandir()</code>会将这个目录下的文件和目录都列出来，那么利用操作数组的函数将内部指针移到我们想要的目录上然后直接用<code>chdir</code>切就好了，如果要向上跳就要构造<code>chdir(&#39;..&#39;)</code></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce10-169085794352314.png"
+                     data-src="/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E5%8F%82%E6%95%B0rce10-169182640782513.png"
                      
                 ></p>
 <h5 id="array-reverse"><a href="#array-reverse" class="headerlink" title="array_reverse()"></a>array_reverse()</h5><p>将整个数组倒过来，有的时候当我们想读的文件比较靠后时，就可以用这个函数把它倒过来，就可以少用几个<code>next()</code>函数。</p>
@@ -739,10 +765,12 @@ echo  file_get_contents ( &#39;data:&#x2F;&#x2F;text&#x2F;plain;base64,SSBsb3ZlI
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/../images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8Drce1-169085831076615.png"
+                     data-src="/images/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%97%A0%E6%95%B0%E5%AD%97%E5%AD%97%E6%AF%8Drce1-169182654778616.png"
                      
                 ></p>
 <p>详情见大佬博客：<a class="link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/pursue-security/p/15404150.html" >RCE篇之无数字字母rce - 学安全的小白 - 博客园 (cnblogs.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>引用</p>
+<p>p神博客：<a class="link"   target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/webshell-without-alphanum.html" >一些不包含数字和字母的webshell | 离别歌 (leavesongs.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 
             </div>
 
@@ -755,7 +783,7 @@ echo  file_get_contents ( &#39;data:&#x2F;&#x2F;text&#x2F;plain;base64,SSBsb3ZlI
         <li><strong>Created at:</strong> 2023-07-20 20:19:18</li>
         
             <li>
-                <strong>Updated at:</strong> 2023-08-01 10:54:42
+                <strong>Updated at:</strong> 2023-08-13 16:25:23
             </li>
         
         <li>

