@@ -43,7 +43,7 @@
 <meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E5%85%B3%E9%94%AE%E5%AD%97%E8%BF%87%E6%BB%A4.png">
 <meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E7%BB%BC%E5%90%88%E8%BF%87%E6%BB%A41.png">
 <meta property="article:published_time" content="2023-08-09T11:46:00.000Z">
-<meta property="article:modified_time" content="2023-08-13T06:51:48.332Z">
+<meta property="article:modified_time" content="2023-09-27T10:11:45.030Z">
 <meta property="article:author" content="阿巴">
 <meta property="article:tag" content="web安全">
 <meta name="twitter:card" content="summary">
@@ -249,8 +249,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-08-13 14:51:48</span>
-            <span class="mobile">2023-08-13 14:51:48</span>
+            <span class="desktop">2023-09-27 18:11:45</span>
+            <span class="mobile">2023-09-27 18:11:45</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -528,7 +528,28 @@ length() 	返回字符串的长度，别名是count<span aria-hidden="true" clas
                 ></p>
 <p>通过此脚本可以快速查看我们目标方法所在位置。</p>
 <h4 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h4><h5 id="内建函数eval执行命令"><a href="#内建函数eval执行命令" class="headerlink" title="内建函数eval执行命令"></a>内建函数eval执行命令</h5><p>内建函数：在python执行脚本时自动加载的函数，python脚本查看可利用eval命令执行。</p>
-<h5 id="os模块直接执行命令"><a href="#os模块直接执行命令" class="headerlink" title="os模块直接执行命令"></a>os模块直接执行命令</h5><p>在其他函数中执行os命令</p>
+<h5 id="os模块直接执行命令"><a href="#os模块直接执行命令" class="headerlink" title="os模块直接执行命令"></a>os模块直接执行命令</h5><p>在其他函数中执行os命令,在os模块当中存在os.system和两个执行系统命令的函数，下面诉一下这两个命令执行函数与subprocess.Popen函数的区别：</p>
+<ol>
+<li><p><code>os.system</code>:</p>
+<p>该函数返回命令执行结果的返回值，system()函数在执行过程中进行了以下三步操作：</p>
+<ul>
+<li>fork一个子进程；</li>
+<li>在子进程中调用exec函数去执行命令；</li>
+<li>在父进程中调用wait（阻塞）去等待子进程结束。</li>
+<li>对于fork失败，system()函数返回-1。由于使用该函数经常会莫名其妙地出现错误，但是直接执行命令并没有问题，所以一般建议不要使用。</li>
+</ul>
+</li>
+<li><p><code>os.popen</code>:</p>
+<p>popen() 创建一个管道，通过fork一个子进程,然后该子进程执行命令。返回值在标准IO流中，该管道用于父子进程间通信。父进程要么从管道读信息，要么向管道写信息，至于是读还是写取决于父进程调用popen时传递的参数（w或r）。通过popen函数读取命令执行过程中的输出示例如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#!/usr/bin/python</span>
+<span class="token keyword">import</span> os
+
+p<span class="token operator">=</span>os<span class="token punctuation">.</span>popen<span class="token punctuation">(</span><span class="token string">'ssh 10.3.16.121 ls'</span><span class="token punctuation">)</span>
+x<span class="token operator">=</span>p<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> x
+p<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<p>简单来说，os.system模块无法获得执行命令后的输出，但os.popen模块会返回执行命令的结果，即使发生错误，也会返回结果，至于第三个模块，他比popen模块还要灵活，更便于使用。</p>
 <h5 id="importlib类执行命令"><a href="#importlib类执行命令" class="headerlink" title="importlib类执行命令"></a>importlib类执行命令</h5><p>可以载第三方库，使用load_module加载us</p>
 <h5 id="subprocess-Popen类执行命令"><a href="#subprocess-Popen类执行命令" class="headerlink" title="subprocess.Popen类执行命令"></a>subprocess.Popen类执行命令</h5><p>从python2.4版本开始，可以用subprocess这个模块来产生子进程，并连接到子进程的</p>
 <p>输入&#x2F;输出&#x2F;错误中去，还可以得到子进程的返回值。</p>
@@ -744,7 +765,7 @@ mod <span class="token operator">=</span> sys<span class="token punctuation">.</
         <li><strong>Created at:</strong> 2023-08-09 19:46:00</li>
         
             <li>
-                <strong>Updated at:</strong> 2023-08-13 14:51:48
+                <strong>Updated at:</strong> 2023-09-27 18:11:45
             </li>
         
         <li>
