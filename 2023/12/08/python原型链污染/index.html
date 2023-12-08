@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="阿巴">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2023/12/08/python原型链污染/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="python原型链污染python原型链污染与nodejs原型链污染大致相同，都是需要用merge函数来修改父类的函数，只是nodejs是修改object中的原型中的属性，而python是修改父类中的的属性： class father:     secret &#x3D; &quot;hello&quot; class son_a(father):     pass class son_b(father):     pass">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿巴">
+<meta property="og:url" content="http://example.com/2023/12/08/python%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/index.html">
+<meta property="og:site_name" content="阿巴">
+<meta property="og:description" content="python原型链污染python原型链污染与nodejs原型链污染大致相同，都是需要用merge函数来修改父类的函数，只是nodejs是修改object中的原型中的属性，而python是修改父类中的的属性： class father:     secret &#x3D; &quot;hello&quot; class son_a(father):     pass class son_b(father):     pass">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-08T06:45:23.603Z">
+<meta property="article:modified_time" content="2023-11-21T08:14:07.590Z">
+<meta property="article:author" content="阿巴">
+<meta name="twitter:card" content="summary">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/8d.png@1256w_1256h_!web-article-pic.webp" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
+    <!--- Page Info-->
+    
+    <title>
+        
+        阿巴
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/fonts/fonts.css">
+
+    
+<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+
+    <!--- Inject Part-->
+    
+    <script id="hexo-configurations">
+    let Global = window.Global || {};
+    Global.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
+    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/e6d1c777bb54674dd5cc6ed2c6147596a899ed7b.jpg@1256w_708h_!web-article-pic.webp","dark":"/images/688bff5fab134b2da7d52ca53163372d39812ec8.jpg@1256w_708h_!web-article-pic.webp"},"title":"阿巴的小站","subtitle":{"text":[],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/621779","instagram":"https://www.instagram.com/","zhihu":"https://www.zhihu.com/people/zhi-chu-85-7","twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.2.2","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"如果讨厌当前的处境，那就不惜一切代价上去，然后去追随梦想吧！","links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/12/11  12：00：00"};
+    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    Global.data_config = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <span class="pjax-progress-icon">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </span>
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="main-content-container">
+
+        <div class="main-content-header">
+            <header class="navbar-container">
+    
+    <div class="navbar-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                阿巴
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="" 
+                                    href="/"  >
+                                    
+                                        
+                                            <i class="fa-regular fa-house"></i>
+                                        
+                                        HOME
+                                    
+                                </a>
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="navbar-drawer">
+        <ul class="drawer-navbar-list">
+            
+                
+                    <li class="drawer-navbar-item flex-center">
+                        <a class="" 
+                        href="/"  >
+                             
+                                
+                                    <i class="fa-regular fa-house"></i>
+                                
+                                HOME
+                            
+                        </a>
+                    </li>
+                    <!-- Submenu -->
+                    
+            
+
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="post-page-container">
+        <div class="article-content-container">
+
+            <div class="article-title">
+                
+                  <h1 class="article-title-regular"></h1>
+                
+              </div>
+              
+                     
+            
+            
+                <div class="article-header">
+                    <div class="avatar">
+                        <img src="/images/49871906.jpg">
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <span class="name">阿巴</span>
+                            
+                                <span class="author-label">Lv4</span>
+                            
+                        </div>
+                        <div class="meta-info">
+                            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-12-08 14:45:23</span>
+        <span class="mobile">2023-12-08 14:45:23</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-11-21 16:14:07</span>
+            <span class="mobile">2023-11-21 16:14:07</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            
+
+            <div class="article-content markdown-body">
+                <h1 id="python原型链污染"><a href="#python原型链污染" class="headerlink" title="python原型链污染"></a>python原型链污染</h1><p>python原型链污染与nodejs原型链污染大致相同，都是需要用merge函数来修改父类的函数，只是nodejs是修改object中的原型中的属性，而python是修改父类中的的属性：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">father</span><span class="token punctuation">:</span>
+    secret <span class="token operator">=</span> <span class="token string">"hello"</span>
+<span class="token keyword">class</span> <span class="token class-name">son_a</span><span class="token punctuation">(</span>father<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+<span class="token keyword">class</span> <span class="token class-name">son_b</span><span class="token punctuation">(</span>father<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+<span class="token keyword">def</span> <span class="token function">merge</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> dst<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token keyword">in</span> src<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"k:</span><span class="token interpolation"><span class="token punctuation">&#123;</span>k<span class="token punctuation">&#125;</span></span><span class="token string">\t v:</span><span class="token interpolation"><span class="token punctuation">&#123;</span>v<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> <span class="token string">'__getitem__'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> dst<span class="token punctuation">.</span>get<span class="token punctuation">(</span>k<span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token builtin">type</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+                merge<span class="token punctuation">(</span>v<span class="token punctuation">,</span> dst<span class="token punctuation">.</span>get<span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                dst<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> v
+        <span class="token keyword">elif</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token builtin">type</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+            merge<span class="token punctuation">(</span>v<span class="token punctuation">,</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token builtin">setattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+instance <span class="token operator">=</span> son_b<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span>
+payload <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">"__class__"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> 
+        <span class="token string">"__base__"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span> 
+            <span class="token string">"secret"</span> <span class="token punctuation">:</span> <span class="token string">"world"</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>son_a<span class="token punctuation">.</span>secret<span class="token punctuation">)</span>
+<span class="token comment">#hello</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>instance<span class="token punctuation">.</span>secret<span class="token punctuation">)</span>
+<span class="token comment">#hello</span>
+merge<span class="token punctuation">(</span>payload<span class="token punctuation">,</span> instance<span class="token punctuation">)</span>
+<span class="token comment"># k:__class__      v:&#123;'__base__': &#123;'secret': 'world'&#125;&#125;</span>
+<span class="token comment"># getattr(dst,k):  &lt;class '__main__.son_b'></span>
+<span class="token comment"># k:__base__       v:&#123;'secret': 'world'&#125;</span>
+<span class="token comment"># getattr(dst,k):  &lt;class '__main__.father'></span>
+<span class="token comment"># k:secret         v:world</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>son_a<span class="token punctuation">.</span>secret<span class="token punctuation">)</span>
+<span class="token comment">#world</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>instance<span class="token punctuation">.</span>secret<span class="token punctuation">)</span>
+<span class="token comment">#world</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这段代码的关键就是merge函数，简单来说就是将son_()与payload拼接起来，作用与<code>son_b().__class__.__base__.secret = &quot;world&quot;</code>相同，为object添加一个名叫secret且值为world的属性，原本son_a的值是hello，但假设我们访问<code>son_a().__class__.__base__.secret</code>时，访问的便是object中的secret属性的值，就也便可以得到world值。</p>
+<p>但并不是所有的类的属性都可以被污染，如Object的属性就无法被污染，故需要我们污染的目标类的属性可以通过属性值查找获取到</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">merge</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> dst<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># Recursive merge function</span>
+    <span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token keyword">in</span> src<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> <span class="token string">'__getitem__'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> dst<span class="token punctuation">.</span>get<span class="token punctuation">(</span>k<span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token builtin">type</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+                merge<span class="token punctuation">(</span>v<span class="token punctuation">,</span> dst<span class="token punctuation">.</span>get<span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                dst<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> v
+        <span class="token keyword">elif</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token builtin">type</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+            merge<span class="token punctuation">(</span>v<span class="token punctuation">,</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token builtin">setattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+
+payload <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">"__class__"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token string">"__str__"</span> <span class="token punctuation">:</span> <span class="token string">"Polluted ~"</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+merge<span class="token punctuation">(</span>payload<span class="token punctuation">,</span> <span class="token builtin">object</span><span class="token punctuation">)</span>
+<span class="token comment">#TypeError: can't set attributes of built-in/extension type 'object'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在上面的这个列子当中存在父类，我们可以用<code>__class__.__base__</code>访问其父类，但在大部分情况下，不会存在父类，这个时候我们就需要依靠全局变量了。</p>
+<h2 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a><strong>全局变量</strong></h2><p>使用全局变量时就与ssti差不多相同了，同样是通过<code>__globales__</code>属性来修改想要修改的变量值。在python中函数或类方法（对于类的内置方法如<code>__init__</code>这些来说，内置方法在并未重写时其数据类型为装饰器即<code>wrapper_descriptor</code>，只有在重写后才是函数<code>function</code>）均具有一个<code>__globals__</code>属性，该属性将函数或类方法所申明的变量空间中的全局变量以字典的形式返回（相当于这个变量空间中的<code>globals</code>函数的返回值）</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">secret_var <span class="token operator">=</span> <span class="token number">114</span>
+
+<span class="token keyword">def</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+
+<span class="token keyword">class</span> <span class="token class-name">a</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>test<span class="token punctuation">.</span>__globals__ <span class="token operator">==</span> <span class="token builtin">globals</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> a<span class="token punctuation">.</span>__init__<span class="token punctuation">.</span>__globals__<span class="token punctuation">)</span>
+<span class="token comment">#True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>__globasl__</code>来获取全局变量。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">secret_var <span class="token operator">=</span> <span class="token number">114</span>
+
+<span class="token keyword">def</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">pass</span>
+
+<span class="token keyword">class</span> <span class="token class-name">a</span><span class="token punctuation">:</span>
+    secret_class_var <span class="token operator">=</span> <span class="token string">"secret"</span>
+
+<span class="token keyword">class</span> <span class="token class-name">b</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+<span class="token keyword">def</span> <span class="token function">merge</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> dst<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># Recursive merge function</span>
+    <span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token keyword">in</span> src<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> <span class="token string">'__getitem__'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> dst<span class="token punctuation">.</span>get<span class="token punctuation">(</span>k<span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token builtin">type</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+                merge<span class="token punctuation">(</span>v<span class="token punctuation">,</span> dst<span class="token punctuation">.</span>get<span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                dst<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> v
+        <span class="token keyword">elif</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token builtin">type</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+            merge<span class="token punctuation">(</span>v<span class="token punctuation">,</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token builtin">setattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+
+instance <span class="token operator">=</span> b<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+payload <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">"__init__"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token string">"__globals__"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token string">"secret_var"</span> <span class="token punctuation">:</span> <span class="token number">514</span><span class="token punctuation">,</span>
+                <span class="token string">"a"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                    <span class="token string">"secret_class_var"</span> <span class="token punctuation">:</span> <span class="token string">"Pooooluted ~"</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>secret_class_var<span class="token punctuation">)</span>
+<span class="token comment">#secret</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>secret_var<span class="token punctuation">)</span>
+<span class="token comment">#114</span>
+merge<span class="token punctuation">(</span>payload<span class="token punctuation">,</span> instance<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>secret_class_var<span class="token punctuation">)</span>
+<span class="token comment">#Pooooluted ~</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>secret_var<span class="token punctuation">)</span>
+<span class="token comment">#514</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>已加载模块的获取</strong></p>
+<p>局限于当前模块的全局变量获取显然不够，很多情况下需要对并不是定义在入口文件中的类对象或者属性，而我们的操作位置又在入口文件中，这个时候就需要对其他加载过的模块来获取了。</p>
+<p><strong>加载关系简单</strong></p>
+<p>在加载关系简单的情况下，我们可以直接从文件的<code>import</code>语法部分找到目标模块，这个时候我们就可以通过获取全局变量来得到目标模块。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#test.py</span>
+
+<span class="token keyword">import</span> test_1
+
+<span class="token keyword">class</span> <span class="token class-name">cls</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+<span class="token keyword">def</span> <span class="token function">merge</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> dst<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># Recursive merge function</span>
+    <span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token keyword">in</span> src<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> <span class="token string">'__getitem__'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> dst<span class="token punctuation">.</span>get<span class="token punctuation">(</span>k<span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token builtin">type</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+                merge<span class="token punctuation">(</span>v<span class="token punctuation">,</span> dst<span class="token punctuation">.</span>get<span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                dst<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> v
+        <span class="token keyword">elif</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token builtin">type</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+            merge<span class="token punctuation">(</span>v<span class="token punctuation">,</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token builtin">setattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+
+instance <span class="token operator">=</span> cls<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+payload <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">"__init__"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"__globals__"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token string">"test_1"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token string">"secret_var"</span> <span class="token punctuation">:</span> <span class="token number">514</span><span class="token punctuation">,</span>
+                <span class="token string">"target_class"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                    <span class="token string">"secret_class_var"</span> <span class="token punctuation">:</span> <span class="token string">"Poluuuuuuted ~"</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>test_1<span class="token punctuation">.</span>secret_var<span class="token punctuation">)</span>
+<span class="token comment">#secret</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>test_1<span class="token punctuation">.</span>target_class<span class="token punctuation">.</span>secret_class_var<span class="token punctuation">)</span>
+<span class="token comment">#114</span>
+merge<span class="token punctuation">(</span>payload<span class="token punctuation">,</span> instance<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>test_1<span class="token punctuation">.</span>secret_var<span class="token punctuation">)</span>
+<span class="token comment">#514</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>test_1<span class="token punctuation">.</span>target_class<span class="token punctuation">.</span>secret_class_var<span class="token punctuation">)</span>
+<span class="token comment">#Poluuuuuuted ~</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#test_1.py</span>
+
+secret_var <span class="token operator">=</span> <span class="token number">114</span>
+
+<span class="token keyword">class</span> <span class="token class-name">target_class</span><span class="token punctuation">:</span>
+    secret_class_var <span class="token operator">=</span> <span class="token string">"secret"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>加载关系复杂关系——样例</strong></p>
+<p>如<code>CTF</code>题目等实际环境中往往是多层模块导入，甚至是存在于内置模块或三方模块中导入，这个时候通过直接看代码文件中<code>import</code>语法查找就十分困难，而解决方法则是利用<code>sys</code>模块</p>
+<p><code>sys</code>模块的<code>modules</code>属性以字典的形式包含了程序自开始运行时所有已加载过的模块，可以直接从该属性中获取到目标模块：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#test.py</span>
+
+<span class="token keyword">import</span> test_1
+<span class="token keyword">import</span> sys
+
+<span class="token keyword">class</span> <span class="token class-name">cls</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+
+<span class="token keyword">def</span> <span class="token function">merge</span><span class="token punctuation">(</span>src<span class="token punctuation">,</span> dst<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># Recursive merge function</span>
+    <span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token keyword">in</span> src<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> <span class="token string">'__getitem__'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> dst<span class="token punctuation">.</span>get<span class="token punctuation">(</span>k<span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token builtin">type</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+                merge<span class="token punctuation">(</span>v<span class="token punctuation">,</span> dst<span class="token punctuation">.</span>get<span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                dst<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> v
+        <span class="token keyword">elif</span> <span class="token builtin">hasattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token builtin">type</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token builtin">dict</span><span class="token punctuation">:</span>
+            merge<span class="token punctuation">(</span>v<span class="token punctuation">,</span> <span class="token builtin">getattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token builtin">setattr</span><span class="token punctuation">(</span>dst<span class="token punctuation">,</span> k<span class="token punctuation">,</span> v<span class="token punctuation">)</span>
+
+instance <span class="token operator">=</span> cls<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+payload <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    <span class="token string">"__init__"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+        <span class="token string">"__globals__"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token string">"sys"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                <span class="token string">"modules"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                    <span class="token string">"test_1"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                        <span class="token string">"secret_var"</span> <span class="token punctuation">:</span> <span class="token number">514</span><span class="token punctuation">,</span>
+                        <span class="token string">"target_class"</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+                            <span class="token string">"secret_class_var"</span> <span class="token punctuation">:</span> <span class="token string">"Poluuuuuuted ~"</span>
+                        <span class="token punctuation">&#125;</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>test_1<span class="token punctuation">.</span>secret_var<span class="token punctuation">)</span>
+<span class="token comment">#secret</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>test_1<span class="token punctuation">.</span>target_class<span class="token punctuation">.</span>secret_class_var<span class="token punctuation">)</span>
+<span class="token comment">#114</span>
+merge<span class="token punctuation">(</span>payload<span class="token punctuation">,</span> instance<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>test_1<span class="token punctuation">.</span>secret_var<span class="token punctuation">)</span>
+<span class="token comment">#514</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>test_1<span class="token punctuation">.</span>target_class<span class="token punctuation">.</span>secret_class_var<span class="token punctuation">)</span>
+<span class="token comment">#Poluuuuuuted ~</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#test_1.py</span>
+
+secret_var <span class="token operator">=</span> <span class="token number">114</span>
+
+<span class="token keyword">class</span> <span class="token class-name">target_class</span><span class="token punctuation">:</span>
+    secret_class_var <span class="token operator">=</span> <span class="token string">"secret"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在实战中的大部分情况不会是上面我们使用的情况，上面的payload实际上是在已经<code>import sys</code>的情况下使用的，而大部分情况是没有直接导入的，这样问题就从寻找<code>import</code>特定模块的语句转换为寻找<code>import</code>了sys模块的语句，对问题解决的并不见得有多少优化.</p>
+<p><strong>复杂关系实际使用</strong></p>
+<p>通常是利用python中的加载器loader，在 Python 中，加载器（Loader）是一种用于动态加载和导入模块的机制。它允许在运行时根据需要加载模块，并使其在代码中可用。简单来说就是为实现模块加载而设计的类，其在<code>importlib</code>这一内置模块中有具体实现。令人庆幸的是<code>importlib</code>模块下所有的<code>py</code>文件中均引入了<code>sys</code>模块：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"sys"</span> <span class="token keyword">in</span> <span class="token builtin">dir</span><span class="token punctuation">(</span><span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"importlib.__init__"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#True</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"sys"</span> <span class="token keyword">in</span> <span class="token builtin">dir</span><span class="token punctuation">(</span><span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"importlib._bootstrap"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#True</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"sys"</span> <span class="token keyword">in</span> <span class="token builtin">dir</span><span class="token punctuation">(</span><span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"importlib._bootstrap_external"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#True</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"sys"</span> <span class="token keyword">in</span> <span class="token builtin">dir</span><span class="token punctuation">(</span><span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"importlib._common"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#True</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"sys"</span> <span class="token keyword">in</span> <span class="token builtin">dir</span><span class="token punctuation">(</span><span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"importlib.abc"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#True</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"sys"</span> <span class="token keyword">in</span> <span class="token builtin">dir</span><span class="token punctuation">(</span><span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"importlib.machinery"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#True</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"sys"</span> <span class="token keyword">in</span> <span class="token builtin">dir</span><span class="token punctuation">(</span><span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"importlib.metadata"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#True</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"sys"</span> <span class="token keyword">in</span> <span class="token builtin">dir</span><span class="token punctuation">(</span><span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"importlib.resources"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#True</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"sys"</span> <span class="token keyword">in</span> <span class="token builtin">dir</span><span class="token punctuation">(</span><span class="token builtin">__import__</span><span class="token punctuation">(</span><span class="token string">"importlib.util"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>所以只要我们能过获取到一个<code>loader</code>便能用如<code>loader.__init__.__globals__[&#39;sys&#39;]</code>的方式拿到<code>sys</code>模块，这样进而获取目标模块。那<code>loader</code>好获取吗？答案是肯定的。依据官方文档的说明，对于一个模块来说，模块中的一些内置属性会在被加载时自动填充。</p>
+<p><code>__spec__</code>内置属性在<code>Python 3.4</code>版本引入，其包含了关于类加载时的信息，本身是定义在<code>Lib/importlib/_bootstrap.py</code>的类<code>ModuleSpec</code>，显然因为定义在<code>importlib</code>模块下的<code>py</code>文件，所以可以直接采用<code>&lt;模块名&gt;.__spec__.__init__.__globals__[&#39;sys&#39;]</code>获取到<code>sys</code>模块</p>
+<h2 id="攻击面扩展"><a href="#攻击面扩展" class="headerlink" title="攻击面扩展"></a>攻击面扩展</h2><p><strong>函数形参默认值替换</strong></p>
+<p>这个主要使用的函数的<code>__defaults__</code>和<code>__kwdefaults__</code>两个内置属性；</p>
+<p><code>__defaults__</code></p>
+<p><code>__defaults__</code>以元组的形式按从左到右的顺序收录了函数的位置或键值形参的默认值，需要注意这个位置或键值形参是特定的一类形参，并不是位置形参+键值形参，</p>
+
+            </div>
+
+            
+                <div class="post-copyright-info">
+                    <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> </li>
+        <li><strong>Author:</strong> 阿巴</li>
+        <li><strong>Created at:</strong> 2023-12-08 14:45:23</li>
+        
+            <li>
+                <strong>Updated at:</strong> 2023-11-21 16:14:07
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://redefine.ohevan.com/2023/12/08/python原型链污染/
+        </li>
+        <li>
+            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+        </li>
+    </ul>
+</div>
+
+                </div>
+            
+
+            
+
+            
+
+            
+                <div class="article-nav">
+                    
+                        <div class="article-prev">
+                            <a class="prev"
+                            rel="prev"
+                            href="/2023/12/08/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"
+                            >
+                                <span class="left arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </span>
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item"></span>
+                                    <span class="post-nav-item">Prev posts</span>
+                                </span>
+                            </a>
+                        </div>
+                    
+                    
+                        <div class="article-next">
+                            <a class="next"
+                            rel="next"
+                            href="/2023/12/08/nssctf%E5%86%99%E9%A2%98%E8%AE%B0%E5%BD%95/"
+                            >
+                                <span class="title flex-center">
+                                    <span class="post-nav-title-item"></span>
+                                    <span class="post-nav-item">Next posts</span>
+                                </span>
+                                <span class="right arrow-icon flex-center">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </span>
+                            </a>
+                        </div>
+                    
+                </div>
+            
+
+
+            
+        </div>
+
+        
+            <div class="toc-content-container">
+                <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title"></div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93"><span class="nav-text">python原型链污染</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB%E9%9D%A2%E6%89%A9%E5%B1%95"><span class="nav-text">攻击面扩展</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+            </div>
+        
+    </div>
+</div>
+
+
+                
+
+            </div>
+            
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info">
+            &copy;
+            
+              <span>Invalid date</span>
+              -
+            
+            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">阿巴</a>
+        </div>
+        
+            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            <div class="website-count info-item">
+                
+                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
+                        VISITOR COUNT&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
+                        TOTAL PAGE VIEWS&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="theme-info info-item">
+            <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
+                <br>
+            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.2.2</a>
+        </div>
+        
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+        
+            <script async data-pjax>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-expand-width flex-center">
+            <i class="fa-regular fa-expand"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/layouts/navbarShrink.js"></script>
+
+<script src="/js/tools/scrollTopBottom.js"></script>
+
+<script src="/js/tools/lightDarkSwitch.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js"></script>
+
+
+
+
+    
+<script src="/js/tools/runtime.js"></script>
+
+    
+<script src="/js/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts pjax">
+    
+        
+<script src="/js/tools/tocToggle.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+<script src="/js/layouts/toc.js"></script>
+
+<script src="/js/plugins/tabs.js"></script>
+
+    
+</div>
+
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax',
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+            // scrollTo: true,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            Global.utils.pjaxProgressBarStart();
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            Global.utils.pjaxProgressBarEnd();
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+            Global.refresh();
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
