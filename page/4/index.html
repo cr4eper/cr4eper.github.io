@@ -1,785 +1,342 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Hexo Theme Redefine">
-    
-    <meta name="author" content="阿巴">
-    <!-- preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    
-    <!--- Seo Part-->
-    
-    <link rel="canonical" href="http://example.com/page/4/"/>
-    <meta name="robots" content="index,follow">
-    <meta name="googlebot" content="index,follow">
-    <meta name="revisit-after" content="1 days">
-    
-        <meta name="description" content="仰天大笑出门去，我辈岂是蓬蒿人">
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>阿巴</title><meta name="author" content="阿巴"><meta name="copyright" content="阿巴"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="仰天大笑出门去，我辈岂是蓬蒿人">
 <meta property="og:type" content="website">
 <meta property="og:title" content="阿巴">
 <meta property="og:url" content="http://example.com/page/4/index.html">
 <meta property="og:site_name" content="阿巴">
 <meta property="og:description" content="仰天大笑出门去，我辈岂是蓬蒿人">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
 <meta property="article:author" content="阿巴">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/page/4/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '阿巴',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-09-18 18:56:25'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
     
-    
-    <!--- Icon Part-->
-    <link rel="icon" type="image/png" href="/images/8d.png@1256w_1256h_!web-article-pic.webp" sizes="192x192">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
-    <meta name="theme-color" content="#A31F34">
-    <link rel="shortcut icon" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
-    <!--- Page Info-->
-    
-    <title>
-        
-        阿巴
-    </title>
-    
-<link rel="stylesheet" href="/css/style.css">
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
 
-    
-<link rel="stylesheet" href="/fonts/fonts.css">
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
 
+        document.head.appendChild(script)
+      })
     
-<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><hr class="custom-hr"/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="阿巴"><span class="site-name">阿巴</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">阿巴</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/26/%E5%9B%BD%E5%85%89SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-26T13:20:49.629Z" title="Created 2023-12-26 21:20:49">2023-12-26</time></span></div><div class="content">国光SSRF做题记录先贴上这个靶场的扑朔设计图：
 
-    
-<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+web1判断是否存在ssrf漏洞存在：
 
-    <!--- Font Part-->
-    
-    
-    
-    
+Linux中常见敏感文件路径：
+&#x2F;apache&#x2F;apache&#x2F;conf&#x2F;httpd.conf
+&#x2F;apache&#x2F;apache2&#x2F;conf&#x2F;httpd.conf
+&#x2F;apache&#x2F;php&#x2F;php.ini
+&#x2F;bin&#x2F;php.ini
+&#x2F;etc&#x2F;anacrontab
+&#x2F;etc&#x2F;apache&#x2F;apache.conf
+&#x2F;etc&#x2F;apache&#x2F;httpd.conf
+&#x2F;etc&#x2F;apache2&#x2F;apache.conf
+&#x2F;etc&#x2F;apache2&#x2F;httpd.conf
+&#x2F;etc&#x2F;apache2&#x2F;sites-available&#x2F;default
+&#x2F;etc&#x2F;apache2&#x2F;vhosts.d& ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/23/%E5%AE%89%E5%AF%BB%E6%9D%AF/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-23T05:50:35.212Z" title="Created 2023-12-23 13:50:35">2023-12-23</time></span></div><div class="content">安洵杯复现what’s my name&lt;?php
+highlight_file(__file__);
+$d0g3=$_GET['d0g3'];
+$name=$_GET['name'];
+if(preg_match('/^(?:.&#123;5&#125;)*include/',$d0g3))&#123;
+    $sorter='strnatcasecmp';
+    $miao = create_function('$a,$b', 'return "ln($a) + ln($b) = " . log($a * $b);');
+    if(strlen($d0g3)==substr($miao, -2)&amp;&amp;$name===$miao)&#123;
+        $sort_function = ' return 1 * ' . $sorter . '($a["' . $d0g3 . '"], $b["' . $d0g3 . '"]);';
+        @$miao=create_function('$a, $b', $sort_function);
+    ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/08/%E7%9B%AE%E5%BD%95%E7%A9%BF%E8%B6%8A/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-08T06:45:23.618Z" title="Created 2023-12-08 14:45:23">2023-12-08</time></span></div><div class="content">目录穿越简介目录遍历又称目录遍历，攻击者能在web程序所在的根目录以外的地方任意存取被限制的文件夹或文件，来执行命令或查找数据。
+危害：任意查看被限制的文件，资料，执行命令；
+常见地点：常见于html页面展示商品图片时，如下例：在常见的html页面当中，图片的展示常用如下代码：
+&lt;img src="/loadImage?filename=218.png">
 
-    <!--- Inject Part-->
-    
-    <script id="hexo-configurations">
-    let Global = window.Global || {};
-    Global.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
-    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/e6d1c777bb54674dd5cc6ed2c6147596a899ed7b.jpg@1256w_708h_!web-article-pic.webp","dark":"/images/688bff5fab134b2da7d52ca53163372d39812ec8.jpg@1256w_708h_!web-article-pic.webp"},"title":"阿巴的小站","subtitle":{"text":[],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/621779","instagram":"https://www.instagram.com/","zhihu":"https://www.zhihu.com/people/zhi-chu-85-7","twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.2.2","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"如果讨厌当前的处境，那就不惜一切代价上去，然后去追随梦想吧！","links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/12/11  12：00：00"};
-    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
-    Global.data_config = {"masonry":false};
-  </script>
-    
-    <!--- Fontawesome Part-->
-    
-<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+在这段链接当中，就有可能存在穿越漏洞。此段链接当中，用filename来指定图片名字，当我们用.符号将目录切换到上层时，就可能实现任意文件读取。
+几种目录穿越的攻击手段在文件上传时利用目录穿越漏洞在文件上传时假设给了我们路径，如下例，假设现在我们需要把图片上传到var&#x2F;www&#x2F;html&#x2F;upload这个路经下：
 
-    
-<link rel="stylesheet" href="/fontawesome/brands.min.css">
+假设我们将路径稍作修改，将upload改为..&#x2F;upload之后
 
-    
-<link rel="stylesheet" href="/fontawesome/solid.min.css">
+这个文件就会被上传到上一级目录，即var&#x2F;www&#x2F;html中去了。
+对网站上的资源进行攻击网站上存在的资源点，像是图片等资源时：
+127.0.0.1&#x2F;home&#x2F;imag ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/08/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98wp/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-08T06:45:23.617Z" title="Created 2023-12-08 14:45:23">2023-12-08</time></span></div><div class="content">极客大挑战wpwebunsign&lt;?php
+highlight_file(__FILE__);
+class syc
+&#123;
+    public $cuit;
+    public function __destruct()
+    &#123;
+        echo("action!&lt;br>");
+        $function=$this->cuit;
+        return $function();
+    &#125;
+&#125;
 
-    
-<link rel="stylesheet" href="/fontawesome/regular.min.css">
+class lover
+&#123;
+    public $yxx;
+    public $QW;
+    public function __invoke()
+    &#123;
+        echo("invoke!&lt;br>");
+        return $this->yxx->QW;
+    &#125;
 
-    
-    
-    
-    
-<meta name="generator" content="Hexo 6.3.0"></head>
+&#125;
 
+class web
+&#123;
+    public $eva1;
+    public $interesting;
 
-<body>
-<div class="progress-bar-container">
-    
+    public function __ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/08/%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-08T06:45:23.613Z" title="Created 2023-12-08 14:45:23">2023-12-08</time></span></div><div class="content">刷题记录23&#x2F;10&#x2F;23——————23&#x2F;10&#x2F;29nssctf:[GDOUCTF 2023]泄露的伪装diserach扫描扫出www.rar文件，下载打开发现/orzorz.php路径，访问得：
+&lt;?php
+error_reporting(0);
+if(isset($_GET['cxk']))&#123;
+    $cxk=$_GET['cxk'];
+    if(file_get_contents($cxk)=="ctrl")&#123;
+        echo $flag;
+    &#125;else&#123;
+        echo "洗洗睡吧";
+    &#125;
+&#125;else&#123;
+    echo "nononoononoonono";
+&#125;
+?>
 
-    
-        <span class="pjax-progress-bar"></span>
-        <span class="pjax-progress-icon">
-            <i class="fa-solid fa-circle-notch fa-spin"></i>
-        </span>
-    
-</div>
-
-
-<main class="page-container">
-
-    
-        <style>
-    .home-article-item,
-    .sidebar-links,
-    .sidebar-content,
-    a.page-number,
-    a.extend,
-    .sidebar-links .links:hover,
-    .right-bottom-tools,
-    footer.footer {
-        background-color: var(--background-color-transparent-80) !important;
-    }
-    .right-bottom-tools:hover,
-    a.page-number:hover,
-    a.extend:hover {
-        background-color: var(--primary-color) !important;
-    }
-    .site-info,
-    .home-article-sticky-label {
-        background-color: var(--background-color-transparent-15) !important;
-    }
-    .home-article-sticky-label {
-        backdrop-filter: none !important;
-    }
-    .home-banner-background {
-        filter: blur(15px);
-    }
-</style>
-
-<div class="home-banner-background">
-</div>
+file_get_conctents函数：把整个文件读入到一个字符串当中
+file_get_contents(path,include_path,context,start,max_length)
 
 
-    
 
-    <div class="main-content-container">
+参数
+描述
 
-        <div class="main-content-header">
-            <header class="navbar-container">
-    
-    <div class="navbar-content">
-        <div class="left">
+
+
+path
+必需。规定要读 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/08/%E5%88%A9%E7%94%A8register_argc_argv%E4%B8%8Epear%E5%91%BD%E4%BB%A4%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-08T06:45:23.613Z" title="Created 2023-12-08 14:45:23">2023-12-08</time></span></div><div class="content">利用register_argc_argv与pear命令远程命令执行register_argc_argv首先让我们来看这个参数，在php.ini中，这个配置是默认打开的。
+
+在php文档上的解释是：告诉 PHP 是否声明 argv &amp; argc 变量（将包含 GET 信息），简单来说就是用于指示 PHP 是否将 argc 和 argv 作为全局变量注册到符号表中。当配置选项设置为 On 时，PHP 会自动将 argc 和 argv 注册为全局变量，这样在脚本中就可以直接使用它们，而不需要显式地调用 $argc 和 $argv。
+&lt;?php 
+var_dump($_SERVER['arhv']);
+var_dump($argv);
+?>
+
+
+
+上面是在web网页中实现的，这是打开的，情况，当register_argc_argv关闭时，不会取到任何值：
+
+Pear命令PEAR也就是为PHP扩展与应用库(PHP Extension and Application Repository)，它是一个PHP扩展及应用的一个代码仓库。　PEAR 将PHP程序开发过程中常用的功能编写成类库 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/08/%E5%88%A9%E7%94%A8imagick%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-08T06:45:23.611Z" title="Created 2023-12-08 14:45:23">2023-12-08</time></span></div><div class="content">利用imagick写马如下题目：
+class App &#123;
+    function __construct ($cmd) &#123;
+        system($cmd);
+    &#125;
+&#125;
+
+class App2 &#123;
+    function App2 ($cmd) &#123;
+        system($cmd);
+    &#125;
+&#125;
+
+# Vulnerable code
+$a = $_GET['a'];
+$b = $_GET['b'];
+
+new $a($b);
+
+在这段代码中，我们可以将a设置为App1或者2，将b设置为要执行的命令，便可以进行命令执行，但假设在其中没有像App1和2那样的可利用类的化，那就需要考虑其他的类，这个时候可以看自动加载函数，在 PHP 中，自动加载函数是一种特殊的函数，它可以在使用未定义的类时动态加载类文件。当你在 PHP 代码中使用一个尚未被定义的类时，PHP 会自动触发自动加载函数来查找并加载相应的类文件，以便能够使用这个类。
+
+​																							   ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/08/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-08T06:45:23.604Z" title="Created 2023-12-08 14:45:23">2023-12-08</time></span></div><div class="content">python反序列化此类序列化与反序列化与php的反序列化较为相似，相当于把程序运行时产生的变量，字典，对象实例等变换成字符串形式存储起来，以便后续调用，恢复保存前的状态
+python中反序列化的库主要有两个，pickle和cPickle，这俩除了运行效率上有区别外，其他没啥区别
+#序列化
+import pickle
+a_list = ['a','b','c']
+print(pickle.dumps(a_list,protocol=0))
+#运行结果：b'(lp0\nVa\np1\naVb\np2\naVc\np3\na.'
+
+
+#反序列化
+import pickle
+a_list = ['a','b','c']
+print(pickle.loads(b'(lp0\nVa\np1\naVb\np2\naVc\np3\na.'))
+#运行结果：['a','b','c']
+
+
+序列化方式json格式简介JSON（JavaScript Object Notation）是一种轻量级的数据交换格式，易于阅读和编写，同时也易于机器解析和生成。JSON采用完全独立于编程语言的文本格式，这使得JSON ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/08/python%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-08T06:45:23.603Z" title="Created 2023-12-08 14:45:23">2023-12-08</time></span></div><div class="content">python原型链污染python原型链污染与nodejs原型链污染大致相同，都是需要用merge函数来修改父类的函数，只是nodejs是修改object中的原型中的属性，而python是修改父类中的的属性：
+class father:
+    secret = "hello"
+class son_a(father):
+    pass
+class son_b(father):
+    pass
+def merge(src, dst):
+    for k, v in src.items():
+        print(f"k:&#123;k&#125;\t v:&#123;v&#125;")
+        if hasattr(dst, '__getitem__'):
+            if dst.get(k) and type(v) == dict:
+                merge(v, dst.get(k))
+            else:
+                dst[k] = v
+        elif hasattr(dst, k)  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/08/Node.js%E5%AD%A6%E4%B9%A0/" title="Untitled">Untitled</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-08T06:45:23.597Z" title="Created 2023-12-08 14:45:23">2023-12-08</time></span></div><div class="content">Node.js学习nodejs的缺陷大小写转换：toUpperCase():将小写字母转换为大写字母，如果是其他字符，则原字符不变。
+
+toLowerCase():将大写字母转换为小写字母
+
+这里输入的k并不是字母k，而是类k字符，如希腊字母。
+详情见p神博客文章：Fuzz中的javascript大小写特性 | 离别歌 (leavesongs.com)
+nodejs弱类型比较大小比较：
+
+数组比较：
+
+部分其他比较：
+
+危险函数调用命令执行：
+
+nodejs原型链污染在JavaScript中，假设我们要定义一个类时，要以定义”构造函数”的方式来定义：
+function Foo() &#123;
+	this.bar=1
+&#125;
+new Foo()
+
+其中Foo函数的内容，就是Foo类的构造函数，而this.bar就是Foo类的一个属性。在类当中也可以有一些方法，如下：
+function Foo() &#123;
+    this.bar &#x3D; 1
+    this.show &#x3D; function() &#123;
+        console.log(this. ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#content-inner">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#content-inner">7</a><a class="extend next" rel="next" href="/page/5/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿巴</div><div class="author-info__description">仰天大笑出门去，我辈岂是蓬蒿人</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/18/Python%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E9%A9%AC/" title="Python中的内存马">Python中的内存马</a><time datetime="2024-09-17T16:00:00.000Z" title="Created 2024-09-18 00:00:00">2024-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/27/JNDI%20-(%E5%8F%AF%E8%AE%BF%E9%97%AE)JDBC%E3%80%81LDAP%E3%80%81RMI%E3%80%81DNS%E3%80%81NIS%E3%80%81CORBA%E3%80%82/" title="Untitled">Untitled</a><time datetime="2024-06-27T13:08:05.623Z" title="Created 2024-06-27 21:08:05">2024-06-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/16/http192.168.1.14410003/" title="Untitled">Untitled</a><time datetime="2024-06-16T11:39:32.205Z" title="Created 2024-06-16 19:39:32">2024-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/01/%E7%9F%A9%E9%98%B5%E6%9D%AFwp/" title="Untitled">Untitled</a><time datetime="2024-06-01T06:19:50.358Z" title="Created 2024-06-01 14:19:50">2024-06-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/26/Docker%20%20PHP%E7%9A%84%E8%A3%B8%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title="Untitled">Untitled</a><time datetime="2024-05-26T08:06:29.598Z" title="Created 2024-05-26 16:06:29">2024-05-26</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
             
-            <a class="logo-title" href="/">
-                <h1>
-                阿巴
-                </h1>
-            </a>
-        </div>
-
-        <div class="right">
-            <!-- PC -->
-            <div class="desktop">
-                <ul class="navbar-list">
-                    
-                        
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class="active" 
-                                    href="/"  >
-                                    
-                                        
-                                            <i class="fa-regular fa-house"></i>
-                                        
-                                        HOME
-                                    
-                                </a>
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                    
-                </ul>
             </div>
-            <!-- Mobile -->
-            <div class="mobile">
-                
-                <div class="icon-item navbar-bar">
-                    <div class="navbar-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mobile drawer -->
-    <div class="navbar-drawer">
-        <ul class="drawer-navbar-list">
-            
-                
-                    <li class="drawer-navbar-item flex-center">
-                        <a class="active" 
-                        href="/"  >
-                             
-                                
-                                    <i class="fa-regular fa-house"></i>
-                                
-                                HOME
-                            
-                        </a>
-                    </li>
-                    <!-- Submenu -->
-                    
-            
-
-        </ul>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-        </div>
-
-        <div class="main-content-body">
-
-            
-                <div class="home-sidebar-container fade-in-down-animation">
-    <div class="sticky-container">
-        
-            
-                <div class="sidebar-links">
-                    <div class="site-info">
-                        <div class="site-name">阿巴</div>
-                        
-                    </div>
-                    
-                        <div class="announcement-outside">
-                            如果讨厌当前的处境，那就不惜一切代价上去，然后去追随梦想吧！
-                        </div>
-                    
-                </div>
-            
-            <div class="sidebar-content"  marginTop >
-                <div class="avatar">
-                    <img src="/images/49871906.jpg">
-                </div>
-                <div class="author">
-                    <div class="name">阿巴</div>
-                    
-                        <div class="label">Lv4</div>
-                    
-                </div>
-                <div class="statistics">
-                    <a class="item" href="/tags">
-                        <div class="number">1</div>
-                        <div class="label">Tags</div>
-                    </a>
-                    <a class="item" href="/categories">
-                        <div class="number">0</div>
-                        <div class="label">Categories</div>
-                    </a>
-                    <a class="item" href="/archives">
-                        <div class="number">35</div>
-                        <div class="label">Posts</div>
-                    </a>
-                </div>
-            </div>
-        
-
-    </div>
-</div>
-
-            
-
-            <div class="main-content">
-
-                
-                    <div class="home-content-container fade-in-down-animation">
-    <ul class="home-article-list">
-        
-            <li class="home-article-item">
-
-                
-
-                
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/07/20/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-                        sql注入学习笔记
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-
-sql注入学习笔记1.MySQL注入类型可以按照两个分类标准来进行分类，当然常见的就是按照注入方式的不同将其分类为：
-
-联合查询注入：可以明确判断回显位置的情况下使用
-
-报错注入：无回显位置，可以有报错输出的情况可以使用
-
-布尔盲注：关闭错误回显...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Jul 20 2023 20:19:18 GMT+0800">
-                
-                    2023-07-20
-                
-            </span>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/07/20/sql%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Read more<span class="seo-reader-text">sql注入学习笔记</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/07/16/PHP%E7%89%B9%E6%80%A7/">
-                        PHP特性
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-
-[TOC]
-PHP特性php松散比较表：PHP: PHP 类型比较表 - Manual 
-0.基本弱类型
-数组比较：在php手册中写道，当数组(array)与任何非数组进行比较时，数组总是最大的，所以有以下结果“
-var_dump([]&gt;0...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Sun Jul 16 2023 14:35:17 GMT+0800">
-                
-                    2023-07-16
-                
-            </span>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/07/16/PHP%E7%89%B9%E6%80%A7/">Read more<span class="seo-reader-text">PHP特性</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/">
-                        文件上传笔记
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-
-[toc]
-文件上传笔记文件上传漏洞常触发点：相册、头像上传、视频、照片分享、附件上传（论坛发帖、邮箱）、文件管理器等。
-漏洞形成条件：
-
-文件能够通过前端和后端过滤和文件处理
-文件内容不会改变，能够被正确存储
-存储位置在Web容器控制范围内
-攻...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Sun Jul 16 2023 14:35:17 GMT+0800">
-                
-                    2023-07-16
-                
-            </span>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/07/16/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%AC%94%E8%AE%B0/">Read more<span class="seo-reader-text">文件上传笔记</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/07/16/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88SSRF%EF%BC%89%E6%BC%8F%E6%B4%9E/">
-                        服务器端请求伪造漏洞
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-
-[toc]
-服务器端请求伪造漏洞一.漏洞介绍SSRF (Server-Side Request Forgery,服务器端请求伪造)是一种由攻击者构造请求，由服务端发起请求的安全漏洞。一般情况下，SSRF攻击的目标是外网无法访问的内部系统(正因为请...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Sun Jul 16 2023 14:35:17 GMT+0800">
-                
-                    2023-07-16
-                
-            </span>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/07/16/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0%EF%BC%88SSRF%EF%BC%89%E6%BC%8F%E6%B4%9E/">Read more<span class="seo-reader-text">服务器端请求伪造漏洞</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-
-                
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/07/16/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%88XSS%EF%BC%89%E6%94%BB%E5%87%BB/">
-                        跨站脚本攻击（XSS）攻击
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-
-[toc]
-跨站脚本攻击（XSS）攻击跨站脚本攻击（Cross-site scripting，简称 XSS）是一种常见的网络攻击方式，攻击者利用网站存在漏洞，将恶意代码注入到网页中，使得用户在访问受攻击的页面时，浏览器会执行这些恶意代码，从而导致...
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Sun Jul 16 2023 14:35:17 GMT+0800">
-                
-                    2023-07-16
-                
-            </span>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/07/16/%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB%EF%BC%88XSS%EF%BC%89%E6%94%BB%E5%87%BB/">Read more<span class="seo-reader-text">跨站脚本攻击（XSS）攻击</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-    </ul>
-
-    <div class="home-paginator">
-        <div class="paginator">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa-regular fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
-</div>
-
-    </div>
-</div>
-
-                
-
-            </div>
-            
-            
-
-        </div>
-
-        <div class="main-content-footer">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info">
-            &copy;
-            
-              <span>Invalid date</span>
-              -
-            
-            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">阿巴</a>
-        </div>
-        
-            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
-                
-                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
-                        VISITOR COUNT&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
-                        TOTAL PAGE VIEWS&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="theme-info info-item">
-            <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
-                <br>
-            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.2.2</a>
-        </div>
-        
-        
-        
-            <div>
-                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
-            </div>
-        
-        
-        
-            <script async data-pjax>
-                try {
-                    function odometer_init() {
-                    const elements = document.querySelectorAll('.odometer');
-                    elements.forEach(el => {
-                        new Odometer({
-                            el,
-                            format: '( ddd).dd',
-                            duration: 200
-                        });
-                    });
-                    }
-                    odometer_init();
-                } catch (error) {}
-            </script>
-        
-        
-        
-    </div>  
-</footer>
-        </div>
-    </div>
-
-    
-
-    <div class="right-side-tools-container">
-        <div class="side-tools-container">
-    <ul class="hidden-tools-list">
-        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
-            <i class="fa-regular fa-magnifying-glass-plus"></i>
-        </li>
-
-        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
-            <i class="fa-regular fa-magnifying-glass-minus"></i>
-        </li>
-
-        <li class="right-bottom-tools tool-expand-width flex-center">
-            <i class="fa-regular fa-expand"></i>
-        </li>
-
-        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
-            <i class="fa-regular fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-
-        
-
-        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
-            <i class="fa-regular fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="visible-tools-list">
-        <li class="right-bottom-tools toggle-tools-list flex-center">
-            <i class="fa-regular fa-cog fa-spin"></i>
-        </li>
-        
-            <li class="right-bottom-tools tool-scroll-to-top flex-center">
-                <i class="arrow-up fas fa-arrow-up"></i>
-                <span class="percent"></span>
-            </li>
-        
-        
-    </ul>
-</div>
-
-    </div>
-
-    <div class="image-viewer-container">
-    <img src="">
-</div>
-
-
-    
-
-
-</main>
-
-
-
-
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/main.js"></script>
-
-<script src="/js/layouts/navbarShrink.js"></script>
-
-<script src="/js/tools/scrollTopBottom.js"></script>
-
-<script src="/js/tools/lightDarkSwitch.js"></script>
-
-
-
-
-
-    
-<script src="/js/tools/codeBlock.js"></script>
-
-
-
-
-    
-<script src="/js/layouts/lazyload.js"></script>
-
-
-
-
-    
-<script src="/js/tools/runtime.js"></script>
-
-    
-<script src="/js/libs/odometer.min.js"></script>
-
-    
-<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
-
-
-
-
-  
-<script src="/js/libs/Typed.min.js"></script>
-
-  
-<script src="/js/plugins/typed.js"></script>
-
-
-
-
-
-
-
-<div class="post-scripts pjax">
-    
-</div>
-
-
-    
-<script src="/js/libs/pjax.min.js"></script>
-
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        window.pjax = new Pjax({
-            selectors: [
-                'head title',
-                '.page-container',
-                '.pjax',
-            ],
-            history: true,
-            debug: false,
-            cacheBust: false,
-            timeout: 0,
-            analytics: false,
-            currentUrlFullReload: false,
-            scrollRestoration: false,
-            // scrollTo: true,
-        });
-
-        document.addEventListener('pjax:send', () => {
-            Global.utils.pjaxProgressBarStart();
-        });
-
-        document.addEventListener('pjax:complete', () => {
-            Global.utils.pjaxProgressBarEnd();
-            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-            Global.refresh();
-        });
-    });
-</script>
-
-
-
-
-</body>
-</html>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">技术</span><span class="card-category-list-count">1</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/tags/%E5%86%85%E5%AD%98%E9%A9%AC/" style="font-size: 1.1em; color: #999">内存马</a> <a href="/tags/Python/" style="font-size: 1.1em; color: #999">Python</a> <a href="/tags/web%E5%AE%89%E5%85%A8/" style="font-size: 1.5em; color: #99a9bf">web安全</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>Archives</span><a class="card-more-btn" href="/archives/" title="View More">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">September 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/06/"><span class="card-archive-list-date">June 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">May 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">April 2024</span><span class="card-archive-list-count">8</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">March 2024</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">February 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">January 2024</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">December 2023</span><span class="card-archive-list-count">22</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article :</div><div class="item-count">65</div></div><div class="webinfo-item"><div class="item-name">UV :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">PV :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-09-18T10:56:24.671Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 阿巴</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

